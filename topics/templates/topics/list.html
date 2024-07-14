@@ -1,0 +1,78 @@
+{% extends "topics/base.html" %}
+
+{% block content %}
+<div class="container">
+    <table class="table table-primary table-striped table-hover caption-top">
+        <caption>题目列表</caption>
+        <thead>
+            id: 1,
+    名称: '何为动态网页',
+    描述:'何为动态网页！原来这就是动态网页啊！就是ajax请求而已，不过如此~',
+    目的:'掌握过无限debugger，掌握如何判断一个网站的是否是动态网页',
+            问题:"找到数据接口，获取到数据",
+    分类: ['解析','工具','','',''],
+    难度: ['初级','中级','高级','终极']
+    考点: ['打开开发者工具', '过无限debugger', '4', '5'],
+    是否过关: [True,False]
+		文档教程:'',
+		视频教程:'',
+		发布日期:'',
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">名称</th>
+                <th scope="col">简介</th>
+                <th scope="col">目的</th>
+                <th scope="col">难度</th>
+                <th scope="col">考点</th>
+                <th scope="col">解析[文档][视频]</th>
+                <th scope="col">考点[切换可见性]</th>
+                <th scope="col">发布日期</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                <td>
+                    <div class="input-group">
+                        <input type="password" value="password2" class="form-control password-field">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary toggle-password" type="button">显示/隐藏</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+    document.querySelectorAll('.toggle-password').forEach(button => {
+        button.addEventListener('click', function () {
+            const passwordField = this.parentElement.previousElementSibling;
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
+            }
+        });
+    });
+</script>
+
+{% endblock %}

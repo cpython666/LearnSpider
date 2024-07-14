@@ -1,0 +1,40 @@
+{% extends "topics/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container text-center flex-column mt-1">
+  <img src="{% static 'imgs/logo.jpeg' %}" class="img-thumbnail" style="width: 250px;" alt="...">
+  <div class="h1 m-1">
+    爬虫百战成神-LearnSpider
+  </div>
+  <div>
+    <div><span class="badge rounded-pill bg-primary">靶场</span>
+      <span class="badge rounded-pill bg-secondary">爬虫</span>
+      <span class="badge rounded-pill bg-success">教程</span>
+      <span class="badge rounded-pill bg-danger">自动化</span>
+      <span class="badge rounded-pill bg-warning text-dark">一站式</span>
+      <span class="badge rounded-pill bg-info text-dark">DrissionPage</span>
+      <span class="badge rounded-pill bg-dark">Python</span>
+    </div>
+  </div>
+
+  <div class="m-1">
+    <div class="text-start" style="text-indent: 2em;">不仅是一个练习场，也配套有每道题目的多种技术示例代码，文档讲解，视频演示。</div>
+    <div class="text-start" style="text-indent: 2em;"> 题目由易到难，由浅入深，想让大家在刷题与实践的过程中甚至是从零学会爬虫（因为思想学会后，剩下的代码其实就是工具的使用），在这个过程中增加自己对于代码和场景的理解。</div>
+    <div class="text-start" style="text-indent: 2em;"> 本项目目标覆盖爬虫初级，进阶和高级。涉及到requests，scrapy这些请求工具，还有selenium，drissionpage这些自动化工具框架。</div>
+    <div class="text-start" style="text-indent: 2em;"> 涉及到接口请求，静态页面解析，也涉及到代码混淆，接口加密，也包含各种抓包工具的使用，chrome开发者工具的使用等。</div>
+    <div class="text-start" style="text-indent: 2em;"> 包括一些新颖的反爬技术，比如前端层面的反爬，svg反爬，css反爬，雪碧图等，也比如新兴的反爬技术比如wasm。</div>
+    <div class="text-start" style="text-indent: 2em;"> 总之就是我会什么，就像教大家什么。所以此仓库的内容也会无限拓展。也欢迎大家的贡献。</div>
+
+    <div class="text-start mt-3" style="text-indent: 2em;">
+      此仓库旨在让大家在刷题的过程中以结果和成就感驱动学习，学习到某个知识点后可以快速应用，从而感受到学到了东西，感受到爬虫是如此的简单有趣。而不是学完之后因为网站内容变动而没有刷题的地方，久而久之像没学一样。 </div>
+    <div class="text-start" style="text-indent: 2em;"> 并且本项目最想让大家养成举一反三，逻辑推理的思考思维习惯。</div>
+
+
+  </div>
+  <div class="h3 m-1">
+    cpython666出品
+  </div>
+  <a class="btn btn-lg btn-primary m-1" href="list" role="button">开启爬虫成神之旅</a>
+</div>
+{% endblock %}
