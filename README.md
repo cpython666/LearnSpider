@@ -1,4 +1,10 @@
-# 爬虫百战成神 (LearnSpider)
+<h1 align="center">爬虫百战成神 (LearnSpider)</h1>
+<p align="center">
+<a href="https://space.bilibili.com/1909782963">
+<img src="./static/imgs/logo.jpeg" alt="StarDreamSpider" width="300" />
+</a>
+</p>
+<p align="center"><b>来一场爬虫与成神相结合的旅行吧！</b></p>
 
 ## 项目介绍
 
