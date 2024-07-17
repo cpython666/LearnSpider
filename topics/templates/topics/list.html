@@ -1,66 +1,142 @@
 {% extends "topics/base.html" %}
 
 {% block content %}
-<div class="container">
-    <table class="table table-primary table-striped table-hover caption-top">
-        <caption>题目列表</caption>
-        <thead>
+    <div class="table-container container mw-100">
+        <table class="table table-primary table-striped table-hover w-auto">
+            <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">名称</th>
-                <th scope="col">简介</th>
-                <th scope="col">目的</th>
-                <th scope="col">难度</th>
-                <th scope="col">考点</th>
-                <th scope="col">解析[文档][视频]</th>
-                <th scope="col">考点[切换可见性]</th>
-                <th scope="col">发布日期</th>
+                <th class="fixed-column" scope="col">#</th>
+                <th class="fixed-column" scope="col" data-bs-toggle="tooltip" data-bs-html="true" title="名称">名称</th>
+                <th class="fixed-column" scope="col">链接</th>
             </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>
-                    <div class="input-group">
-                        <input type="password" value="password2" class="form-control password-field">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary toggle-password" type="button">显示/隐藏</button>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody id="data-body-fixed">
+            <!-- 固定列的数据 -->
+            {#            <tr>#}
+            {#                <td class="fixed-column">1</td>#}
+            {#                <td class="fixed-column">题目1</td>#}
+            {#                <td class="fixed-column">链接</td>#}
+            {#            </tr>#}
+            </tbody>
+        </table>
+        <div class="table-responsive">
+            <table class="table table-primary table-striped table-hover scrollable-table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">名称</th>
+                    <th scope="col">简介</th>
+                    <th scope="col">目的</th>
+                    <th scope="col">难度</th>
+                    <th scope="col">考点</th>
+                    <th scope="col">解析[文档][视频]</th>
+                    <th scope="col">考点[切换可见性]</th>
+                    <th scope="col">发布日期</th>
+                    <th scope="col">目标</th>
+                    <th scope="col">问题</th>
+                    <th scope="col">类别</th>
+                    <th scope="col">难度</th>
+                    <th scope="col">难度分数</th>
+                    <th scope="col">考点</th>
+                    <th scope="col">通过状态</th>
+                    <th scope="col">图文讲解</th>
+                    <th scope="col">视频讲解</th>
+                    <th scope="col">题目路径</th>
+                </tr>
+                </thead>
+                <tbody id="data-body-scroll">
+                <!-- 滚动列的数据 -->
+{#                <tr>#}
+{#                    <td>初级</td>#}
+{#                    <td>考点1</td>#}
+{#                    <td>文档1</td>#}
+{#                    <td>视频1</td>#}
+{#                    <td>发布日期1</td>#}
+{#                    <td>目标1</td>#}
+{#                    <td>问题1</td>#}
+{#                    <td>类别1</td>#}
+{#                    <td>简单</td>#}
+{#                    <td>2</td>#}
+{#                    <td>考点1</td>#}
+{#                    <td>通过</td>#}
+{#                    <td>讲解1</td>#}
+{#                    <td>视频讲解1</td>#}
+{#                    <td>路径1</td>#}
+{#                    <td>#}
+{#                 #}
+{#                    </td>#}
+{#                </tr>#}
+
+                <!-- 更多滚动列数据 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
 
 {% endblock %}
 
 {% block script %}
-<script>
-    document.querySelectorAll('.toggle-password').forEach(button => {
-        button.addEventListener('click', function () {
-            const passwordField = this.parentElement.previousElementSibling;
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-            } else {
-                passwordField.type = 'password';
-            }
+    <script>
+        // 函数：生成带有提示框的单元格
+        // 函数：生成带有默认提示框的单元格
+        function createTooltipCell(text, tooltipTitle = text) {
+            var cell = $('<td>').text(text);
+            cell.attr({
+                'data-bs-toggle': 'tooltip',
+                'data-bs-html': 'true',
+                'title': tooltipTitle
+            });
+            return cell;
+        }
+
+        $(document).ready(function () {
+            $.ajax({
+                url: 'api/',
+                type: 'GET',
+                success: function (data) {
+                    $.each(data, function (index, topic) {
+                        var row_fixed = $('<tr>');
+                        var row_scroll = $('<tr>');
+
+                        row_fixed.append(createTooltipCell(topic.order_id))
+                        row_fixed.append(createTooltipCell(topic.title));
+                        row_fixed.append(createTooltipCell(topic.response_path));
+                        row_scroll.append(createTooltipCell(topic.des));
+                        row_scroll.append(createTooltipCell(topic.goal));
+                        row_scroll.append(createTooltipCell(topic.question));
+                        row_scroll.append(createTooltipCell(topic.category));
+                        row_scroll.append(createTooltipCell(topic.difficulty));
+                        row_scroll.append(createTooltipCell(topic.difficulty_score));
+                        row_scroll.append(createTooltipCell(topic.points));
+                        row_scroll.append(createTooltipCell(topic.pass_status));
+                        row_scroll.append(createTooltipCell(topic.solution_txt));
+                        row_scroll.append(createTooltipCell(topic.solution_video));
+
+                        $('#data-body-fixed').append(row_fixed);
+                        $('#data-body-scroll').append(row_scroll);
+                    });
+                    // 初始化提示框
+                    $('[data-bs-toggle="tooltip"]').tooltip();
+                },
+                error: function () {
+                    console.error('请求失败');
+                }
+            });
         });
-    });
-</script>
+    </script>
+
+    <script>
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function () {
+                const passwordField = this.parentElement.previousElementSibling;
+                if (passwordField.type === 'password') {
+                    passwordField.type = 'text';
+                } else {
+                    passwordField.type = 'password';
+                }
+            });
+        });
+    </script>
 
 {% endblock %}

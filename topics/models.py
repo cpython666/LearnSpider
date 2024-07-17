@@ -1,5 +1,5 @@
 from django.db import models
-
+import json
 class Topics(models.Model):
     DIFFICULTY_CHOICES = [
         ('beginner', '初级'),
@@ -16,8 +16,8 @@ class Topics(models.Model):
     question = models.TextField(blank=True,default='暂无题目要求',help_text='题目要求')
     category = models.CharField(blank=True,default='成神之路',max_length=100,help_text='题目类别：成神之路，xpath特训')
     difficulty = models.CharField(blank=True,default='简单',max_length=12, choices=DIFFICULTY_CHOICES,help_text='难度')
-    difficulty_score = models.BigIntegerField(blank=True,default=2,help_text='难度分数，后续根据此字段排序order_id')
-    points = models.JSONField(blank=True,default=list,help_text='本题的考点')
+    difficulty_score = models.BigIntegerField(blank=True,default=200,help_text='难度分数，后续根据此字段排序order_id')
+    points = models.TextField(blank=True,default='暂未更新考点',help_text='本题的考点',)
     pass_status = models.BooleanField(blank=True,default=False,help_text='是否通过')
     solution_txt = models.URLField(blank=True,default='暂无表述',help_text='图文讲解')
     solution_video = models.URLField(blank=True,default='暂无表述',help_text='视频讲解')

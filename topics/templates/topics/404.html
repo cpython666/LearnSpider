@@ -1,6 +1,12 @@
 {% extends "topics/base.html" %}
+{% load static %}
 
 {% block content %}
-<h1>404</h1>
 
+    <div class="alert alert-warning" role="alert">
+<span class="h1">404</span>
+</div>
+<div class="text-center">
+<img src="{% static 'imgs/404.svg' %}" class="rounded img-thumbnail" style="width: 500px" alt="找不到你想要的页面了～">
+</div>
 {% endblock %}

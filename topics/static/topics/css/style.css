@@ -1,0 +1,22 @@
+td, th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+
+.table-container {
+    display: flex;
+    overflow-x: auto;
+}
+
+.fixed-column {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}
+
+#data-body-fixed,thead{
+    border-right: 2px solid #ffffff !important; /* 添加右侧边框 */
+
+}

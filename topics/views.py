@@ -17,3 +17,6 @@ def topic_view(request, response_path):
     topic = get_object_or_404(Topics, response_path=response_path)
     # 返回对应的 HTML 视图
     return render(request, topics_path_prefix+response_path+topics_path_suffix, {'topic': topic})
+
+def error404(request, exception):
+    return render(request, 'topics/404.html', status=404)
