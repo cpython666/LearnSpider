@@ -46,26 +46,26 @@
                 </thead>
                 <tbody id="data-body-scroll">
                 <!-- 滚动列的数据 -->
-{#                <tr>#}
-{#                    <td>初级</td>#}
-{#                    <td>考点1</td>#}
-{#                    <td>文档1</td>#}
-{#                    <td>视频1</td>#}
-{#                    <td>发布日期1</td>#}
-{#                    <td>目标1</td>#}
-{#                    <td>问题1</td>#}
-{#                    <td>类别1</td>#}
-{#                    <td>简单</td>#}
-{#                    <td>2</td>#}
-{#                    <td>考点1</td>#}
-{#                    <td>通过</td>#}
-{#                    <td>讲解1</td>#}
-{#                    <td>视频讲解1</td>#}
-{#                    <td>路径1</td>#}
-{#                    <td>#}
-{#                 #}
-{#                    </td>#}
-{#                </tr>#}
+                {#                <tr>#}
+                {#                    <td>初级</td>#}
+                {#                    <td>考点1</td>#}
+                {#                    <td>文档1</td>#}
+                {#                    <td>视频1</td>#}
+                {#                    <td>发布日期1</td>#}
+                {#                    <td>目标1</td>#}
+                {#                    <td>问题1</td>#}
+                {#                    <td>类别1</td>#}
+                {#                    <td>简单</td>#}
+                {#                    <td>2</td>#}
+                {#                    <td>考点1</td>#}
+                {#                    <td>通过</td>#}
+                {#                    <td>讲解1</td>#}
+                {#                    <td>视频讲解1</td>#}
+                {#                    <td>路径1</td>#}
+                {#                    <td>#}
+                {#                 #}
+                {#                    </td>#}
+                {#                </tr>#}
 
                 <!-- 更多滚动列数据 -->
                 </tbody>
@@ -80,15 +80,26 @@
     <script>
         // 函数：生成带有提示框的单元格
         // 函数：生成带有默认提示框的单元格
-        function createTooltipCell(text, tooltipTitle = text) {
-            var cell = $('<td>').text(text);
-            cell.attr({
-                'data-bs-toggle': 'tooltip',
-                'data-bs-html': 'true',
-                'title': tooltipTitle
-            });
-            return cell;
-        }
+function createTooltipCell(text, tooltipTitle = text, link = '') {
+    var cell;
+    if (link) {
+        var linkElement = $('<a>').attr('href', link).text(text);
+        linkElement.attr({
+            'data-bs-toggle': 'tooltip',
+            'data-bs-html': 'true',
+            'title': tooltipTitle
+        });
+        cell = $('<td>').append(linkElement);
+    } else {
+        cell = $('<td>').text(text);
+        cell.attr({
+            'data-bs-toggle': 'tooltip',
+            'data-bs-html': 'true',
+            'title': tooltipTitle
+        });
+    }
+    return cell;
+}
 
         $(document).ready(function () {
             $.ajax({
@@ -101,7 +112,7 @@
 
                         row_fixed.append(createTooltipCell(topic.order_id))
                         row_fixed.append(createTooltipCell(topic.title));
-                        row_fixed.append(createTooltipCell(topic.response_path));
+                        row_fixed.append(createTooltipCell("Go", "点击访问链接", topic.response_path));
                         row_scroll.append(createTooltipCell(topic.des));
                         row_scroll.append(createTooltipCell(topic.goal));
                         row_scroll.append(createTooltipCell(topic.question));
