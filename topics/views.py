@@ -10,6 +10,12 @@ def index(request):
 
 def list(request):
     return render(request, 'topics/list.html')
+def tools(request):
+    return render(request, 'topics/tools.html')
+def shorthand(request):
+    return render(request, 'topics/shorthand.html')
+def solutions(request):
+    return render(request, 'topics/solutions.html')
 
 def topic_view(request, response_path):
     # 根据 path 获取对应的题目
