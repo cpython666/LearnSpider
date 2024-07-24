@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1 id="myHeader"></h1>
+</body>
+<script>
+    async function fetchServerTimestamp() {
+  try {
+    const response = await fetch('/api/server-timestamp/');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data.timestamp;
+  } catch (error) {
+    console.error('Failed to fetch server timestamp:', error);
+    return null;
+  }
+}
+
+function decodeTimestamp(encodedTimestamp) {
+  // 使用 Base64 解码
+  const decodedStr = atob(encodedTimestamp);
+
+  // 提取和数值和时间戳
+  const digitSum = parseInt(decodedStr.slice(0, -13), 10);
+  const timestamp = parseInt(decodedStr.slice(-13), 10);
+
+  // 验证和数值
+  const calculatedSum = Array.from(String(timestamp)).reduce((acc, digit) => acc + parseInt(digit, 10), 0);
+  if (calculatedSum !== digitSum) {
+    throw new Error('Invalid timestamp: digit sum does not match');
+  }
+
+  return timestamp;
+}
+
+// 使用示例
+fetchServerTimestamp().then(encodedTimestamp => {
+  if (encodedTimestamp) {
+    try {
+      const timestamp = decodeTimestamp(encodedTimestamp);
+              // 获取 h1 标签
+        var h1Element = document.getElementById('myHeader');
+            // 设置 h1 标签的内容
+            h1Element.textContent = 'Decoded timestamp:'+timestamp;
+      console.log('Decoded timestamp:', timestamp);
+      // 在这里使用服务器时间戳进行相关操作
+    } catch (error) {
+      console.error('Failed to decode timestamp:', error);
+    }
+  }
+});
+
+</script>
+</html>

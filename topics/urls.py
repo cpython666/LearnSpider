@@ -10,5 +10,7 @@ urlpatterns = [
     path('shorthand', views.shorthand, name='shorthand'),
     path('solutions', views.solutions, name='solutions'),
     path('topic/<str:response_path>/', topic_view, name='topic_view'),
+    path('demo/', views.demo),
+    path('request_twice/', views.request_twice),
 ]
 
