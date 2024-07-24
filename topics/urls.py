@@ -9,8 +9,15 @@ urlpatterns = [
     path('tools', views.tools, name='tools'),
     path('shorthand', views.shorthand, name='shorthand'),
     path('solutions', views.solutions, name='solutions'),
-    path('topic/<str:response_path>/', topic_view, name='topic_view'),
+
+    # 直接请求接口类型
     path('demo/', views.demo),
-    path('request_twice/', views.request_twice),
+    path('view/request-twice/', views.request_twice, name='request-twice'),
+
+    # topic开头重定向到视图返回/html
+    path('topic/<str:response_path>/', topic_view, name='topic_view'),
+
+
+
 ]
 

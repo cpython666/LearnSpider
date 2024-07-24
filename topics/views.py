@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Topics
 
-from LearnSpider.settings import topics_path_prefix
 def demo(request):
     return render(request, 'topics/list/demo_get_server_time.html')
 

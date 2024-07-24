@@ -22,6 +22,7 @@ class Topics(models.Model):
     solution_txt = models.URLField(blank=True, null=True,default='暂无表述',help_text='题解，图文讲解')
     solution_video = models.URLField(blank=True, null=True,default='暂无表述',help_text='视频讲解')
     api_type = models.CharField(blank=True, null=True,max_length=255,default='直接对应视图',help_text='此题目的接口类型：直接对应视图，访问一个接口判断后决定是否返回视图，返回一个视图+【多个】api')
+    api_prefix = models.CharField(blank=True, null=True,max_length=255,default='topic/',help_text='topic/,view/,api/')
     response_path = models.TextField(blank=True, null=True, help_text='题目路径【文件名】')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
