@@ -1,2 +1,4 @@
 .idea
 staticfiles
+/static/bootstrap/bootstrap-icons-1.11.3/
+/static/bootstrap/bootstrap-icons-1.11.3.zip
