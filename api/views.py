@@ -25,3 +25,30 @@ def get_server_timestamp(request):
     # 使用 Base64 编码
     encoded_str = base64.b64encode(combined_str.encode()).decode()
     return JsonResponse({'timestamp': encoded_str})
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+import json
+
+
+@csrf_exempt
+@require_POST
+def check_answer(request):
+    data = json.loads(request.body)
+    question_title = data.get('question_title')
+    answer = str(data.get('answer'))
+
+    try:
+        question = Topics.objects.get(title=question_title)
+        if question.answer == answer:
+            # 答案正确，更新通过状态
+            question.pass_status = True
+            question.save()
+            return JsonResponse({'correct': True})
+        else:
+            # 答案错误
+            return JsonResponse({'correct': False})
+    except Topics.DoesNotExist:
+        return JsonResponse({'correct': False, 'error': '题目不存在'})

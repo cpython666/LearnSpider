@@ -1,12 +1,16 @@
 {% extends "topics/base.html" %}
 
+{% block question %}
+
+{% endblock %}
+
+
 {% block content %}
     <div class="card text-center">
         <div class="card-header h5">
             题目列表
         </div>
         <div class="card-body">
-{#            <div class="flex-column align-items-center justify-content-center">#}
                 <div class="table-container container flex-container justify-content-center">
                     <table class="table table-primary table-striped table-hover w-auto">
                         <thead>
@@ -20,12 +24,6 @@
                         </tr>
                         </thead>
                         <tbody id="data-body-fixed">
-                        <!-- 固定列的数据 -->
-                        {#            <tr>#}
-                        {#                <td class="fixed-column">1</td>#}
-                        {#                <td class="fixed-column">题目1</td>#}
-                        {#                <td class="fixed-column">链接</td>#}
-                        {#            </tr>#}
                         </tbody>
                     </table>
                     <div class="table-responsive">
@@ -36,41 +34,9 @@
                                 <th scope="col">状态</th>
                                 <th scope="col">题解</th>
                                 <th scope="col">类别</th>
-
-{#                                                            <th scope="col">简介</th>#}
-{#                                                            <th scope="col">目的</th>#}
-{#                                                            <th scope="col">考点</th>#}
-{#                                                            <th scope="col">目标</th>#}
-{#                                                            <th scope="col">问题</th>#}
-{#                                                            <th scope="col">难度分数</th>#}
-{#                                                            <th scope="col">考点</th>#}
-{#                                                            <th scope="col">发布时间</th>#}
                             </tr>
                             </thead>
                             <tbody id="data-body-scroll">
-                            <!-- 滚动列的数据 -->
-                            {#                <tr>#}
-                            {#                    <td>初级</td>#}
-                            {#                    <td>考点1</td>#}
-                            {#                    <td>文档1</td>#}
-                            {#                    <td>视频1</td>#}
-                            {#                    <td>发布日期1</td>#}
-                            {#                    <td>目标1</td>#}
-                            {#                    <td>问题1</td>#}
-                            {#                    <td>类别1</td>#}
-                            {#                    <td>简单</td>#}
-                            {#                    <td>2</td>#}
-                            {#                    <td>考点1</td>#}
-                            {#                    <td>通过</td>#}
-                            {#                    <td>讲解1</td>#}
-                            {#                    <td>视频讲解1</td>#}
-                            {#                    <td>路径1</td>#}
-                            {#                    <td>#}
-                            {#                 #}
-                            {#                    </td>#}
-                            {#                </tr>#}
-
-                            <!-- 更多滚动列数据 -->
                             </tbody>
                         </table>
                     </div>

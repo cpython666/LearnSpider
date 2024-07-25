@@ -10,14 +10,19 @@ urlpatterns = [
     path('shorthand', views.shorthand, name='shorthand'),
     path('solutions', views.solutions, name='solutions'),
 
-    # 直接请求接口类型
-    path('demo/', views.demo),
-    path('view/request-twice/', views.request_twice, name='request-twice'),
+
 
     # topic开头重定向到视图返回/html
-    path('topic/<str:response_path>/', topic_view, name='topic_view'),
+    path('page/<str:response_path>/', topic_view, name='topic_view'),
 
 
+
+    # 请求视图类型
+    path('view/hello-spider/', views.hello_spider, name='request_twice'),
+    path('view/request-twice/', views.request_twice, name='request-twice'),
+
+    # 混合请求接口类型
+    path('demo/', views.demo),
 
 ]
 

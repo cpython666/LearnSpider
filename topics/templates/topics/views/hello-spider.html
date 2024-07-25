@@ -1,0 +1,19 @@
+{% extends "topics/base.html" %}
+
+
+{% block title %}
+Hello，爬虫！
+{% endblock %}
+
+{% block content %}
+    <h1>您好🦆, 爬虫er~👋</h1>
+    <h3>
+    请问，这个页面有多少个：《Hello, Spider~》？
+
+    </h3>
+    {% for greeting, button_class in greeting_buttons %}
+        <button type="button" class="{{ button_class }}">{{ greeting }}</button>
+    {% endfor %}
+
+
+{% endblock %}

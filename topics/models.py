@@ -14,6 +14,7 @@ class Topics(models.Model):
     des = models.TextField(blank=True, null=True,default='暂无表述',help_text='题目的描述：简单创造一个背景故事')
     goal = models.TextField(blank=True, null=True,default='暂无描述',help_text='题目的目标：掌握xxx')
     question = models.TextField(blank=True, null=True,default='暂无题目要求',help_text='题目要求')
+    answer = models.CharField(blank=True,default='666',max_length=255,help_text='题目的答案')
     category = models.CharField(blank=True, null=True,default='成神之路',max_length=100,help_text='题目类别：成神之路，xpath特训')
     difficulty = models.CharField(blank=True, null=True,default='简单',max_length=12, choices=DIFFICULTY_CHOICES,help_text='难度')
     difficulty_score = models.BigIntegerField(blank=True, null=True,default=200,help_text='难度分数，后续根据此字段排序order_id')

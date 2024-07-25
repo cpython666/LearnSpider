@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Request-Twice</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // 设置 Cookie
+        var cookieName = 'timestamp';
+        var cookieValue = new Date().getTime() / 1000; // 当前时间戳（秒）
+        var cookieExpiration = new Date(new Date().getTime() + 1000); // 过期时间为一秒后
+        document.cookie = cookieName + '=' + cookieValue + '; expires=' + cookieExpiration.toUTCString() + '; path=/';
+        // 重新加载页面
+        window.location.reload();
+    </script>
+</body>
+
+</html>
