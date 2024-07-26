@@ -4,16 +4,16 @@
 {% block title %}
 Hello，爬虫！
 {% endblock %}
-
-{% block content %}
-    <h1>您好🦆, 爬虫er~👋</h1>
+{% block question %}
+<h1>您好🦆, 爬虫er~👋</h1>
     <h3>
-    请问，这个页面有多少个：《Hello, Spider~》？
+    请问，这个页面有多少个：《Hello, Spider~》？【ps：题目中的这个不算！】
 
     </h3>
+{% endblock %}
+
+{% block content %}
     {% for greeting, button_class in greeting_buttons %}
         <button type="button" class="{{ button_class }}">{{ greeting }}</button>
     {% endfor %}
-
-
 {% endblock %}

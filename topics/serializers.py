@@ -8,6 +8,10 @@ class TopicsSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         response_path = representation.get('response_path')
         api_prefix = representation.get('api_prefix')
-        if response_path:
+
+        if api_prefix.startswith('url/'):
+            pass
+        elif response_path:
             representation['response_path'] = f"{api_prefix}{response_path}"
+
         return representation

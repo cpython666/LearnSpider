@@ -1,9 +1,6 @@
 {% extends "topics/base.html" %}
 
-{% block question %}
-
-{% endblock %}
-
+{% block answer %}{% endblock %}
 
 {% block content %}
     <div class="card text-center">
@@ -34,6 +31,7 @@
                                 <th scope="col">状态</th>
                                 <th scope="col">题解</th>
                                 <th scope="col">类别</th>
+                                <th scope="col">简介</th>
                             </tr>
                             </thead>
                             <tbody id="data-body-scroll">
@@ -45,14 +43,8 @@
                     <ul class="pagination justify-content-center" id="pagination">
                     </ul>
                 </nav>
-{#            </div>#}
-
-
         </div>
-
-
     </div>
-
 
 {% endblock %}
 
@@ -69,7 +61,10 @@
             var element;
 
             if (type === 'link') {
-                element = $('<a>').attr('href', link).text(text);
+                element = $('<a>').attr({
+                    'href': link,
+                    'target': '_blank'  // 新标签页打开链接
+                }).text(text);
             } else {
                 element = $('<span>').text(text);
             }
@@ -150,8 +145,8 @@
                 row_scroll.append(createStatusCell(topic.pass_status));
                 row_scroll.append(createSolutionCell(topic.solution_txt, topic.solution_video));
                 row_scroll.append(createTooltipCell(topic.category));
+                row_scroll.append(createTooltipCell(topic.des));
 
-                {#row_scroll.append(createTooltipCell(topic.des));#}
                 {#row_scroll.append(createTooltipCell(topic.goal));#}
                 {#row_scroll.append(createTooltipCell(topic.question));#}
                 {#row_scroll.append(createTooltipCell(topic.difficulty_score));#}

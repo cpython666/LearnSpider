@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 from topics.models import Topics
 
 class Command(BaseCommand):
-    help = '批量更新题目的 order_id'
+    help = '批量更新题目的 order_id，根绝题目的难度分数排序order_id'
 
     def handle(self, *args, **kwargs):
         questions = Topics.objects.all().order_by('difficulty_score')
