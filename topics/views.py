@@ -5,7 +5,6 @@ from .models import Topics
 def demo(request):
     return render(request, 'topics/pages/demo_get_server_time.html')
 
-
 from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 import time
@@ -25,24 +24,19 @@ def hello_spider(request):#random_greetings
         "btn btn-dark",
         "btn btn-link"
     ]
-
     # 随机生成 666 个 "Hello, Spider~"
     for _ in range(666):
         greetings.append("Hello, Spider~")
-
     # 随机生成 "你好～世界！" 的数量（例如，随机 1 到 100 个）
     nihao_count = random.randint(1, 100)
     for _ in range(nihao_count):
         greetings.append("你好～世界！")
-
     # 随机生成 "Hello, World～" 的数量（例如，随机 1 到 100 个）
     hello_world_count = random.randint(1, 100)
     for _ in range(hello_world_count):
         greetings.append("Hello, World～")
-
     # 为每个 greeting 随机选择一个按钮样式
     greeting_buttons = [(greeting, random.choice(button_classes)) for greeting in greetings]
-
     # 打乱顺序
     random.shuffle(greeting_buttons)
 

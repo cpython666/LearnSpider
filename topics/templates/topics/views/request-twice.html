@@ -1,13 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "topics/base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Request-Twice</title>
-</head>
 
-<body>
-    <h1>Welcome to the page!</h1>
-</body>
+{% block title %}
+cookie反爬-pro
+{% endblock %}
+{% block question %}
+<h1>您好🦆, 爬虫er~👋</h1>
+    <h3>
+    请问，你用代码获取到这个页面的源代码了吗？
+    </h3>
+{% endblock %}
 
-</html>
+{% block content %}
+    {% for greeting, button_class in greeting_buttons %}
+        <button type="button" class="{{ button_class }}">{{ greeting }}</button>
+    {% endfor %}
+{% endblock %}
