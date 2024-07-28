@@ -20,9 +20,14 @@ urlpatterns = [
     # 请求视图类型
     path('view/hello-spider/', views.hello_spider, name='request_twice'),
     path('view/request-twice/', views.request_twice, name='request-twice'),
+    path('view/ua/', views.ua, name='ua'),
+    path('view/encode/', views.encode_page, name='encode'),
+
+
 
     # 混合请求接口类型
     path('demo/', views.demo),
+    path('demo1/', views.demo1),
 
 ]
 

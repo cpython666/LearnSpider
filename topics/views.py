@@ -1,16 +1,16 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+
 from .models import Topics
-
-def demo(request):
-    return render(request, 'topics/pages/demo_get_server_time.html')
-
-from django.http import HttpResponse, JsonResponse
-from django.utils import timezone
+from .decorators import require_ua
 import time
 import random
 from django.shortcuts import render
 
+def demo(request):
+    return render(request, 'topics/pages/demo_get_server_time.html')
+
+def demo1(request):
+    return render(request, 'topics/pages/demo.html')
 def hello_spider(request):#random_greetings
     greetings = []
     button_classes = [
@@ -42,6 +42,15 @@ def hello_spider(request):#random_greetings
 
     return render(request, 'topics/views/hello-spider.html', {'greeting_buttons': greeting_buttons})
 
+def ua(request):
+    return render(request, 'topics/views/ua.html')
+def encode_page(request):
+    response = render(request, 'topics/views/encode.html')
+    response['Content-Type'] = 'text/html;'
+    # response['Content-Type'] = 'text/html; charset=GB2312'
+    # response['Content-Type'] = 'text/html;UTF-8'
+    # response['Content-Type'] = 'text/html; charset=ISO-8859-1'
+    return response
 
 def request_twice(request):
     # get_content_or_script
@@ -53,10 +62,8 @@ def request_twice(request):
     # 因此，尽管浏览器应该删除过期的Cookie，后端进行过期时间的验证仍然是推荐的做法，以确保系统的可靠性和安全性。
     COOKIE_NAME = 'timestamp'
     COOKIE_EXPIRATION = 1  # 秒
-
     # 读取 Cookie
     cookie_value = request.COOKIES.get(COOKIE_NAME)
-
     if cookie_value:
         try:
             # 验证 Cookie 是否过期
@@ -67,7 +74,6 @@ def request_twice(request):
                 return render(request, 'topics/views/request-twice.html')
         except ValueError:
             pass
-
     # 如果没有有效的 Cookie，返回 JavaScript 代码来设置 Cookie
     return render(request, 'topics/views/request-twice-cookie.html')
 
@@ -83,6 +89,8 @@ def shorthand(request):
     return render(request, 'topics/shorthand.html')
 def solutions(request):
     return render(request, 'topics/solutions.html')
+
+
 
 def topic_view(request, response_path):
     # 根据 path 获取对应的题目

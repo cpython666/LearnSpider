@@ -140,10 +140,7 @@ LearnSpider/
 
 根据难度分数计算显示顺序
 ```bash
-
 python manage.py update_pass_status
-
-
 ```
 迁移模型
 ```bash
@@ -152,6 +149,7 @@ python manage.py migrate
 ```
 
 ```bash
-python manage.py update_order_ids
+#更新题目的显示顺序id
 python manage.py update_difficulty_scores
+python manage.py update_order_ids
 ```

@@ -4,7 +4,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+
+{% block charset %}<meta charset="UTF-8"> {% endblock %}
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}爬虫百战成神{% endblock %}</title>
     <link rel="icon" type="image/x-icon" href="{% static 'imgs/favicon.ico' %}"/>
@@ -15,6 +17,7 @@
     <script src="{% static 'js/cpython666.js' %}"></script>
     <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
+
 </head>
 
 <body>
