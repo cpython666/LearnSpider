@@ -1,0 +1,37 @@
+{% extends "topics/base.html" %}
+
+{% block title %}
+表格求和
+{% endblock %}
+{% block question %}
+<h1>您好🦆, 爬虫er~👋</h1>
+    <h3>
+    请问，表格中所有数字的总和为多少？【ctrl+f搜不到了吧，哈哈😂】
+
+    </h3>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h1 class="mt-5">表格求和</h1>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    {% for col in table_data.0 %}
+                        <th>列{{ forloop.counter }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in table_data %}
+                    <tr>
+                        {% for cell in row %}
+                            <td>{{ cell }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

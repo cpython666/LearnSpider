@@ -1,0 +1,88 @@
+{% extends "topics/base.html" %}
+{% load static %}
+{% block title %}
+色图收集者
+{% endblock %}
+{% block question %}
+<h1>您好🦆, 爬虫er~👋</h1>
+    <h3>
+    下面是一些精彩的色图展示，请欣赏！🎨
+    </h3>
+    将所有的图片下载到本地，存放到【学习资料】文件夹，图片命名为：标题-描述-图片名
+    <br>
+    偷着乐吧小伙子，这道题目答案是：【我只是爱学习】
+    <br>
+    记得常常温习哟～😉
+    <div class="alert alert-info" role="alert">
+    可能会有小伙伴嗤之以鼻。就这？😑，为了仓库的大小和未成年考虑，图片的大小和档次被压缩。<br>
+但是附上图片的来源网站【全部都是4k大图奥😉】：<a href="https://wallhaven.cc/toplist" class="link-success" target="_blank">https://wallhaven.cc/toplist</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-5">色图收集者</h1>
+    <div class="row">
+        <!-- 色图块 1 -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{% static 'imgs/setu/1.jpg' %}" class="card-img-top" alt="色图 1">
+                <div class="card-body">
+                    <h5 class="card-title">色图标题 1</h5>
+                    <p class="card-text">描述：这是一幅色彩鲜艳的图像，展示了美丽的风景。</p>
+                </div>
+            </div>
+        </div>
+        <!-- 色图块 2 -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{% static 'imgs/setu/2.jpg' %}" class="card-img-top" alt="色图 2">
+                <div class="card-body">
+                    <h5 class="card-title">色图标题 2</h5>
+                    <p class="card-text">描述：这幅图像展示了丰富的色彩和动态的设计。</p>
+                </div>
+            </div>
+        </div>
+        <!-- 色图块 3 -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{% static 'imgs/setu/3.jpg' %}" class="card-img-top" alt="色图 3">
+                <div class="card-body">
+                    <h5 class="card-title">色图标题 3</h5>
+                    <p class="card-text">描述：这幅图像以抽象的形式展现了色彩的碰撞。</p>
+                </div>
+            </div>
+        </div>
+        <!-- 色图块 4 -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{% static 'imgs/setu/1.png' %}" class="card-img-top" alt="色图 4">
+                <div class="card-body">
+                    <h5 class="card-title">色图标题 4</h5>
+                    <p class="card-text">描述：这幅图像以优雅的色调展示了艺术的美感。</p>
+                </div>
+            </div>
+        </div>
+        <!-- 色图块 5 -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{% static 'imgs/setu/2.png' %}" class="card-img-top" alt="色图 5">
+                <div class="card-body">
+                    <h5 class="card-title">色图标题 5</h5>
+                    <p class="card-text">描述：这幅图像充满了生动的色彩和细腻的细节。</p>
+                </div>
+            </div>
+        </div>
+        <!-- 色图块 6 -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{% static 'imgs/setu/3.png' %}" class="card-img-top" alt="色图 6">
+                <div class="card-body">
+                    <h5 class="card-title">色图标题 6</h5>
+                    <p class="card-text">描述：这幅图像展示了色彩和形状的完美结合。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

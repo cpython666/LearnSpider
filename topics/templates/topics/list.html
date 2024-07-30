@@ -161,38 +161,45 @@
         }
 
         // 函数：渲染分页控件
-        function renderPagination(totalItems) {
-            const totalPages = Math.ceil(totalItems / itemsPerPage);
-            $('#pagination').empty();
+function renderPagination(totalItems) {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    $('#pagination').empty();
 
-            for (let i = 1; i <= totalPages; i++) {
-                const li = $('<li>').addClass('page-item').addClass(i === currentPage ? 'active' : '');
-                const a = $('<a>').addClass('page-link').attr('href', '#').text(i);
-                a.on('click', function (e) {
-                    e.preventDefault();
-                    currentPage = i;
-                    renderTable(currentPage);
-                    renderPagination(data.length);
-                });
-                li.append(a);
-                $('#pagination').append(li);
-            }
-        }
-
-        $(document).ready(function () {
-            $.ajax({
-                url: 'api/topics',
-                type: 'GET',
-                success: function (response) {
-                    data = response;
-                    renderTable(currentPage);
-                    renderPagination(data.length);
-                },
-                error: function () {
-                    console.error('请求失败');
-                }
-            });
+    for (let i = 1; i <= totalPages; i++) {
+        const li = $('<li>').addClass('page-item').addClass(i === currentPage ? 'active' : '');
+        const a = $('<a>').addClass('page-link').attr('href', `?page=${i}`).text(i);
+        a.on('click', function (e) {
+            e.preventDefault();
+            currentPage = i;
+            window.history.pushState({}, '', `?page=${i}`);
+            renderTable(currentPage);
+            renderPagination(data.length);
         });
+        li.append(a);
+        $('#pagination').append(li);
+    }
+}
+$(document).ready(function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageParam = urlParams.get('page');
+    if (pageParam) {
+        currentPage = parseInt(pageParam, 10);
+    }
+
+    $.ajax({
+        url: 'api/topics',
+        type: 'GET',
+        success: function (response) {
+            data = response;
+            renderTable(currentPage);
+            renderPagination(data.length);
+        },
+        error: function () {
+            console.error('请求失败');
+        }
+    });
+});
+
     </script>
 
 {% endblock %}

@@ -1,0 +1,88 @@
+{% extends "topics/base.html" %}
+
+{% block title %}
+新闻收集者
+{% endblock %}
+{% block question %}
+<h1>您好🦆, 爬虫er~👋</h1>
+    <h3>
+    以下是一些与爬虫相关的新闻，希望你喜欢！🕷
+    </h3>
+    获取所有的新闻信息，输出这样的格式：[{"title":"xxx",{"auther":"xxx",{"publish_date":"xxx",{"detail":"xxx",}...]
+    <br>
+    成功获取了吗？请回答【成功了！】
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-5">新闻收集者</h1>
+    <div class="row">
+        <!-- 新闻块 1 -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Python 爬虫挑战赛圆满结束</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">发布日期: 2024-07-30</h6>
+                    <p class="card-text">作者: 爬虫大师</p>
+                    <p class="card-text">本次 Python 爬虫挑战赛吸引了来自全球的数百名爬虫爱好者。经过激烈的比拼，最终产生了前三名获奖者。他们的作品展示了爬虫技术的无限可能。</p>
+                </div>
+            </div>
+        </div>
+        <!-- 新闻块 2 -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">新型反爬虫技术亮相科技大会</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">发布日期: 2024-07-28</h6>
+                    <p class="card-text">作者: 安全先锋</p>
+                    <p class="card-text">在今年的科技大会上，多个公司展示了他们最新的反爬虫技术。这些技术旨在保护网站内容，防止未经授权的爬取行为，引起了广泛关注。</p>
+                </div>
+            </div>
+        </div>
+        <!-- 新闻块 3 -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">知名数据科学家分享爬虫最佳实践</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">发布日期: 2024-07-25</h6>
+                    <p class="card-text">作者: 数据达人</p>
+                    <p class="card-text">著名数据科学家在最近的研讨会上分享了爬虫的最佳实践，包括如何处理反爬机制、如何提高爬虫效率以及数据清洗的技巧，受到了与会者的热烈欢迎。</p>
+                </div>
+            </div>
+        </div>
+        <!-- 新闻块 4 -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Web Scraping 在商业中的应用</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">发布日期: 2024-07-22</h6>
+                    <p class="card-text">作者: 商业分析师</p>
+                    <p class="card-text">越来越多的企业开始利用 Web Scraping 技术来收集竞争对手的信息、市场趋势以及客户反馈。本文介绍了几种典型的商业应用案例。</p>
+                </div>
+            </div>
+        </div>
+        <!-- 新闻块 5 -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">AI 与爬虫技术的结合：未来展望</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">发布日期: 2024-07-20</h6>
+                    <p class="card-text">作者: 技术前沿</p>
+                    <p class="card-text">随着 AI 技术的发展，爬虫技术也在不断进步。未来，AI 将在爬虫中发挥更加重要的作用，帮助爬虫变得更加智能和高效。</p>
+                </div>
+            </div>
+        </div>
+        <!-- 新闻块 6 -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">爬虫技术在学术研究中的应用</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">发布日期: 2024-07-18</h6>
+                    <p class="card-text">作者: 学术达人</p>
+                    <p class="card-text">爬虫技术在学术研究中有着广泛的应用，例如数据收集、文献综述和社会网络分析。本文探讨了几种典型的学术应用场景。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

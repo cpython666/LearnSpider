@@ -41,7 +41,7 @@ def hello_spider(request):#random_greetings
     random.shuffle(greeting_buttons)
 
     return render(request, 'topics/views/hello-spider.html', {'greeting_buttons': greeting_buttons})
-
+@require_ua
 def ua(request):
     return render(request, 'topics/views/ua.html')
 def encode_page(request):
@@ -51,6 +51,32 @@ def encode_page(request):
     # response['Content-Type'] = 'text/html;UTF-8'
     # response['Content-Type'] = 'text/html; charset=ISO-8859-1'
     return response
+
+def table(request):
+    # 定义行数和列数，这里可以随机生成，或者根据你的需求来确定
+    rows = random.randint(5, 10)
+    cols = random.randint(5, 10)
+
+    # 生成随机的表格数据，确保总和为666666
+    total_sum = 666666
+    table_data = [[0] * cols for _ in range(rows)]
+    remaining_sum = total_sum
+
+    for r in range(rows):
+        for c in range(cols):
+            if r == rows - 1 and c == cols - 1:
+                table_data[r][c] = remaining_sum  # 最后一个单元格填充剩余的数值
+            else:
+                # 确保 max_value 始终大于等于 1
+                max_value = max(1, remaining_sum - (rows - r - 1) * (cols - c - 1))
+                value = random.randint(1, max_value)
+                table_data[r][c] = value
+                remaining_sum -= value
+
+    context = {
+        'table_data': table_data
+    }
+    return render(request, 'topics/views/table.html', context)
 
 def request_twice(request):
     # get_content_or_script

@@ -22,6 +22,7 @@ urlpatterns = [
     path('view/request-twice/', views.request_twice, name='request-twice'),
     path('view/ua/', views.ua, name='ua'),
     path('view/encode/', views.encode_page, name='encode'),
+    path('view/table/', views.table, name='table'),
 
 
 
