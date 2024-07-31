@@ -8,6 +8,22 @@
             题目列表
         </div>
         <div class="card-body">
+<!-- 添加分类筛选下拉选择框 -->
+<div class="mb-3 d-flex align-items-center" style="gap: 0.5rem;">
+    <label for="category-select" class="form-label" style="margin-bottom: 0;">筛选分类</label>
+    <select class="form-select" id="category-select" style="width: 150px; padding: 0.25rem 0.5rem;">
+        <option value="">所有分类</option>
+        <!-- 在此处添加你的分类选项 -->
+        <option value="序言">序言</option>
+        <option value="成神之路">成神之路</option>
+        <option value="hook">hook</option>
+        <option value="骚操作">骚操作</option>
+        <option value="概览教程">概览教程</option>
+        <option value="xpath">xpath</option>
+        <!-- 更多分类选项 -->
+    </select>
+</div>
+
                 <div class="table-container container flex-container justify-content-center">
                     <table class="table table-primary table-striped table-hover w-auto">
                         <thead>
@@ -28,6 +44,7 @@
                             <thead>
                             <tr>
                                 <th scope="col">难度</th>
+                                <th scope="col">发布</th>
                                 <th scope="col">状态</th>
                                 <th scope="col">题解</th>
                                 <th scope="col">类别</th>
@@ -49,157 +66,173 @@
 {% endblock %}
 
 {% block script %}
-    <script>
-        // 每页显示的记录数
-        const itemsPerPage = 10;
-        let currentPage = 1;
-        let data = [];
+<script>
+    // 每页显示的记录数
+    const itemsPerPage = 10;
+    let currentPage = 1;
+    let data = [];
+    let filteredData = [];
 
-        // 函数：生成带有默认提示框的单元格
-        function createTooltipCell(text, type = 'text', link = '', tooltipTitle = text) {
-            var cell;
-            var element;
+    // 函数：生成带有默认提示框的单元格
+    function createTooltipCell(text, type = 'text', link = '', tooltipTitle = text) {
+        var cell;
+        var element;
 
-            if (type === 'link') {
-                element = $('<a>').attr({
-                    'href': link,
-                    'target': '_blank'  // 新标签页打开链接
-                }).text(text);
-            } else {
-                element = $('<span>').text(text);
-            }
-
-            element.attr({
-                'data-bs-toggle': 'tooltip',
-                'data-bs-html': 'true',
-                'title': tooltipTitle
-            });
-
-            cell = $('<td>').append(element);
-            return cell;
+        if (type === 'link') {
+            element = $('<a>').attr({
+                'href': link,
+                'target': '_blank'  // 新标签页打开链接
+            }).text(text);
+        } else {
+            element = $('<span>').text(text);
         }
 
-        // 函数：生成包含文本图标和视频图标的单元格
-        function createSolutionCell(docLink, videoLink) {
-            var cell = $('<td>');
-            {# style="cursor:pointer; margin-right: 10px;"#}
-            var docIcon = $('<i class="bi bi-markdown" style="cursor:pointer; margin:0 5px;font-size: 1.2rem;"></i>');
-            var videoIcon = $('<i class="bi bi-play-btn" style="cursor:pointer; margin:0 5px;font-size: 1.2rem;"></i>');
-
-            docIcon.attr('title', '文档解析').tooltip();
-            videoIcon.attr('title', '视频解析').tooltip();
-
-            docIcon.on('click', function () {
-                window.open(docLink, '_blank');
-            });
-
-            videoIcon.on('click', function () {
-                window.open(videoLink, '_blank');
-            });
-
-            cell.append(docIcon).append(videoIcon);
-            return cell;
-        }
-
-        function createStatusCell(status) {
-            var text = status ? '通过' : '未通过'
-            var cell;
-            var element;
-            if (status) {
-                element = $('<span>').text(text).addClass('badge bg-success');
-
-            } else {
-                element = $('<span>').text(text).addClass('badge bg-warning  text-dark');
-
-            }
-
-            element.attr({
-                'data-bs-toggle': 'tooltip',
-                'data-bs-html': 'true',
-                'title': text
-            });
-
-            cell = $('<td>').append(element);
-            return cell;
-        }
-
-        // 函数：渲染表格内容
-        function renderTable(page) {
-            $('#data-body-fixed').empty();
-            $('#data-body-scroll').empty();
-
-            const start = (page - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-
-            const pageData = data.slice(start, end);
-
-            $.each(pageData, function (index, topic) {
-                var row_fixed = $('<tr>');
-                var row_scroll = $('<tr>');
-
-                row_fixed.append(createTooltipCell(topic.order_id));
-                row_fixed.append(createTooltipCell(topic.title));
-                row_fixed.append(createTooltipCell("Go", 'link', topic.response_path, "点击查看题目详情"));
-
-                row_scroll.append(createTooltipCell(topic.difficulty));
-                row_scroll.append(createStatusCell(topic.pass_status));
-                row_scroll.append(createSolutionCell(topic.solution_txt, topic.solution_video));
-                row_scroll.append(createTooltipCell(topic.category));
-                row_scroll.append(createTooltipCell(topic.des));
-
-                {#row_scroll.append(createTooltipCell(topic.goal));#}
-                {#row_scroll.append(createTooltipCell(topic.question));#}
-                {#row_scroll.append(createTooltipCell(topic.difficulty_score));#}
-                {#row_scroll.append(createTooltipCell(topic.points));#}
-
-                $('#data-body-fixed').append(row_fixed);
-                $('#data-body-scroll').append(row_scroll);
-            });
-
-            // 初始化提示框
-            $('[data-bs-toggle="tooltip"]').tooltip();
-        }
-
-        // 函数：渲染分页控件
-function renderPagination(totalItems) {
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    $('#pagination').empty();
-
-    for (let i = 1; i <= totalPages; i++) {
-        const li = $('<li>').addClass('page-item').addClass(i === currentPage ? 'active' : '');
-        const a = $('<a>').addClass('page-link').attr('href', `?page=${i}`).text(i);
-        a.on('click', function (e) {
-            e.preventDefault();
-            currentPage = i;
-            window.history.pushState({}, '', `?page=${i}`);
-            renderTable(currentPage);
-            renderPagination(data.length);
+        element.attr({
+            'data-bs-toggle': 'tooltip',
+            'data-bs-html': 'true',
+            'title': tooltipTitle
         });
-        li.append(a);
-        $('#pagination').append(li);
+
+        cell = $('<td>').append(element);
+        return cell;
+    }
+
+    // 函数：生成包含文本图标和视频图标的单元格
+    function createSolutionCell(docLink, videoLink) {
+        var cell = $('<td>');
+        var docIcon = $('<i class="bi bi-markdown" style="cursor:pointer; margin:0 5px;font-size: 1.2rem;"></i>');
+        var videoIcon = $('<i class="bi bi-play-btn" style="cursor:pointer; margin:0 5px;font-size: 1.2rem;"></i>');
+
+        docIcon.attr('title', '文档解析').tooltip();
+        videoIcon.attr('title', '视频解析').tooltip();
+
+        docIcon.on('click', function () {
+            window.open(docLink, '_blank');
+        });
+
+        videoIcon.on('click', function () {
+            window.open(videoLink, '_blank');
+        });
+
+        cell.append(docIcon).append(videoIcon);
+        return cell;
+    }
+
+    function createStatusCell(status, type = "pass") {
+        var text = type === "pass" ? (status ? '通过' : '未通过') : (status ? '已发布' : '未发布');
+        var cell;
+        var element;
+
+        if (status) {
+            element = $('<span>').text(text).addClass('badge bg-success');
+        } else {
+            element = $('<span>').text(text).addClass('badge bg-warning text-dark');
+        }
+
+        element.attr({
+            'data-bs-toggle': 'tooltip',
+            'data-bs-html': 'true',
+            'title': text
+        });
+
+        cell = $('<td>').append(element);
+        return cell;
+    }
+
+    // 函数：渲染表格内容
+    function renderTable(page) {
+        $('#data-body-fixed').empty();
+        $('#data-body-scroll').empty();
+
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+
+        const pageData = filteredData.slice(start, end);
+
+        $.each(pageData, function (index, topic) {
+            var row_fixed = $('<tr>');
+            var row_scroll = $('<tr>');
+
+            row_fixed.append(createTooltipCell(topic.order_id));
+            row_fixed.append(createTooltipCell(topic.title));
+            row_fixed.append(createTooltipCell("Go", 'link', topic.response_path, "点击查看题目详情"));
+
+            row_scroll.append(createTooltipCell(topic.difficulty));
+            row_scroll.append(createStatusCell(topic.published, type = "1"));
+            row_scroll.append(createStatusCell(topic.pass_status));
+            row_scroll.append(createSolutionCell(topic.solution_txt, topic.solution_video));
+            row_scroll.append(createTooltipCell(topic.category));
+            row_scroll.append(createTooltipCell(topic.des));
+
+            $('#data-body-fixed').append(row_fixed);
+            $('#data-body-scroll').append(row_scroll);
+        });
+
+        // 初始化提示框
+        $('[data-bs-toggle="tooltip"]').tooltip();
+    }
+
+    // 函数：渲染分页控件
+    function renderPagination(totalItems) {
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        $('#pagination').empty();
+
+        for (let i = 1; i <= totalPages; i++) {
+            const li = $('<li>').addClass('page-item').addClass(i === currentPage ? 'active' : '');
+            const a = $('<a>').addClass('page-link').attr('href', `?page=${i}`).text(i);
+            a.on('click', function (e) {
+                e.preventDefault();
+                currentPage = i;
+                window.history.pushState({}, '', `?page=${i}`);
+                renderTable(currentPage);
+                renderPagination(filteredData.length);
+            });
+            li.append(a);
+            $('#pagination').append(li);
+        }
+    }
+// 函数：根据选择的分类过滤数据（忽略大小写）
+function filterDataByCategory(category) {
+    if (category === "null") {
+        filteredData = data.filter(topic => topic.category === null);
+    } else if (category) {
+        const lowerCaseCategory = category.toLowerCase();
+        filteredData = data.filter(topic => topic.category && topic.category.toLowerCase().includes(lowerCaseCategory));
+    } else {
+        filteredData = data;
     }
 }
-$(document).ready(function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const pageParam = urlParams.get('page');
-    if (pageParam) {
-        currentPage = parseInt(pageParam, 10);
-    }
 
-    $.ajax({
-        url: 'api/topics',
-        type: 'GET',
-        success: function (response) {
-            data = response;
-            renderTable(currentPage);
-            renderPagination(data.length);
-        },
-        error: function () {
-            console.error('请求失败');
+
+    $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const pageParam = urlParams.get('page');
+        if (pageParam) {
+            currentPage = parseInt(pageParam, 10);
         }
-    });
-});
 
-    </script>
+        $.ajax({
+            url: '/api/topics/',
+            type: 'GET',
+            success: function (response) {
+                data = response;
+                filteredData = data; // 初始时显示全部数据
+                renderTable(currentPage);
+                renderPagination(filteredData.length);
+            },
+            error: function () {
+                console.error('请求失败');
+            }
+        });
+
+        // 处理分类筛选变更
+        $('#category-select').on('change', function () {
+            const selectedCategory = $(this).val();
+            filterDataByCategory(selectedCategory);
+            renderTable(1); // 筛选后重置为第一页
+            renderPagination(filteredData.length);
+        });
+    });
+</script>
 
 {% endblock %}

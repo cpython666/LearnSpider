@@ -19,6 +19,7 @@ class Topics(models.Model):
     difficulty = models.CharField(blank=True, null=True,default='简单',max_length=12, choices=DIFFICULTY_CHOICES,help_text='难度')
     difficulty_score = models.BigIntegerField(blank=True, null=True,default=200,help_text='难度分数，后续根据此字段排序order_id')
     points = models.TextField(blank=True, null=True,default='暂未更新考点',help_text='本题的考点',)
+    published = models.BooleanField(blank=True, null=True,default=False,help_text='是否发布')
     pass_status = models.BooleanField(blank=True, null=True,default=False,help_text='是否通过')
     solution_txt = models.URLField(blank=True, null=True,default='暂无表述',help_text='题解，图文讲解')
     solution_video = models.URLField(blank=True, null=True,default='暂无表述',help_text='视频讲解')

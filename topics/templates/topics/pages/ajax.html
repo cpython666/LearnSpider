@@ -1,0 +1,55 @@
+{% extends "topics/base.html" %}
+{% load static %}
+{% block title %}
+何为动态网页
+{% endblock %}
+{% block question %}
+<h1>您好🦆, 爬虫er~👋</h1>
+    <h3>
+   什么是动态网页呢？🤠
+    </h3>
+    查看这个网页的源代码，可以找到数据吗？<br>
+    请问：动态网页中加载的数据在浏览器的开发者工具的网络标签栏下面的哪个筛选框里？【完整的内容，区分大小写，包括分隔符】
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+        <h1 class="mb-4">动态内容</h1>
+        <div id="content">
+            <!-- 动态内容将插入到这里 -->
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: '/api/ajax/', // API 接口
+                type: 'GET',
+                success: function(response) {
+                    // 假设 API 返回的数据格式为：{ "title": "xxx", "author": "xxx", "date": "xxx", "content": "xxx" }
+                    const data = response;
+
+                    // 创建内容元素
+                    const contentElement = `
+                        <div class="card">
+                            <div class="card-header">
+                                ${data.title}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">${data.author}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">${data.date}</h6>
+                                <p class="card-text">${data.content}</p>
+                            </div>
+                        </div>
+                    `;
+
+                    // 将内容插入到页面中
+                    $('#content').html(contentElement);
+                },
+                error: function() {
+                    $('#content').html('<div class="alert alert-danger" role="alert">内容加载失败</div>');
+                }
+            });
+        });
+    </script>
+{% endblock %}

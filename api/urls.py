@@ -12,6 +12,17 @@ router.register(r"api/topics", TopicsViewSet)
 urlpatterns = [
     # 关于题目模型的的api接口
     path("", include(router.urls)),
+
+    # ---------------页面所需的数据接口-----------
+
+    path("api/ajax/", views.ajax, name="ajax"),
+    path("api/pagination1/<int:pageNo>/", views.pagination1, name="pagination1"),
+
+    # ---------------页面所需的数据接口----------------
+
+    # ------------------工具接口--------------------
+    path("api/delay/<int:delay_time>/", views.delay, name="delay"),
+
     # 延迟多少秒返回结果
     path("api/delay/<int:delay_time>/", views.delay, name="delay"),
     # 返回请求客户端的IP
@@ -31,4 +42,6 @@ urlpatterns = [
     path(
         "api/server-timestamp/", views.get_server_timestamp, name="get_server_timestamp"
     ),
+    # ------------------工具接口--------------------
+
 ]
