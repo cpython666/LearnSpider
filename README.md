@@ -112,6 +112,14 @@ LearnSpider/
 
 6. 在浏览器中打开 `http://127.0.0.1:8000` 查看项目。
 
+### docker部署
+
+环境:windows+dockerdesktop
+启动命令
+```bash
+docker-compose up --build -d
+```
+
 ## 贡献指南
 
 1. Fork 本仓库
