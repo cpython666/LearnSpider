@@ -148,7 +148,7 @@ docker-compose up --build -d
 希望这些建议对你的项目有所帮助！如果有更多问题，随时联系我。
 
 **注意：** 该项目仅供学习和交流使用，不得用于非法活动。作者对任何滥用项目所导致的问题概不负责。
-
+### 常用工具命令
 根据难度分数计算显示顺序
 ```bash
 python manage.py update_pass_status
@@ -164,3 +164,17 @@ python manage.py migrate
 python manage.py update_difficulty_scores
 python manage.py update_order_ids
 ```
+
+## 项目赞助
+赞助支持可以备注github名，会显示在下方列表  
+
+| 日期         | 姓名                                                | 金额 | 
+|------------|---------------------------------------------------| - |
+| 2024.08.20 | [@cpython666](https://github.com/realhellosunsun) | ￥0|
+
+
+<p style="display: flex;">
+
+  <img src="static/imgs/support/wx.jpg" alt="微信" width="350" />
+  <img src="static/imgs/support/zfb.jpg" alt="支付宝" width="350" />
+</p>
