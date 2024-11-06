@@ -1,0 +1,130 @@
+{% extends "topics/base.html" %}
+{% load static %}
+{% block title %}
+    自动化问卷填写
+{% endblock %}
+{% block question %}
+    <h1>自动化问卷填写🤖</h1>
+    <h3>
+        解决自己的需求或者赚钱...都是一个有力的理由！🫣
+    </h3>
+    <p>
+        小新为了一个作业，要填写几千份问卷！！！！！！<br>
+        他无法想象要填写到什么时候，直到他从朋友那里得知了Python自动化...<br>
+        没有花里胡哨的操作，只是拼接了一些简单基础的代码来自动化填写问卷。
+    </p>
+{% endblock %}
+
+{% block content %}
+    <!-- 示例问卷问题 -->
+    <div class="question">
+        <label for="q1">1. 你对Python的熟悉程度？（单选）</label><br>
+        <input type="radio" name="q1" value="熟悉" id="q1-1">
+        <label for="q1-1">熟悉</label><br>
+        <input type="radio" name="q1" value="一般" id="q1-2">
+        <label for="q1-2">一般</label><br>
+        <input type="radio" name="q1" value="不熟悉" id="q1-3">
+        <label for="q1-3">不熟悉</label><br>
+    </div>
+
+    <div class="question">
+        <label for="q2">2. 你认为Python的自动化功能是否有帮助？（单选）</label><br>
+        <input type="radio" name="q2" value="有帮助" id="q2-1">
+        <label for="q2-1">有帮助</label><br>
+        <input type="radio" name="q2" value="无帮助" id="q2-2">
+        <label for="q2-2">无帮助</label><br>
+        <input type="radio" name="q2" value="不确定" id="q2-3">
+        <label for="q2-3">不确定</label><br>
+    </div>
+
+    <div class="question">
+        <label for="q3">3. 请用一句话描述你对自动化填表的看法。（开放性问题）</label><br>
+        <textarea name="q3" id="q3" rows="4" cols="50" placeholder="请输入你的看法"></textarea><br>
+    </div>
+
+    <div class="question">
+        <label for="q4">4. 你通常会用Python做哪些类型的项目？（多选）</label><br>
+        <input type="checkbox" name="q4" value="数据分析" id="q4-1">
+        <label for="q4-1">数据分析</label><br>
+        <input type="checkbox" name="q4" value="网站开发" id="q4-2">
+        <label for="q4-2">网站开发</label><br>
+        <input type="checkbox" name="q4" value="自动化脚本" id="q4-3">
+        <label for="q4-3">自动化脚本</label><br>
+        <input type="checkbox" name="q4" value="机器学习" id="q4-4">
+        <label for="q4-4">机器学习</label><br>
+    </div>
+
+    <div class="question">
+        <label for="q5">5. 你认为学习编程的最大挑战是什么？（单选）</label><br>
+        <input type="radio" name="q5" value="时间管理" id="q5-1">
+        <label for="q5-1">时间管理</label><br>
+        <input type="radio" name="q5" value="难度理解" id="q5-2">
+        <label for="q5-2">难度理解</label><br>
+        <input type="radio" name="q5" value="工具使用" id="q5-3">
+        <label for="q5-3">工具使用</label><br>
+        <input type="radio" name="q5" value="缺乏资源" id="q5-4">
+        <label for="q5-4">缺乏资源</label><br>
+    </div>
+
+    <div class="question">
+        <label for="q6">6. 请评价你对Python编程的兴趣程度（1-5分）。（评分）</label><br>
+        <select name="q6" id="q6">
+            <option value="1">1 - 很低</option>
+            <option value="2">2 - 较低</option>
+            <option value="3">3 - 中等</option>
+            <option value="4">4 - 较高</option>
+            <option value="5">5 - 很高</option>
+        </select><br>
+    </div>
+
+    <div class="question">
+        <label for="q7">7. 你更喜欢哪种编程语言？（单选）</label><br>
+        <input type="radio" name="q7" value="Python" id="q7-1">
+        <label for="q7-1">Python</label><br>
+        <input type="radio" name="q7" value="JavaScript" id="q7-2">
+        <label for="q7-2">JavaScript</label><br>
+        <input type="radio" name="q7" value="Java" id="q7-3">
+        <label for="q7-3">Java</label><br>
+        <input type="radio" name="q7" value="C++" id="q7-4">
+        <label for="q7-4">C++</label><br>
+    </div>
+
+    <div class="question">
+        <label for="q8">8. 你是否有过在Python中使用API的经验？（单选）</label><br>
+        <input type="radio" name="q8" value="是" id="q8-1">
+        <label for="q8-1">是</label><br>
+        <input type="radio" name="q8" value="否" id="q8-2">
+        <label for="q8-2">否</label><br>
+    </div>
+
+    <div class="question">
+        <label for="q9">9. 如果需要编写自动化脚本，你会选择哪个框架？（单选）</label><br>
+        <input type="radio" name="q9" value="Selenium" id="q9-1">
+        <label for="q9-1">Selenium</label><br>
+        <input type="radio" name="q9" value="BeautifulSoup" id="q9-2">
+        <label for="q9-2">BeautifulSoup</label><br>
+        <input type="radio" name="q9" value="Requests" id="q9-3">
+        <label for="q9-3">Requests</label><br>
+        <input type="radio" name="q9" value="其他" id="q9-4">
+        <label for="q9-4">其他</label><br>
+    </div>
+
+    <div class="question">
+        <label for="q10">10. 你对未来学习Python有什么期望或计划？（开放性问题）</label><br>
+        <textarea name="q10" id="q10" rows="4" cols="50" placeholder="请输入你的期望或计划"></textarea><br>
+    </div>
+    <div class="question">
+        <label for="q11">11. 你最常使用的Python库是什么？请简单说明原因。（输入框）</label><br>
+        <input type="text" name="q11" id="q11" placeholder="请输入库名称及原因"><br>
+    </div>
+
+    <button type="submit" class="btn btn-primary" onclick="showAlert(event)">提交问卷</button>
+    <script>
+        function showAlert(event) {
+            event.preventDefault();  // 阻止默认表单提交行为
+            alert("已提交问卷");  // 弹出提示框
+            // 如果需要继续提交表单，可以移除下面这行注释
+            // event.target.submit();
+        }
+    </script>
+{% endblock %}
