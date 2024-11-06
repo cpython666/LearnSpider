@@ -4,7 +4,7 @@ from django.views.static import serve
 from LearnSpider.settings import STATIC_ROOT
 # https://www.cnblogs.com/ddb1-1/p/12455147.html
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('', include('topics.urls')),
     path('', include('api.urls')),
 ]

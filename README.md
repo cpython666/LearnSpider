@@ -117,9 +117,11 @@ LearnSpider/
 环境:windows+dockerdesktop
 启动命令
 ```bash
-docker-compose up --build -d
+docker build -t learn-spider-app .
 ```
-
+```bash
+docker run -d -p 80:8000 learn-spider-app
+```
 ## 贡献指南
 
 1. Fork 本仓库
