@@ -1,6 +1,7 @@
 import asyncio
 import base64
 import json
+import random
 
 from django.http import JsonResponse
 from django.utils import timezone
@@ -88,7 +89,7 @@ def ajax(request):
         }, json_dumps_params={'ensure_ascii': False}
     )
 
-
+# 翻页网页
 def pagination1(request, pageNo):
     if pageNo == 100:
         pageNo = 666
@@ -96,6 +97,70 @@ def pagination1(request, pageNo):
         "data": f"这是第{pageNo}页的内容。"
     }
     return JsonResponse(data, json_dumps_params={'ensure_ascii': False})
+
+
+# 假设更多的商品数据，包含商品名称和价格
+products = [
+    {"name": "华为手机", "price": 4000, "brand": "华为", "category": "手机", "image": "https://example.com/image1.jpg", "rating": 4.5, "reviews": 1200, "stock": 100, "sales": 300, "description": "高性能智能手机，搭载最新麒麟芯片"},
+    {"name": "苹果笔记本", "price": 8000, "brand": "苹果", "category": "电脑", "image": "https://example.com/image2.jpg", "rating": 4.7, "reviews": 800, "stock": 50, "sales": 200, "description": "轻薄便携，适合商务办公"},
+    {"name": "小米电视", "price": 2000, "brand": "小米", "category": "电视", "image": "https://example.com/image3.jpg", "rating": 4.3, "reviews": 1500, "stock": 200, "sales": 600, "description": "智能高清大屏，支持4K"},
+    {"name": "戴森吸尘器", "price": 2500, "brand": "戴森", "category": "家电", "image": "https://example.com/image4.jpg", "rating": 4.9, "reviews": 600, "stock": 30, "sales": 100, "description": "强力吸尘，适用于各种地面"},
+    {"name": "索尼耳机", "price": 1500, "brand": "索尼", "category": "耳机", "image": "https://example.com/image5.jpg", "rating": 4.8, "reviews": 900, "stock": 150, "sales": 450, "description": "高品质音效，舒适佩戴"},
+    {"name": "三星冰箱", "price": 5000, "brand": "三星", "category": "家电", "image": "https://example.com/image6.jpg", "rating": 4.6, "reviews": 700, "stock": 80, "sales": 250, "description": "节能环保，静音设计"},
+    {"name": "微软Surface Pro 7", "price": 6500, "brand": "微软", "category": "电脑", "image": "https://example.com/image7.jpg", "rating": 4.4, "reviews": 300, "stock": 90, "sales": 120, "description": "二合一平板，支持触摸和笔操作"},
+    {"name": "联想ThinkPad X1 Carbon", "price": 9000, "brand": "联想", "category": "电脑", "image": "https://example.com/image8.jpg", "rating": 4.6, "reviews": 1100, "stock": 40, "sales": 80, "description": "高端商务笔记本，轻薄坚固"},
+    {"name": "佳能相机", "price": 3500, "brand": "佳能", "category": "相机", "image": "https://example.com/image9.jpg", "rating": 4.7, "reviews": 700, "stock": 100, "sales": 200, "description": "高像素数码单反相机，适合摄影爱好者"},
+    {"name": "尼康相机", "price": 3000, "brand": "尼康", "category": "相机", "image": "https://example.com/image10.jpg", "rating": 4.5, "reviews": 500, "stock": 80, "sales": 150, "description": "便捷小巧的数码相机，适合日常拍摄"},
+    {"name": "飞利浦空气净化器", "price": 2200, "brand": "飞利浦", "category": "家电", "image": "https://example.com/image11.jpg", "rating": 4.8, "reviews": 1500, "stock": 50, "sales": 400, "description": "高效空气净化，改善空气质量"},
+    {"name": "Bose音响", "price": 3500, "brand": "Bose", "category": "音响", "image": "https://example.com/image12.jpg", "rating": 4.9, "reviews": 2000, "stock": 120, "sales": 500, "description": "无与伦比的音效，蓝牙连接"},
+    {"name": "飞利浦电动牙刷", "price": 500, "brand": "飞利浦", "category": "个人护理", "image": "https://example.com/image13.jpg", "rating": 4.6, "reviews": 800, "stock": 100, "sales": 300, "description": "智能电动牙刷，有效清洁牙齿"},
+    {"name": "德龙咖啡机", "price": 1800, "brand": "德龙", "category": "家电", "image": "https://example.com/image14.jpg", "rating": 4.7, "reviews": 900, "stock": 50, "sales": 150, "description": "高品质咖啡机，适合家庭使用"},
+    {"name": "瑞士军刀", "price": 350, "brand": "瑞士军刀", "category": "户外", "image": "https://example.com/image15.jpg", "rating": 4.9, "reviews": 700, "stock": 100, "sales": 250, "description": "多功能便携工具，适合户外活动"},
+    {"name": "耐克跑步鞋", "price": 900, "brand": "耐克", "category": "运动", "image": "https://example.com/image16.jpg", "rating": 4.5, "reviews": 1500, "stock": 80, "sales": 400, "description": "舒适运动鞋，适合跑步使用"},
+    {"name": "阿迪达斯运动裤", "price": 600, "brand": "阿迪达斯", "category": "运动", "image": "https://example.com/image17.jpg", "rating": 4.3, "reviews": 1200, "stock": 150, "sales": 500, "description": "透气舒适的运动裤"},
+    {"name": "松下剃须刀", "price": 700, "brand": "松下", "category": "个人护理", "image": "https://example.com/image18.jpg", "rating": 4.6, "reviews": 400, "stock": 200, "sales": 600, "description": "高效剃须，适合男士使用"},
+    {"name": "飞利浦剃须刀", "price": 650, "brand": "飞利浦", "category": "个人护理", "image": "https://example.com/image19.jpg", "rating": 4.7, "reviews": 500, "stock": 100, "sales": 350, "description": "舒适剃须，减少皮肤刺激"},
+    {"name": "小米智能手表", "price": 500, "brand": "小米", "category": "智能设备", "image": "https://example.com/image20.jpg", "rating": 4.4, "reviews": 800, "stock": 120, "sales": 400, "description": "健康监测，运动追踪"},
+    {"name": "Apple Watch", "price": 2500, "brand": "苹果", "category": "智能设备", "image": "https://example.com/image21.jpg", "rating": 4.8, "reviews": 1500, "stock": 60, "sales": 250, "description": "精准健康监测，时尚外观"},
+    {"name": "三星手机", "price": 3500, "brand": "三星", "category": "手机", "image": "https://example.com/image22.jpg", "rating": 4.6, "reviews": 1100, "stock": 200, "sales": 700, "description": "高清屏幕，快速充电"},
+    {"name": "荣耀手机", "price": 2500, "brand": "荣耀", "category": "手机", "image": "https://example.com/image23.jpg", "rating": 4.3, "reviews": 700, "stock": 150, "sales": 400, "description": "性价比高，适合日常使用"},
+    {"name": "美的空调", "price": 5000, "brand": "美的", "category": "家电", "image": "https://example.com/image24.jpg", "rating": 4.7, "reviews": 1200, "stock": 70, "sales": 300, "description": "节能空调，快速降温"},
+    {"name": "奥克斯空调", "price": 3500, "brand": "奥克斯", "category": "家电", "image": "https://example.com/image25.jpg", "rating": 4.4, "reviews": 800, "stock": 150, "sales": 500, "description": "高效能空调，适合夏季使用"},
+    {"name": "海尔冰箱", "price": 3000, "brand": "海尔", "category": "家电", "image": "https://example.com/image26.jpg", "rating": 4.5, "reviews": 1000, "stock": 120, "sales": 600, "description": "节能环保冰箱，持久保鲜"},
+    {"name": "华硕显卡", "price": 4000, "brand": "华硕", "category": "电脑配件", "image": "https://example.com/image27.jpg", "rating": 4.6, "reviews": 500, "stock": 80, "sales": 300, "description": "强大性能，支持最新游戏"},
+    {"name": "英伟达显卡", "price": 4500, "brand": "英伟达", "category": "电脑配件", "image": "https://example.com/image28.jpg", "rating": 4.7, "reviews": 1000, "stock": 100, "sales": 450, "description": "超高性能，适合游戏和专业设计"},
+    {"name": "西部数据硬盘", "price": 800, "brand": "西部数据", "category": "电脑配件", "image": "https://example.com/image29.jpg", "rating": 4.3, "reviews": 600, "stock": 200, "sales": 500, "description": "高容量硬盘，快速读写"},
+    {"name": "希捷硬盘", "price": 700, "brand": "希捷", "category": "电脑配件", "image": "https://example.com/image30.jpg", "rating": 4.5, "reviews": 500, "stock": 150, "sales": 400, "description": "高性能硬盘，适合大数据存储"},
+    {"name": "JBL蓝牙音响", "price": 900, "brand": "JBL", "category": "音响", "image": "https://example.com/image31.jpg", "rating": 4.6, "reviews": 800, "stock": 100, "sales": 450, "description": "便携式蓝牙音响，音质优良"},
+    {"name": "荣耀平板", "price": 1200, "brand": "荣耀", "category": "平板", "image": "https://example.com/image32.jpg", "rating": 4.4, "reviews": 300, "stock": 80, "sales": 200, "description": "高性价比平板，适合娱乐使用"},
+    {"name": "iPad Pro", "price": 7000, "brand": "苹果", "category": "平板", "image": "https://example.com/image33.jpg", "rating": 4.9, "reviews": 1500, "stock": 50, "sales": 100, "description": "强大性能，适合创作和娱乐"},
+    {"name": "华为平板", "price": 2500, "brand": "华为", "category": "平板", "image": "https://example.com/image34.jpg", "rating": 4.7, "reviews": 600, "stock": 100, "sales": 400, "description": "流畅体验，支持多种应用"},
+    {"name": "小米平板", "price": 1500, "brand": "小米", "category": "平板", "image": "https://example.com/image35.jpg", "rating": 4.2, "reviews": 400, "stock": 120, "sales": 350, "description": "性价比高，适合学习和娱乐"},
+    {"name": "三星平板", "price": 2500, "brand": "三星", "category": "平板", "image": "https://example.com/image36.jpg", "rating": 4.5, "reviews": 800, "stock": 150, "sales": 450, "description": "大屏幕，高清显示"},
+    {"name": "酷派手机", "price": 1000, "brand": "酷派", "category": "手机", "image": "https://example.com/image37.jpg", "rating": 3.9, "reviews": 500, "stock": 200, "sales": 700, "description": "经济实用型手机"},
+    {"name": "小米米家电器套装", "price": 3000, "brand": "小米", "category": "家电", "image": "https://example.com/image38.jpg", "rating": 4.5, "reviews": 600, "stock": 150, "sales": 500, "description": "一站式智能家居，提升生活品质"},
+    {"name": "华为Mate 40", "price": 6500, "brand": "华为", "category": "手机", "image": "https://example.com/image39.jpg", "rating": 4.8, "reviews": 1200, "stock": 80, "sales": 350, "description": "超高清影像系统，强悍性能"},
+    {"name": "三星Galaxy Z Fold", "price": 12000, "brand": "三星", "category": "手机", "image": "https://example.com/image40.jpg", "rating": 4.9, "reviews": 1500, "stock": 30, "sales": 100, "description": "折叠屏幕，革新体验"},
+    {"name": "华硕ROG游戏本", "price": 13000, "brand": "华硕", "category": "电脑", "image": "https://example.com/image41.jpg", "rating": 4.8, "reviews": 900, "stock": 50, "sales": 200, "description": "专业游戏笔记本，强悍性能"},
+    {"name": "雷蛇游戏鼠标", "price": 800, "brand": "雷蛇", "category": "外设", "image": "https://example.com/image42.jpg", "rating": 4.7, "reviews": 1000, "stock": 100, "sales": 500, "description": "精准控制，舒适握感"},
+    {"name": "机械键盘", "price": 1200, "brand": "Corsair", "category": "外设", "image": "https://example.com/image43.jpg", "rating": 4.5, "reviews": 700, "stock": 80, "sales": 300, "description": "高效键盘，适合游戏和编程"},
+    {"name": "苹果耳机", "price": 1000, "brand": "苹果", "category": "耳机", "image": "https://example.com/image44.jpg", "rating": 4.8, "reviews": 1500, "stock": 100, "sales": 450, "description": "高品质音效，舒适佩戴"},
+    {"name": "华为耳机", "price": 600, "brand": "华为", "category": "耳机", "image": "https://example.com/image45.jpg", "rating": 4.5, "reviews": 400, "stock": 200, "sales": 600, "description": "降噪耳机，适合长时间佩戴"},
+    {"name": "小米米家扫地机器人", "price": 1500, "brand": "小米", "category": "家电", "image": "https://example.com/image46.jpg", "rating": 4.7, "reviews": 1000, "stock": 50, "sales": 300, "description": "智能扫地，解放双手"},
+    {"name": "博世洗碗机", "price": 4500, "brand": "博世", "category": "家电", "image": "https://example.com/image47.jpg", "rating": 4.8, "reviews": 500, "stock": 80, "sales": 250, "description": "高效节能洗碗机，省时省力"},
+    {"name": "小米空气净化器", "price": 1200, "brand": "小米", "category": "家电", "image": "https://example.com/image48.jpg", "rating": 4.6, "reviews": 600, "stock": 100, "sales": 450, "description": "高效空气净化，适合家庭使用"}]
+
+def pagination_table(request, page):
+    items_per_page = 10  # 每页显示20个商品
+    start_index = (page - 1) * items_per_page
+    end_index = start_index + items_per_page
+
+    # 随机选择每页的商品数据
+    random.shuffle(products)  # 打乱商品列表顺序
+    data = products[start_index:end_index]  # 取当前页的数据
+
+    # 返回JSON响应
+    return JsonResponse({"data": data})
 
 
 @require_GET

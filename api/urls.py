@@ -13,12 +13,13 @@ urlpatterns = [
     # 关于题目模型的的api接口
     path("", include(router.urls)),
 
-    # ---------------页面所需的数据接口-----------
+    # ---------------页面所需的数据接口------开始-----
 
     path("api/ajax/", views.ajax, name="ajax"),
     path("api/pagination1/<int:pageNo>/", views.pagination1, name="pagination1"),
+    path("api/pagination_table/<int:page>/", views.pagination_table, name="pagination_table"),
 
-    # ---------------页面所需的数据接口----------------
+    # ---------------页面所需的数据接口--------结束--------
 
     # ------------------工具接口--------------------
     path("api/delay/<int:delay_time>/", views.delay, name="delay"),
