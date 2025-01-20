@@ -6,3 +6,4 @@ __pycache__/
 /static/bootstrap/bootstrap-icons-1.11.3/
 /static/bootstrap/bootstrap-icons-1.11.3.zip
 bigsetu
+LearnSpider/secret_settings.py
