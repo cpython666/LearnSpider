@@ -35,4 +35,5 @@ ALLOWED_HOSTS = [
     "learnspider.vip",
     "127.0.0.1",
     "localhost",
+    "110.42.101.196"
 ]

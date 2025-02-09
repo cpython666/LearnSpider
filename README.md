@@ -19,18 +19,21 @@
 此仓库旨在让大家在刷题的过程中以结果和成就感驱动学习，学习到某个知识点后可以快速应用，从而感受到学到了东西，爬虫是如此的简单有趣。而不是学完之后因为网站内容变动而没有刷题的地方，久而久之像没学一样。并且本项目最想让大家养成举一反三，逻辑推理的思考思维习惯。
 
 搭建此项目使用的技术栈是Django+DRF+JQuery。使用django的模板语法实现前端，使用jquery实现页面js逻辑与请求，drf实现请求限流。数据库使用sqlite。前端样式实现使用的bootstrap，本来想着手搓的，后面做的时候有感觉没必要给自己增加无意义的工作量。
+
 ### TODO
+
 - docker部署
 - 用户系统
+
 ### 项目目标
 
 - **覆盖范围**：从初级到高级的爬虫技术
 - **工具与框架**：requests、scrapy、selenium、drissionpage等
 - **技术点**：
-  - 接口请求与静态页面解析
-  - 代码混淆与接口加密
-  - 各种抓包工具与Chrome开发者工具使用
-  - 新颖的反爬技术（前端层面、SVG、CSS、雪碧图、WASM等）
+    - 接口请求与静态页面解析
+    - 代码混淆与接口加密
+    - 各种抓包工具与Chrome开发者工具使用
+    - 新颖的反爬技术（前端层面、SVG、CSS、雪碧图、WASM等）
 
 ### 项目特色
 
@@ -47,9 +50,11 @@
 - 培养举一反三和逻辑推理的思维习惯。
 
 ## 账号密码
-LearnSpider
-LearnSpider
-邮箱：cpython666@gmail.com
+
+LearnSpider  
+LearnSpider  （线上密码已被更改）
+邮箱：cpython666@gmail.com  
+
 ## 技术栈
 
 - 后端框架：Django + Django REST Framework (DRF)
@@ -116,12 +121,19 @@ LearnSpider/
 
 环境:windows+dockerdesktop
 启动命令
+
 ```bash
 docker build -t learn-spider-app .
 ```
+
 ```bash
 docker run -d -p 80:8000 learn-spider-app
 ```
+
+```bash
+docker compose up -d
+```
+
 ## 贡献指南
 
 1. Fork 本仓库
@@ -150,12 +162,17 @@ docker run -d -p 80:8000 learn-spider-app
 希望这些建议对你的项目有所帮助！如果有更多问题，随时联系我。
 
 **注意：** 该项目仅供学习和交流使用，不得用于非法活动。作者对任何滥用项目所导致的问题概不负责。
+
 ### 常用工具命令
+
 根据难度分数计算显示顺序
+
 ```bash
 python manage.py update_pass_status
 ```
+
 迁移模型
+
 ```bash
 python manage.py makemigrations
 python manage.py migrate
@@ -168,15 +185,54 @@ python manage.py update_order_ids
 ```
 
 ## 项目赞助
-赞助支持可以备注github名，会显示在下方列表  
 
-| 日期         | 姓名                                               | 金额 | 
-|------------|--------------------------------------------------| - |
-| 2024.08.20 | [@cpython666](https://github.com/cpython666) | ￥0|
+赞助支持可以备注github名，会显示在下方列表
 
+| 日期         | 姓名                                           | 金额 | 
+|------------|----------------------------------------------|----|
+| 2024.08.20 | [@cpython666](https://github.com/cpython666) | ￥0 |
 
 <p style="display: flex;">
 
   <img src="static/imgs/support/wx.jpg" alt="微信" width="350" />
   <img src="static/imgs/support/zfb.jpg" alt="支付宝" width="350" />
 </p>
+
+## 部署时
+
+### 收集静态文件
+
+```bash
+python manage.py collectstatic --noinput
+```
+
+## 部署时nginx配置
+
+```
+server {
+    listen 80;
+    server_name learnspider.vip;
+
+    location / {
+        proxy_pass http://127.0.0.1:8001;  # 反向代理到 Django 服务器
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # 防止 WebSocket 断开（可选，若有 WebSocket 需求）
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+    }
+
+    # 处理静态文件（如果 Django 直接提供静态文件，可以忽略）
+    location /static/ {
+        alias /usr/local/projects/learnspider_static/;
+    }
+
+    location /media/ {
+        alias /path/to/your/media/;
+    }
+}
+```
