@@ -2,7 +2,35 @@ from django.db import models
 import json
 
 
-class Topics(models.Model):
+class BaseModel(models.Model):
+    created_at = models.DateTimeField(
+        auto_now_add=True, null=True, blank=True
+    )  # 创建时间
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)  # 修改时间
+
+    class Meta:
+        abstract = True
+
+
+class OrderMixin(models.Model):
+    display_order = models.PositiveIntegerField(
+        blank=True, null=True, default=100
+    )  # 记录显示顺序
+
+    class Meta:
+        abstract = True
+
+
+class Category(BaseModel):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(blank=True, null=True, max_length=200, help_text='类别名')
+    detail = models.CharField(blank=True, null=True, default=None, max_length=200, help_text='类别的描述')
+
+    class Meta:
+        db_table = "sd_ls_category"  # 自定义表名
+
+
+class Topics(BaseModel):
     DIFFICULTY_CHOICES = [
         ('beginner', '初级'),
         ('intermediate', '中级'),
@@ -12,8 +40,8 @@ class Topics(models.Model):
 
     id = models.AutoField(primary_key=True)
     order_id = models.PositiveIntegerField(blank=True, null=True, default=3, help_text='题目排序，根据难度分排序，会变')
-    title = models.CharField(blank=True, default='111', max_length=200, help_text='题目的标题，最好有趣个性化一点')
-    des = models.TextField(blank=True, null=True, default='暂无表述', help_text='题目的描述：简单创造一个背景故事')
+    title = models.CharField(blank=True, default=None, max_length=200, help_text='题目的标题，最好有趣个性化一点')
+    detail = models.TextField(blank=True, null=True, default='暂无表述', help_text='题目的描述：简单创造一个背景故事')
     goal = models.TextField(blank=True, null=True, default='暂无描述', help_text='题目的目标：掌握xxx')
     question = models.TextField(blank=True, null=True, default='暂无题目要求', help_text='题目要求')
     answer = models.CharField(blank=True, default='666', max_length=255, help_text='题目的答案')
@@ -37,7 +65,23 @@ class Topics(models.Model):
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     class Meta:
+        db_table = "sd_ls_topic"  # 自定义表名
         ordering = ['order_id']  # 默认按 order_id 排序
 
     def __str__(self):
         return self.title
+
+
+# 题目与 Category 的中间表
+class TopicCategoryRelation(BaseModel, OrderMixin):
+    id = models.AutoField(primary_key=True)
+
+    topic = models.ForeignKey(Topics, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "sd_ls_topic_category_relation"  # 自定义表名
+        unique_together = ('topic', 'category')  # 确保唯一关系
+
+    def __str__(self):
+        return f"Topic {self.topic_id} - Category {self.category_id}"
