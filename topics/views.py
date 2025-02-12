@@ -6,12 +6,16 @@ import time
 import random
 from django.shortcuts import render
 
+
 def demo(request):
     return render(request, 'topics/pages/demo_get_server_time.html')
 
+
 def demo1(request):
     return render(request, 'topics/pages/demo.html')
-def hello_spider(request):#random_greetings
+
+
+def hello_spider(request):  # random_greetings
     greetings = []
     button_classes = [
         "btn btn-primary",
@@ -41,9 +45,13 @@ def hello_spider(request):#random_greetings
     random.shuffle(greeting_buttons)
 
     return render(request, 'topics/views/hello-spider.html', {'greeting_buttons': greeting_buttons})
+
+
 @require_ua
 def ua(request):
     return render(request, 'topics/views/ua.html')
+
+
 def encode_page(request):
     response = render(request, 'topics/views/encode.html')
     response['Content-Type'] = 'text/html;'
@@ -51,6 +59,7 @@ def encode_page(request):
     # response['Content-Type'] = 'text/html;UTF-8'
     # response['Content-Type'] = 'text/html; charset=ISO-8859-1'
     return response
+
 
 def table(request):
     # 定义行数和列数，这里可以随机生成，或者根据你的需求来确定
@@ -77,6 +86,7 @@ def table(request):
         'table_data': table_data
     }
     return render(request, 'topics/views/table.html', context)
+
 
 def request_twice(request):
     # get_content_or_script
@@ -105,24 +115,39 @@ def request_twice(request):
 
 
 def index(request):
-    return render(request, 'topics/index.html')
+    return render(request, 'topics/index/index.html')
+
 
 def list(request):
-    return render(request, 'topics/list.html')
+    return render(request, 'topics/index/list.html')
+
+
 def tools(request):
-    return render(request, 'topics/tools.html')
+    return render(request, 'topics/index/tools.html')
+
+
+def sandbox(request):
+    return render(request, 'topics/index/sandbox.html')
+
+
+def sandbox_news(request):
+    return render(request, 'topics/sandbox/news/news.html')
+
+
 def shorthand(request):
-    return render(request, 'topics/shorthand.html')
+    return render(request, 'topics/index/shorthand.html')
+
+
 def solutions(request):
     return render(request, 'topics/solutions.html')
-
 
 
 def topic_view(request, response_path):
     # 根据 path 获取对应的题目
     topic = get_object_or_404(Topics, response_path=response_path)
     # 返回对应的 HTML 视图
-    return render(request, 'topics/pages/'+response_path+'.html', {'topic': topic})
+    return render(request, 'topics/pages/' + response_path + '.html', {'topic': topic})
+
 
 def error404(request, exception):
     return render(request, 'topics/404.html', status=404)

@@ -1,14 +1,14 @@
-# 在 api 应用中创建一个 management/commands 文件夹，并在其中创建 update_order_ids.py
-
 from django.core.management.base import BaseCommand
 from topics.models import Topics
 
+
+# python manage.py update_order_ids
 class Command(BaseCommand):
-    help = '批量更新题目的 order_id，根绝题目的难度分数排序order_id'
+    help = '批量更新题目的 order_id，根绝题目的 order_id 排序好乘以 10'
 
     def handle(self, *args, **kwargs):
-        questions = Topics.objects.all().order_by('difficulty_score')
+        questions = Topics.objects.all().order_by('order_id')
         for idx, question in enumerate(questions):
-            question.order_id = idx + 1
+            question.order_id = (idx + 1) * 10
             question.save()
-        self.stdout.write(self.style.SUCCESS('Successfully updated order_ids'))
+        self.stdout.write(self.style.SUCCESS('已成功更新 order_ids'))

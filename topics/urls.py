@@ -9,13 +9,11 @@ urlpatterns = [
     path('tools', views.tools, name='tools'),
     path('shorthand', views.shorthand, name='shorthand'),
     path('solutions', views.solutions, name='solutions'),
-
-
+    path('sandbox', views.sandbox, name='sandbox'),
+    path('sandbox/news', views.sandbox_news, name='sandbox_news'),
 
     # topic开头重定向到视图返回/html
     path('page/<str:response_path>/', topic_view, name='topic_view'),
-
-
 
     # 请求视图类型
     path('view/hello-spider/', views.hello_spider, name='request_twice'),
@@ -24,11 +22,8 @@ urlpatterns = [
     path('view/encode/', views.encode_page, name='encode'),
     path('view/table/', views.table, name='table'),
 
-
-
     # 混合请求接口类型
     path('demo/', views.demo),
     path('demo1/', views.demo1),
 
 ]
-

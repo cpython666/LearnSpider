@@ -1,0 +1,70 @@
+{% extends "topics/base.html" %}
+{% load static %}
+{% block title %}工具箱{% endblock %}
+
+{% block answer %}
+    <!-- 你可以在此处添加一些其他的内容或展示区 -->
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- 左侧工具选项 -->
+            <div class="col-12 col-md-3">
+                <div class="list-group">
+                    <a href="#tool1" class="list-group-item list-group-item-action active" data-bs-toggle="list"
+                       role="tab">
+                        工具1
+                    </a>
+                    <a href="#tool2" class="list-group-item list-group-item-action" data-bs-toggle="list" role="tab">
+                        工具2
+                    </a>
+                    <a href="#tool3" class="list-group-item list-group-item-action" data-bs-toggle="list" role="tab">
+                        工具3
+                    </a>
+                </div>
+            </div>
+
+            <!-- 右侧工具内容 -->
+            <div class="col-12 col-md-9">
+                <div class="tab-content">
+                    <!-- 工具 1 内容 -->
+                    <div class="tab-pane fade show active" id="tool1" role="tabpanel">
+                        <div class="card shadow-sm">
+                            <img src="{% static 'imgs/tool1.jpg' %}" class="card-img-top" alt="工具1">
+                            <div class="card-body">
+                                <h5 class="card-title">工具1</h5>
+                                <p class="card-text">工具1的简短描述。它帮助你进行各种任务。</p>
+                                <a href="/tool1" class="btn btn-primary">进入工具</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 工具 2 内容 -->
+                    <div class="tab-pane fade" id="tool2" role="tabpanel">
+                        <div class="card shadow-sm">
+                            <img src="{% static 'imgs/tool2.jpg' %}" class="card-img-top" alt="工具2">
+                            <div class="card-body">
+                                <h5 class="card-title">工具2</h5>
+                                <p class="card-text">工具2的简短描述。它用于处理复杂的数据分析任务。</p>
+                                <a href="/tool2" class="btn btn-primary">进入工具</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 工具 3 内容 -->
+                    <div class="tab-pane fade" id="tool3" role="tabpanel">
+                        <div class="card shadow-sm">
+                            <img src="{% static 'imgs/tool3.jpg' %}" class="card-img-top" alt="工具3">
+                            <div class="card-body">
+                                <h5 class="card-title">工具3</h5>
+                                <p class="card-text">工具3是一个高效的文本处理工具，适用于各种文本分析需求。</p>
+                                <a href="/tool3" class="btn btn-primary">进入工具</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

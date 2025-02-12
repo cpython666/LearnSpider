@@ -44,7 +44,7 @@ class Topics(BaseModel):
     detail = models.TextField(blank=True, null=True, default='暂无表述', help_text='题目的描述：简单创造一个背景故事')
     goal = models.TextField(blank=True, null=True, default='暂无描述', help_text='题目的目标：掌握xxx')
     question = models.TextField(blank=True, null=True, default='暂无题目要求', help_text='题目要求')
-    answer = models.CharField(blank=True, default='666', max_length=255, help_text='题目的答案')
+    answer = models.CharField(blank=True, null=True, max_length=255, help_text='题目的答案')
     category = models.CharField(blank=True, null=True, default='成神之路', max_length=100,
                                 help_text='题目类别：成神之路，xpath特训')
     difficulty = models.CharField(blank=True, null=True, default='简单', max_length=12, choices=DIFFICULTY_CHOICES,
@@ -61,8 +61,6 @@ class Topics(BaseModel):
     api_prefix = models.CharField(blank=True, null=True, max_length=255, default='topic/',
                                   help_text='topic/,view/,api/')
     response_path = models.TextField(blank=True, null=True, help_text='题目路径【文件名】')
-    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     class Meta:
         db_table = "sd_ls_topic"  # 自定义表名
