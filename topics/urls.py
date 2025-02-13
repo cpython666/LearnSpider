@@ -9,8 +9,22 @@ urlpatterns = [
     path('tools', views.tools, name='tools'),
     path('shorthand', views.shorthand, name='shorthand'),
     path('solutions', views.solutions, name='solutions'),
-    path('sandbox', views.sandbox, name='sandbox'),
-    path('sandbox/news', views.sandbox_news, name='sandbox_news'),
+
+    # ------------------ 试金场 -----------------
+    path('sandbox/', views.sandbox, name='sandbox'),
+
+    path('sandbox/news/', views.sandbox_news, name='sandbox_news'),
+    path('sandbox/news/search/', views.sandbox_news, name='sandbox_news_search'),
+    path('sandbox/news/about/', views.sandbox_news_about_us, name='sandbox_news_about_us'),  # 关于我们页面
+    path('sandbox/news/notice/', views.sandbox_news_notice, name='sandbox_news_notice'),
+    path('sandbox/news/category/', views.sandbox_news_category, name='sandbox_news_category'),
+    path('sandbox/news/category/<str:char_name>/', views.sandbox_news_category_detail,
+         name='sandbox_news_category_detail'),
+    path('sandbox/news/category/technology/', views.sandbox_news, name='sandbox_news'),
+    path('sandbox/news/category/web3/', views.sandbox_news, name='sandbox_news'),
+    path('sandbox/news/news_detail/<int:id>/', views.sandbox_news_detail, name='sandbox_news_detail'),
+
+    # ------------------------------------------
 
     # topic开头重定向到视图返回/html
     path('page/<str:response_path>/', topic_view, name='topic_view'),

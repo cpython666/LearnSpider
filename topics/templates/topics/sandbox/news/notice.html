@@ -1,0 +1,66 @@
+{% extends "topics/sandbox/news/news_base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container my-5 w-50">
+        <h1 class="display-4 text-center mb-5">推送通知设置</h1>
+
+        <!-- 通知设置 -->
+        <section class="notification-settings mb-5">
+            <h2 class="h3 mb-3">是否接收通知</h2>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="receive_notifications" checked>
+                <label class="form-check-label" for="receive_notifications">
+                    接收新闻推送通知
+                </label>
+            </div>
+        </section>
+
+        <!-- 新闻偏好设置 -->
+        <section class="news-preferences mb-5">
+            <h2 class="h3 mb-3">选择您感兴趣的新闻类型</h2>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="tech_news" checked>
+                <label class="form-check-label" for="tech_news">
+                    科技
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="entertainment_news">
+                <label class="form-check-label" for="entertainment_news">
+                    娱乐
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="sports_news">
+                <label class="form-check-label" for="sports_news">
+                    体育
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="web3_news">
+                <label class="form-check-label" for="web3_news">
+                    Web3
+                </label>
+            </div>
+        </section>
+
+        <!-- 订阅套餐选择 -->
+        <section class="subscription-package mb-5">
+            <h2 class="h3 mb-3">选择订阅套餐</h2>
+            <div class="form-group">
+                <label for="subscription_package">选择套餐</label>
+                <select class="form-control" id="subscription_package">
+                    <option value="basic">基础套餐 - 每日一次推送</option>
+                    <option value="premium">高级套餐 - 每小时推送</option>
+                    <option value="vip">VIP套餐 - 实时推送</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- 保存设置按钮 -->
+        <div class="text-center">
+            <button class="btn btn-primary" id="save-settings">保存设置</button>
+        </div>
+    </div>
+
+{% endblock %}

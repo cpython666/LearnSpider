@@ -1,0 +1,44 @@
+{% extends "topics/sandbox/news/news_base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container my-5">
+        <!-- Logo 和 标题 -->
+        <div class="text-center mb-5 d-flex justify-content-center align-items-center">
+            <img src="{% static 'imgs/sandbox/news.jpeg' %}" alt="星梦新闻 Logo" class="img-fluid"
+                 style="max-width: 150px;">
+            <h1 class="display-4 mt-3">星梦新闻</h1>
+        </div>
+
+        <!-- 搜索框 -->
+        <div class="search-box mb-5 d-flex justify-content-center">
+            <form action="{% url 'sandbox_news_search' %}" method="get" class="w-75 w-md-50">
+                <div class="input-group">
+                    <input type="text" class="form-control form-control-lg" name="q" placeholder="搜索新闻..."
+                           aria-label="Search">
+                    <button class="btn btn-primary btn-lg" type="submit">搜索</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 最新热点新闻 -->
+        <div class="latest-news">
+            <h2 class="h3 mb-4 w-100 text-center">最新热点新闻</h2>
+            <div class="row">
+                {% for news_item in latest_news %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="{% url 'sandbox_news_detail' news_item.id %}"
+                                       class="text-decoration-none text-dark">{{ news_item.title }}</a>
+                                </h5>
+                                <p class="card-text">{{ news_item.summary }}</p>
+                                <small class="text-muted">{{ news_item.publish_date }}</small>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

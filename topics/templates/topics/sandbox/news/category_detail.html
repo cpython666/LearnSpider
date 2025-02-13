@@ -1,0 +1,40 @@
+{% extends "topics/sandbox/news/news_base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container my-5 d-flex align-items-center flex-column">
+        <!-- 标题 -->
+        <h1 class="display-4 text-center mb-5">新闻分类</h1>
+
+        <!-- 新闻分类列表 -->
+        <div class="category-list mb-5 w-50">
+            <h2 class="h3">新闻分类</h2>
+            <div class="list-group">
+                <a href="{% url 'sandbox_news_category_detail' category.char_name %}"
+                   class="list-group-item list-group-item-action">
+                    {{ category.name }}
+                </a>
+            </div>
+        </div>
+
+        <!-- 每个分类下的新闻 -->
+        <div class="category-news mb-5 w-100">
+            <h3 class="h4 mb-4">{{ category.name }} 分类的新闻</h3>
+            <div class="row">
+                {% for news_item in category.news %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="{% url 'sandbox_news_detail' news_item.id %}"
+                                       class="text-decoration-none text-dark">{{ news_item.title }}</a>
+                                </h5>
+                                <p class="card-text">{{ news_item.summary }}</p>
+                                <small class="text-muted">{{ news_item.publish_date }}</small>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

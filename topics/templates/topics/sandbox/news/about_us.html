@@ -1,0 +1,61 @@
+{% extends "topics/sandbox/news/news_base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container my-5">
+        <!-- 标题 -->
+        <h1 class="display-4 text-center mb-5">关于我们</h1>
+
+        <!-- 应用介绍 -->
+        <section class="about-introduction mb-5">
+            <h2 class="h3 mb-3">我们的使命</h2>
+            <p>
+                星梦新闻致力于为用户提供最新、最全面的新闻信息。我们的目标是让用户能够随时随地了解全球范围内的热点新闻，覆盖各类领域，包括科技、娱乐、体育等。通过高效的新闻推荐和精准的搜索引擎，我们希望帮助用户更好地获取感兴趣的内容。
+            </p>
+        </section>
+
+        <!-- 团队介绍 -->
+        <section class="team mb-5">
+            <h2 class="h3 mb-3">我们的团队</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{% static 'images/team_member1.jpg' %}" class="card-img-top" alt="团队成员1">
+                        <div class="card-body">
+                            <h5 class="card-title">张三</h5>
+                            <p class="card-text">项目经理，负责整体项目的规划和管理。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{% static 'images/team_member2.jpg' %}" class="card-img-top" alt="团队成员2">
+                        <div class="card-body">
+                            <h5 class="card-title">李四</h5>
+                            <p class="card-text">前端开发，负责用户界面的设计与开发。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{% static 'images/team_member3.jpg' %}" class="card-img-top" alt="团队成员3">
+                        <div class="card-body">
+                            <h5 class="card-title">王五</h5>
+                            <p class="card-text">后端开发，负责数据库和服务端的开发与优化。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系我们 -->
+        <section class="contact-us mb-5">
+            <h2 class="h3 mb-3">联系我们</h2>
+            <p>如果你有任何问题或建议，欢迎通过以下方式联系我们：</p>
+            <ul>
+                <li>电子邮件：2942581284@qq.com</li>
+                <li>官方B站账号：@Python斗罗</li>
+                {#                <li>客服热线：400-123-4567</li>#}
+            </ul>
+        </section>
+    </div>
+{% endblock %}

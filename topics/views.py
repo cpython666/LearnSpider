@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-
+from datetime import datetime
 from .models import Topics
 from .decorators import require_ua
 import time
@@ -131,7 +131,121 @@ def sandbox(request):
 
 
 def sandbox_news(request):
-    return render(request, 'topics/sandbox/news/news.html')
+    # 模拟一些假新闻数据
+    latest_news = [
+        {
+            'id': 1,
+            'title': '新科技革命：AI 将重塑未来',
+            'summary': '随着 AI 技术的飞速发展，未来的科技将发生翻天覆地的变化...',
+            'publish_date': datetime.now().strftime('%Y-%m-%d'),
+        },
+        {
+            'id': 2,
+            'title': '2025年全球互联网将迎来新变革',
+            'summary': '在未来几年，全球互联网将经历一场前所未有的革命...',
+            'publish_date': datetime.now().strftime('%Y-%m-%d'),
+        },
+        {
+            'id': 3,
+            'title': '量子计算的突破性进展',
+            'summary': '量子计算作为一种新型计算模式，正在逐步突破技术瓶颈...',
+            'publish_date': datetime.now().strftime('%Y-%m-%d'),
+        },
+        {
+            'id': 4,
+            'title': '5G网络加速全球数字化进程',
+            'summary': '5G网络的普及正在改变全球通信格局，推动各行各业的数字化转型...',
+            'publish_date': datetime.now().strftime('%Y-%m-%d'),
+        },
+        {
+            'id': 5,
+            'title': '未来科技：机器人将进入家庭生活',
+            'summary': '随着人工智能和机器人技术的发展，智能机器人正在进入普通家庭...',
+            'publish_date': datetime.now().strftime('%Y-%m-%d'),
+        },
+    ]
+
+    return render(request, 'topics/sandbox/news/news_index.html',
+                  {'latest_news': latest_news, "search": '/sandbox/news/search'})
+
+
+# 模拟分类和新闻数据
+categories = [
+    {
+        'id': 1,
+        'char_name': 'technology',
+        'name': '科技',
+        'news': [
+            {'id': 1, 'title': 'AI 的未来', 'summary': '探索人工智能的最新发展...', 'publish_date': '2025-02-13'},
+            {'id': 2, 'title': '5G 网络的全球影响', 'summary': '5G 网络带来的技术革新...',
+             'publish_date': '2025-02-12'},
+        ]
+    },
+    {
+        'id': 2,
+        'char_name': 'happy',
+        'name': '娱乐',
+        'news': [
+            {'id': 3, 'title': '明星动态：新电影发布', 'summary': '最新电影上映，明星动态...',
+             'publish_date': '2025-02-14'},
+            {'id': 4, 'title': '2025年超级碗回顾', 'summary': '今年超级碗的精彩瞬间...',
+             'publish_date': '2025-02-10'},
+        ]
+    },
+    {
+        'id': 3,
+        'char_name': 'sport',
+        'name': '体育',
+        'news': [
+            {'id': 5, 'title': '足球世界杯的传奇时刻', 'summary': '回顾世界杯历史上的经典时刻...',
+             'publish_date': '2025-02-11'},
+            {'id': 6, 'title': 'NBA 历史最佳球员排名', 'summary': 'NBA 球员排名持续更新...',
+             'publish_date': '2025-02-09'},
+        ]
+    },
+    {
+        'id': 4,
+        'char_name': 'web3',
+        'name': 'Web3',
+        'news': [
+            {'id': 7, 'title': 'Web3：去中心化互联网的崛起',
+             'summary': 'Web3 作为去中心化的互联网理念，正在改变许多行业...', 'publish_date': '2025-02-15'},
+            {'id': 8, 'title': 'NFT 的未来：如何定义数字所有权',
+             'summary': 'NFT 已成为区块链中的一个重要领域，它带来了数字资产的革命...', 'publish_date': '2025-02-14'},
+            {'id': 9, 'title': 'DeFi：去中心化金融的现状与未来',
+             'summary': 'DeFi 带来了无银行的金融模式，它能否挑战传统金融体系？', 'publish_date': '2025-02-13'},
+        ]
+    },
+]
+
+
+def sandbox_news_category(request):
+    return render(request, 'topics/sandbox/news/category.html', {'categories': categories})
+
+
+def sandbox_news_category_detail(request, char_name):
+    for category in categories:
+        if category['char_name'] == char_name:
+            return render(request, 'topics/sandbox/news/category_detail.html', {'category': category})
+
+
+def sandbox_news_detail(request, id):
+    # 假设根据id获取新闻，实际上只是返回假数据
+    news_item = {
+        'id': id,
+        'title': f'新闻 {id} 详情',
+        'content': '这是新闻的详细内容，更多的细节信息可以在这里展示。',
+    }
+    return render(request, 'topics/sandbox/news/news_detail.html',
+                  {'news_item': news_item})
+
+
+def sandbox_news_about_us(request):
+    return render(request, 'topics/sandbox/news/about_us.html')
+
+
+def sandbox_news_notice(request):
+    return render(request, 'topics/sandbox/news/notice.html')
 
 
 def shorthand(request):
