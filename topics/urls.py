@@ -18,8 +18,12 @@ urlpatterns = [
     path('sandbox/news/about/', views.sandbox_news_about_us, name='sandbox_news_about_us'),  # 关于我们页面
     path('sandbox/news/notice/', views.sandbox_news_notice, name='sandbox_news_notice'),
     path('sandbox/news/category/', views.sandbox_news_category, name='sandbox_news_category'),
-    path('sandbox/news/category/<str:char_name>/', views.sandbox_news_category_detail,
+    path('sandbox/news/category/<slug:slug>/', views.sandbox_news_category_detail,
          name='sandbox_news_category_detail'),
+    # 详情页面路由
+    path('sandbox/news/source/<slug:slug>/', views.sandbox_news_source_detail, name='sandbox_news_source_detail'),
+    # path('news/category/<slug:slug>/', views.category_detail, name='category_detail'),
+
     path('sandbox/news/category/technology/', views.sandbox_news, name='sandbox_news'),
     path('sandbox/news/category/web3/', views.sandbox_news, name='sandbox_news'),
     path('sandbox/news/news_detail/<int:id>/', views.sandbox_news_detail, name='sandbox_news_detail'),

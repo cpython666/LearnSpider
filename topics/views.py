@@ -220,13 +220,50 @@ categories = [
 
 
 def sandbox_news_category(request):
-    return render(request, 'topics/sandbox/news/category.html', {'categories': categories})
+    # 模拟数据：新闻来源平台和新闻类别
+    sources = [
+        {'name': '抖音', 'slug': 'douyin'},
+        {'name': 'B站', 'slug': 'bilibili'},
+        {'name': '知乎', 'slug': 'zhihu'},
+    ]
+    # 模拟数据：新闻类别
+    categories = [
+        {'name': '国际新闻', 'slug': 'international'},
+        {'name': '国内新闻', 'slug': 'domestic'},
+        {'name': '科技新闻', 'slug': 'technology'},
+        {'name': '体育新闻', 'slug': 'sports'},
+        {'name': '娱乐新闻', 'slug': 'entertainment'},
+    ]
+
+    # 将数据传递到模板
+    return render(request, 'topics/sandbox/news/category.html', {'sources': sources, 'categories': categories})
 
 
-def sandbox_news_category_detail(request, char_name):
-    for category in categories:
-        if category['char_name'] == char_name:
-            return render(request, 'topics/sandbox/news/category_detail.html', {'category': category})
+def sandbox_news_category_detail(request, slug):
+    # 模拟数据：新闻类别详情
+    categories_details = {
+        'international': {'name': '国际新闻', 'description': '全球范围内的新闻热点，聚焦国际局势。'},
+        'domestic': {'name': '国内新闻', 'description': '关注本国的时事新闻，涵盖社会、政治、经济等各个方面。'},
+        'technology': {'name': '科技新闻', 'description': '报道最新的科技趋势、创新产品和技术突破。'},
+        'sports': {'name': '体育新闻', 'description': '关注体育赛事、运动员动态及全球体育新闻。'},
+        'entertainment': {'name': '娱乐新闻', 'description': '报道娱乐圈的最新动态、明星资讯、影视作品等。'},
+    }
+
+    category = categories_details.get(slug, {})
+    return render(request, 'topics/sandbox/news/detail_category.html', {'category': category})
+
+
+def sandbox_news_source_detail(request, slug):
+    # 模拟数据：来源平台详情
+    sources_details = {
+        'douyin': {'name': '抖音', 'description': '抖音是一款短视频分享社交平台，用户可以发布和观看短视频。'},
+        'bilibili': {'name': 'B站', 'description': 'B站是一家以二次元文化为主的在线视频平台，提供丰富的视频内容。'},
+        'zhihu': {'name': '知乎', 'description': '知乎是一个知识分享和问答社区，汇集了大量专业内容和用户互动。'},
+    }
+
+    source = sources_details.get(slug, {})
+    print(source)
+    return render(request, 'topics/sandbox/news/detail_source.html', {'source': source})
 
 
 def sandbox_news_detail(request, id):
@@ -236,7 +273,7 @@ def sandbox_news_detail(request, id):
         'title': f'新闻 {id} 详情',
         'content': '这是新闻的详细内容，更多的细节信息可以在这里展示。',
     }
-    return render(request, 'topics/sandbox/news/news_detail.html',
+    return render(request, 'topics/sandbox/news/detail_news.html',
                   {'news_item': news_item})
 
 

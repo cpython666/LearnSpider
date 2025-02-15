@@ -1,127 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fixed and Scrollable Table</title>
-    <!-- 引入 Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .table-container {
-            display: flex;
-            overflow-x: auto;
-        }
-        .fixed-column {
-            position: sticky;
-            left: 0;
-            background: white;
-            z-index: 1;
-            border-right: 2px solid #dee2e6; /* 添加右侧边框 */
-        }
-        .fixed-column th, .fixed-column td {
-            white-space: nowrap;
-        }
-        .scrollable-table thead th {
-            white-space: nowrap;
-        }
-    </style>
-</head>
-<body>
+{% extends "topics/base.html" %}
+{% load static %}
+{% block title %}新闻类别{% endblock %}
+{% block answer %}
+    <!-- 你可以在此处添加一些其他的内容或展示区 -->
+{% endblock %}
+{% block content %}
     <div class="container mt-4">
-        <div class="table-container">
-            <table class="table table-primary table-striped table-hover caption-top">
-                <caption>题目列表</caption>
-                <thead>
-                    <tr>
-                        <th class="fixed-column" scope="col">#</th>
-                        <th class="fixed-column" scope="col">名称</th>
-                        <th class="fixed-column" scope="col">简介</th>
-                        <th class="fixed-column" scope="col">目的</th>
-                    </tr>
-                </thead>
-                <tbody id="data-body">
-                    <!-- 固定列的数据 -->
-                    <tr>
-                        <td class="fixed-column">1</td>
-                        <td class="fixed-column">题目1</td>
-                        <td class="fixed-column">简介1</td>
-                        <td class="fixed-column">目的1</td>
-                    </tr>
-                    <tr>
-                        <td class="fixed-column">2</td>
-                        <td class="fixed-column">题目2</td>
-                        <td class="fixed-column">简介2</td>
-                        <td class="fixed-column">目的2</td>
-                    </tr>
-                    <!-- 更多固定列数据 -->
-                </tbody>
-            </table>
-            <div class="table-responsive">
-                <table class="table table-primary table-striped table-hover caption-top scrollable-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">难度</th>
-                            <th scope="col">考点</th>
-                            <th scope="col">解析[文档][视频]</th>
-                            <th scope="col">考点[切换可见性]</th>
-                            <th scope="col">发布日期</th>
-                            <th scope="col">目标</th>
-                            <th scope="col">问题</th>
-                            <th scope="col">类别</th>
-                            <th scope="col">难度</th>
-                            <th scope="col">难度分数</th>
-                            <th scope="col">考点</th>
-                            <th scope="col">通过状态</th>
-                            <th scope="col">图文讲解</th>
-                            <th scope="col">视频讲解</th>
-                            <th scope="col">题目路径</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- 滚动列的数据 -->
-                        <tr>
-                            <td>初级</td>
-                            <td>考点1</td>
-                            <td>文档1</td>
-                            <td>视频1</td>
-                            <td>发布日期1</td>
-                            <td>目标1</td>
-                            <td>问题1</td>
-                            <td>类别1</td>
-                            <td>简单</td>
-                            <td>2</td>
-                            <td>考点1</td>
-                            <td>通过</td>
-                            <td>讲解1</td>
-                            <td>视频讲解1</td>
-                            <td>路径1</td>
-                        </tr>
-                        <tr>
-                            <td>中级</td>
-                            <td>考点2</td>
-                            <td>文档2</td>
-                            <td>视频2</td>
-                            <td>发布日期2</td>
-                            <td>目标2</td>
-                            <td>问题2</td>
-                            <td>类别2</td>
-                            <td>难</td>
-                            <td>3</td>
-                            <td>考点2</td>
-                            <td>未通过</td>
-                            <td>讲解2</td>
-                            <td>视频讲解2</td>
-                            <td>路径2</td>
-                        </tr>
-                        <!-- 更多滚动列数据 -->
-                    </tbody>
-                </table>
+        <h1 class="text-center">新闻类别</h1>
+
+        <div class="row mt-4">
+            <!-- 新闻类别 1 -->
+            <div class="col-12 col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <img src="{% static 'imgs/international_news.jpg' %}" class="card-img-top" alt="国际新闻">
+                    <div class="card-body">
+                        <h5 class="card-title">国际新闻</h5>
+                        <p class="card-text">了解全球范围内的新闻热点，聚焦国际局势。</p>
+                        <p><strong>来源：</strong>BBC, CNN, Al Jazeera</p>
+                        <a href="/news/international" class="btn btn-primary">查看国际新闻</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新闻类别 2 -->
+            <div class="col-12 col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <img src="{% static 'imgs/domestic_news.jpg' %}" class="card-img-top" alt="国内新闻">
+                    <div class="card-body">
+                        <h5 class="card-title">国内新闻</h5>
+                        <p class="card-text">关注本国的时事新闻，涵盖社会、政治、经济等各个方面。</p>
+                        <p><strong>来源：</strong>新华网, 人民日报, 中国日报</p>
+                        <a href="/news/domestic" class="btn btn-primary">查看国内新闻</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新闻类别 3 -->
+            <div class="col-12 col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <img src="{% static 'imgs/sports_news.jpg' %}" class="card-img-top" alt="体育新闻">
+                    <div class="card-body">
+                        <h5 class="card-title">体育新闻</h5>
+                        <p class="card-text">关注各类体育赛事、运动员动态及体育评论。</p>
+                        <p><strong>来源：</strong>ESPN, 体育日报, FIFA</p>
+                        <a href="/news/sports" class="btn btn-primary">查看体育新闻</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新闻类别 4 -->
+            <div class="col-12 col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <img src="{% static 'imgs/technology_news.jpg' %}" class="card-img-top" alt="科技新闻">
+                    <div class="card-body">
+                        <h5 class="card-title">科技新闻</h5>
+                        <p class="card-text">报道最新的科技趋势、创新产品、以及技术突破。</p>
+                        <p><strong>来源：</strong>TechCrunch, Wired, The Verge</p>
+                        <a href="/news/technology" class="btn btn-primary">查看科技新闻</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新闻类别 5 -->
+            <div class="col-12 col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <img src="{% static 'imgs/entertainment_news.jpg' %}" class="card-img-top" alt="娱乐新闻">
+                    <div class="card-body">
+                        <h5 class="card-title">娱乐新闻</h5>
+                        <p class="card-text">聚焦电影、电视剧、明星八卦及娱乐圈动态。</p>
+                        <p><strong>来源：</strong>娱乐头条, 新浪娱乐, 腾讯娱乐</p>
+                        <a href="/news/entertainment" class="btn btn-primary">查看娱乐新闻</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新闻类别 6 -->
+            <div class="col-12 col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <img src="{% static 'imgs/business_news.jpg' %}" class="card-img-top" alt="财经新闻">
+                    <div class="card-body">
+                        <h5 class="card-title">财经新闻</h5>
+                        <p class="card-text">提供全球财经新闻，涉及股票、市场、投资等领域。</p>
+                        <p><strong>来源：</strong>华尔街日报, 财新网, Bloomberg</p>
+                        <a href="/news/business" class="btn btn-primary">查看财经新闻</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- 引入 Bootstrap JS 和 jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}

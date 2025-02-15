@@ -1,0 +1,35 @@
+{% extends "topics/sandbox/news/news_base.html" %}
+{% load static %}
+{% block title %}热榜新闻{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4 text-primary">各平台热榜新闻</h1>
+
+        <div class="row mt-4">
+            {% for platform in platforms %}
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-info text-white">
+                            <h4>{{ platform.name }} 热榜</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                {% for news in platform.hot_news.all %}
+                                    <li class="list-group-item">
+                                        <a href="{{ news.url }}" class="text-decoration-none text-dark hover-link">
+                                            <h5>{{ news.title }}</h5>
+                                            <small class="text-muted">热度: {{ news.heat }}</small>
+                                        </a>
+                                    </li>
+                                {% empty %}
+                                    <li class="list-group-item text-muted">该平台暂无热榜新闻。</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

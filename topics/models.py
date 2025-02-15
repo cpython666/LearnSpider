@@ -83,3 +83,45 @@ class TopicCategoryRelation(BaseModel, OrderMixin):
 
     def __str__(self):
         return f"Topic {self.topic_id} - Category {self.category_id}"
+
+
+# 平台表
+class NewsPlatform(BaseModel):
+    name = models.CharField(max_length=100)  # 平台名称
+    slug = models.SlugField(unique=True)  # 用于URL的标识符
+    description = models.CharField(blank=True, null=True, max_length=255)  # 平台简介
+
+    class Meta:
+        db_table = "sd_ls_news_platform"
+
+    def __str__(self):
+        return self.name
+
+
+# 新闻类别表
+class NewsCategory(BaseModel):
+    name = models.CharField(max_length=100)  # 类别名称
+    slug = models.SlugField(unique=True)  # 用于URL的标识符
+    description = models.TextField(blank=True, null=True)  # 类别简介
+
+    class Meta:
+        db_table = "sd_ls_news_category"
+
+    def __str__(self):
+        return self.name
+
+
+# 新闻表
+class News(BaseModel):
+    title = models.CharField(max_length=200)  # 新闻标题
+    url = models.URLField()  # 新闻链接
+    publish_time = models.DateTimeField(blank=True, null=True)
+    content = models.TextField()  # 新闻内容
+    platform = models.ForeignKey(NewsPlatform, related_name='news', on_delete=models.CASCADE)  # 所属平台
+    category = models.ForeignKey(NewsCategory, related_name='news', on_delete=models.CASCADE)  # 新闻类别
+
+    class Meta:
+        db_table = "sd_ls_news"
+
+    def __str__(self):
+        return self.title

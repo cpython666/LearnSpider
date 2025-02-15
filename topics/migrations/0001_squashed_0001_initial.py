@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [('topics', '0001_initial')]
+    # replaces = [('topics', '0001_initial')]
 
     initial = True
 
