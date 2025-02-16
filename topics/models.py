@@ -101,7 +101,7 @@ class NewsPlatform(BaseModel):
 # 新闻类别表
 class NewsCategory(BaseModel):
     name = models.CharField(max_length=100)  # 类别名称
-    slug = models.SlugField(unique=True)  # 用于URL的标识符
+    slug = models.CharField(unique=True, max_length=255)  # 用于URL的标识符
     description = models.TextField(blank=True, null=True)  # 类别简介
 
     class Meta:
@@ -111,12 +111,29 @@ class NewsCategory(BaseModel):
         return self.name
 
 
+class NewsRequestHistory(BaseModel):
+    request_time = models.DateTimeField(auto_now_add=True)
+    response_data = models.JSONField()  # 处理后的结果数据
+    status = models.CharField(blank=True, null=True, max_length=255)
+    platform = models.ForeignKey(NewsPlatform, related_name='history', on_delete=models.CASCADE)  # 所属平台
+
+    class Meta:
+        db_table = "sd_ls_news_request_history"
+
+    def __str__(self):
+        return f"Request at {self.request_time}"
+
+
 # 新闻表
 class News(BaseModel):
     title = models.CharField(max_length=200)  # 新闻标题
     url = models.URLField()  # 新闻链接
+    desc = models.CharField(max_length=500, blank=True, null=True)
     publish_time = models.DateTimeField(blank=True, null=True)
+    timestamp = models.IntegerField(default=0, blank=True, null=True)
+    author = models.CharField(max_length=255, blank=True, null=True)
     content = models.TextField()  # 新闻内容
+    hot = models.IntegerField(default=0)  # 新闻内容
     platform = models.ForeignKey(NewsPlatform, related_name='news', on_delete=models.CASCADE)  # 所属平台
     category = models.ForeignKey(NewsCategory, related_name='news', on_delete=models.CASCADE)  # 新闻类别
 
