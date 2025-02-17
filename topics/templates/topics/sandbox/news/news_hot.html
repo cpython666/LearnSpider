@@ -1,35 +1,56 @@
 {% extends "topics/sandbox/news/news_base.html" %}
-{% load static %}
-{% block title %}热榜新闻{% endblock %}
+
+{% block title %}热榜{% endblock %}
 
 {% block content %}
-    <div class="container mt-5">
-        <h1 class="text-center mb-4 text-primary">各平台热榜新闻</h1>
-
-        <div class="row mt-4">
-            {% for platform in platforms %}
-                <div class="col-md-6 mb-4">
-                    <div class="card shadow-sm">
-                        <div class="card-header bg-info text-white">
-                            <h4>{{ platform.name }} 热榜</h4>
+    <div class="container mt-4">
+        <div class="row">
+            {% for platform, news_list in platform_news_mapping.items %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">{{ platform.name }}</h5>
+                            <a href="{% url 'sandbox_news_hot_detail' platform.slug %}"
+                               class="btn btn-outline-primary btn-sm">查看更多</a>
                         </div>
                         <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                                {% for news in platform.hot_news.all %}
-                                    <li class="list-group-item">
-                                        <a href="{{ news.url }}" class="text-decoration-none text-dark hover-link">
-                                            <h5>{{ news.title }}</h5>
-                                            <small class="text-muted">热度: {{ news.heat }}</small>
-                                        </a>
-                                    </li>
-                                {% empty %}
-                                    <li class="list-group-item text-muted">该平台暂无热榜新闻。</li>
-                                {% endfor %}
-                            </ul>
+                            {% if news_list %}
+                                <ul class="list-group">
+                                    {% for news in news_list %}
+                                        <li class="list-group-item">
+                                            <!-- 使用Flex布局对齐排名和标题 -->
+                                            <div class="d-flex align-items-center">
+                                                <span class="badge
+
+                                                                                                            {% if forloop.counter == 1 %}bg-warning text-white{% elif forloop.counter == 2 %}bg-secondary text-white{% elif forloop.counter == 3 %}bg-success text-white{% else %}bg-light text-dark{% endif %}">
+{#{% if forloop.counter == 1 %}bg-warning text-white{% elif forloop.counter == 2 %}bg-secondary text-white{% elif forloop.counter == 3 %}bg-success text-white{% else %}bg-secondary text-white{% endif %}">#}
+                                                    {{ forloop.counter }}
+                                                </span>
+                                                <a href="{{ news.get_absolute_url }}" data-bs-toggle="tooltip"
+                                                   data-bs-placement="top" title="{{ news.title }}" class="ms-2">
+                                                    <span class="text-truncate"
+                                                          style="max-width: 200px; display: inline-block;">{{ news.title }}</span>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted">暂无新闻</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
+
+    <!-- 初始化 tooltip -->
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+
 {% endblock %}

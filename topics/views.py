@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from datetime import datetime
-from .models import Topics
+from .models import Topics, NewsPlatform, News, NewsCategory, NewsRequestHistory
 from .decorators import require_ua
 import time
 import random
@@ -8,11 +8,11 @@ from django.shortcuts import render
 
 
 def demo(request):
-    return render(request, 'topics/pages/demo_get_server_time.html')
+    return render(request, "topics/pages/demo_get_server_time.html")
 
 
 def demo1(request):
-    return render(request, 'topics/pages/demo.html')
+    return render(request, "topics/pages/demo.html")
 
 
 def hello_spider(request):  # random_greetings
@@ -26,7 +26,7 @@ def hello_spider(request):  # random_greetings
         "btn btn-info",
         "btn btn-light",
         "btn btn-dark",
-        "btn btn-link"
+        "btn btn-link",
     ]
     # 随机生成 666 个 "Hello, Spider~"
     for _ in range(666):
@@ -40,21 +40,27 @@ def hello_spider(request):  # random_greetings
     for _ in range(hello_world_count):
         greetings.append("Hello, World～")
     # 为每个 greeting 随机选择一个按钮样式
-    greeting_buttons = [(greeting, random.choice(button_classes)) for greeting in greetings]
+    greeting_buttons = [
+        (greeting, random.choice(button_classes)) for greeting in greetings
+    ]
     # 打乱顺序
     random.shuffle(greeting_buttons)
 
-    return render(request, 'topics/views/hello-spider.html', {'greeting_buttons': greeting_buttons})
+    return render(
+        request,
+        "topics/views/hello-spider.html",
+        {"greeting_buttons": greeting_buttons},
+    )
 
 
 @require_ua
 def ua(request):
-    return render(request, 'topics/views/ua.html')
+    return render(request, "topics/views/ua.html")
 
 
 def encode_page(request):
-    response = render(request, 'topics/views/encode.html')
-    response['Content-Type'] = 'text/html;'
+    response = render(request, "topics/views/encode.html")
+    response["Content-Type"] = "text/html;"
     # response['Content-Type'] = 'text/html; charset=GB2312'
     # response['Content-Type'] = 'text/html;UTF-8'
     # response['Content-Type'] = 'text/html; charset=ISO-8859-1'
@@ -82,10 +88,8 @@ def table(request):
                 table_data[r][c] = value
                 remaining_sum -= value
 
-    context = {
-        'table_data': table_data
-    }
-    return render(request, 'topics/views/table.html', context)
+    context = {"table_data": table_data}
+    return render(request, "topics/views/table.html", context)
 
 
 def request_twice(request):
@@ -96,7 +100,7 @@ def request_twice(request):
     # 用户行为不确定: 用户可能会手动修改浏览器时间，或者在极端情况下，浏览器可能不会及时删除过期的Cookie。
     # 潜在的安全问题: 不信任客户端数据的完整性始终是一个好的安全实践。
     # 因此，尽管浏览器应该删除过期的Cookie，后端进行过期时间的验证仍然是推荐的做法，以确保系统的可靠性和安全性。
-    COOKIE_NAME = 'timestamp'
+    COOKIE_NAME = "timestamp"
     COOKIE_EXPIRATION = 1  # 秒
     # 读取 Cookie
     cookie_value = request.COOKIES.get(COOKIE_NAME)
@@ -107,114 +111,154 @@ def request_twice(request):
             current_time = time.time()
             if current_time - cookie_timestamp <= COOKIE_EXPIRATION:
                 # 如果 Cookie 仍然有效，返回 HTML 内容
-                return render(request, 'topics/views/request-twice.html')
+                return render(request, "topics/views/request-twice.html")
         except ValueError:
             pass
     # 如果没有有效的 Cookie，返回 JavaScript 代码来设置 Cookie
-    return render(request, 'topics/views/request-twice-cookie.html')
+    return render(request, "topics/views/request-twice-cookie.html")
 
 
 def index(request):
-    return render(request, 'topics/index/index.html')
+    return render(request, "topics/index/index.html")
 
 
 def list(request):
-    return render(request, 'topics/index/list.html')
+    return render(request, "topics/index/list.html")
 
 
 def tools(request):
-    return render(request, 'topics/index/tools.html')
+    return render(request, "topics/index/tools.html")
 
 
 def sandbox(request):
-    return render(request, 'topics/index/sandbox.html')
+    return render(request, "topics/index/sandbox.html")
 
 
 def sandbox_news(request):
     # 模拟一些假新闻数据
     latest_news = [
         {
-            'id': 1,
-            'title': '新科技革命：AI 将重塑未来',
-            'summary': '随着 AI 技术的飞速发展，未来的科技将发生翻天覆地的变化...',
-            'publish_date': datetime.now().strftime('%Y-%m-%d'),
+            "id": 1,
+            "title": "新科技革命：AI 将重塑未来",
+            "summary": "随着 AI 技术的飞速发展，未来的科技将发生翻天覆地的变化...",
+            "publish_date": datetime.now().strftime("%Y-%m-%d"),
         },
         {
-            'id': 2,
-            'title': '2025年全球互联网将迎来新变革',
-            'summary': '在未来几年，全球互联网将经历一场前所未有的革命...',
-            'publish_date': datetime.now().strftime('%Y-%m-%d'),
+            "id": 2,
+            "title": "2025年全球互联网将迎来新变革",
+            "summary": "在未来几年，全球互联网将经历一场前所未有的革命...",
+            "publish_date": datetime.now().strftime("%Y-%m-%d"),
         },
         {
-            'id': 3,
-            'title': '量子计算的突破性进展',
-            'summary': '量子计算作为一种新型计算模式，正在逐步突破技术瓶颈...',
-            'publish_date': datetime.now().strftime('%Y-%m-%d'),
+            "id": 3,
+            "title": "量子计算的突破性进展",
+            "summary": "量子计算作为一种新型计算模式，正在逐步突破技术瓶颈...",
+            "publish_date": datetime.now().strftime("%Y-%m-%d"),
         },
         {
-            'id': 4,
-            'title': '5G网络加速全球数字化进程',
-            'summary': '5G网络的普及正在改变全球通信格局，推动各行各业的数字化转型...',
-            'publish_date': datetime.now().strftime('%Y-%m-%d'),
+            "id": 4,
+            "title": "5G网络加速全球数字化进程",
+            "summary": "5G网络的普及正在改变全球通信格局，推动各行各业的数字化转型...",
+            "publish_date": datetime.now().strftime("%Y-%m-%d"),
         },
         {
-            'id': 5,
-            'title': '未来科技：机器人将进入家庭生活',
-            'summary': '随着人工智能和机器人技术的发展，智能机器人正在进入普通家庭...',
-            'publish_date': datetime.now().strftime('%Y-%m-%d'),
+            "id": 5,
+            "title": "未来科技：机器人将进入家庭生活",
+            "summary": "随着人工智能和机器人技术的发展，智能机器人正在进入普通家庭...",
+            "publish_date": datetime.now().strftime("%Y-%m-%d"),
         },
     ]
 
-    return render(request, 'topics/sandbox/news/news_index.html',
-                  {'latest_news': latest_news, "search": '/sandbox/news/search'})
+    return render(
+        request,
+        "topics/sandbox/news/news_index.html",
+        {"latest_news": latest_news, "search": "/sandbox/news/search"},
+    )
 
 
 # 模拟分类和新闻数据
 categories = [
     {
-        'id': 1,
-        'char_name': 'technology',
-        'name': '科技',
-        'news': [
-            {'id': 1, 'title': 'AI 的未来', 'summary': '探索人工智能的最新发展...', 'publish_date': '2025-02-13'},
-            {'id': 2, 'title': '5G 网络的全球影响', 'summary': '5G 网络带来的技术革新...',
-             'publish_date': '2025-02-12'},
-        ]
+        "id": 1,
+        "char_name": "technology",
+        "name": "科技",
+        "news": [
+            {
+                "id": 1,
+                "title": "AI 的未来",
+                "summary": "探索人工智能的最新发展...",
+                "publish_date": "2025-02-13",
+            },
+            {
+                "id": 2,
+                "title": "5G 网络的全球影响",
+                "summary": "5G 网络带来的技术革新...",
+                "publish_date": "2025-02-12",
+            },
+        ],
     },
     {
-        'id': 2,
-        'char_name': 'happy',
-        'name': '娱乐',
-        'news': [
-            {'id': 3, 'title': '明星动态：新电影发布', 'summary': '最新电影上映，明星动态...',
-             'publish_date': '2025-02-14'},
-            {'id': 4, 'title': '2025年超级碗回顾', 'summary': '今年超级碗的精彩瞬间...',
-             'publish_date': '2025-02-10'},
-        ]
+        "id": 2,
+        "char_name": "happy",
+        "name": "娱乐",
+        "news": [
+            {
+                "id": 3,
+                "title": "明星动态：新电影发布",
+                "summary": "最新电影上映，明星动态...",
+                "publish_date": "2025-02-14",
+            },
+            {
+                "id": 4,
+                "title": "2025年超级碗回顾",
+                "summary": "今年超级碗的精彩瞬间...",
+                "publish_date": "2025-02-10",
+            },
+        ],
     },
     {
-        'id': 3,
-        'char_name': 'sport',
-        'name': '体育',
-        'news': [
-            {'id': 5, 'title': '足球世界杯的传奇时刻', 'summary': '回顾世界杯历史上的经典时刻...',
-             'publish_date': '2025-02-11'},
-            {'id': 6, 'title': 'NBA 历史最佳球员排名', 'summary': 'NBA 球员排名持续更新...',
-             'publish_date': '2025-02-09'},
-        ]
+        "id": 3,
+        "char_name": "sport",
+        "name": "体育",
+        "news": [
+            {
+                "id": 5,
+                "title": "足球世界杯的传奇时刻",
+                "summary": "回顾世界杯历史上的经典时刻...",
+                "publish_date": "2025-02-11",
+            },
+            {
+                "id": 6,
+                "title": "NBA 历史最佳球员排名",
+                "summary": "NBA 球员排名持续更新...",
+                "publish_date": "2025-02-09",
+            },
+        ],
     },
     {
-        'id': 4,
-        'char_name': 'web3',
-        'name': 'Web3',
-        'news': [
-            {'id': 7, 'title': 'Web3：去中心化互联网的崛起',
-             'summary': 'Web3 作为去中心化的互联网理念，正在改变许多行业...', 'publish_date': '2025-02-15'},
-            {'id': 8, 'title': 'NFT 的未来：如何定义数字所有权',
-             'summary': 'NFT 已成为区块链中的一个重要领域，它带来了数字资产的革命...', 'publish_date': '2025-02-14'},
-            {'id': 9, 'title': 'DeFi：去中心化金融的现状与未来',
-             'summary': 'DeFi 带来了无银行的金融模式，它能否挑战传统金融体系？', 'publish_date': '2025-02-13'},
-        ]
+        "id": 4,
+        "char_name": "web3",
+        "name": "Web3",
+        "news": [
+            {
+                "id": 7,
+                "title": "Web3：去中心化互联网的崛起",
+                "summary": "Web3 作为去中心化的互联网理念，正在改变许多行业...",
+                "publish_date": "2025-02-15",
+            },
+            {
+                "id": 8,
+                "title": "NFT 的未来：如何定义数字所有权",
+                "summary": "NFT 已成为区块链中的一个重要领域，它带来了数字资产的革命...",
+                "publish_date": "2025-02-14",
+            },
+            {
+                "id": 9,
+                "title": "DeFi：去中心化金融的现状与未来",
+                "summary": "DeFi 带来了无银行的金融模式，它能否挑战传统金融体系？",
+                "publish_date": "2025-02-13",
+            },
+        ],
     },
 ]
 
@@ -222,83 +266,174 @@ categories = [
 def sandbox_news_category(request):
     # 模拟数据：新闻来源平台和新闻类别
     sources = [
-        {'name': '抖音', 'slug': 'douyin'},
-        {'name': 'B站', 'slug': 'bilibili'},
-        {'name': '知乎', 'slug': 'zhihu'},
+        {"name": "抖音", "slug": "douyin"},
+        {"name": "B站", "slug": "bilibili"},
+        {"name": "知乎", "slug": "zhihu"},
     ]
     # 模拟数据：新闻类别
     categories = [
-        {'name': '国际新闻', 'slug': 'international'},
-        {'name': '国内新闻', 'slug': 'domestic'},
-        {'name': '科技新闻', 'slug': 'technology'},
-        {'name': '体育新闻', 'slug': 'sports'},
-        {'name': '娱乐新闻', 'slug': 'entertainment'},
+        {"name": "国际新闻", "slug": "international"},
+        {"name": "国内新闻", "slug": "domestic"},
+        {"name": "科技新闻", "slug": "technology"},
+        {"name": "体育新闻", "slug": "sports"},
+        {"name": "娱乐新闻", "slug": "entertainment"},
     ]
 
     # 将数据传递到模板
-    return render(request, 'topics/sandbox/news/category.html', {'sources': sources, 'categories': categories})
+    return render(
+        request,
+        "topics/sandbox/news/category.html",
+        {"sources": sources, "categories": categories},
+    )
 
 
 def sandbox_news_category_detail(request, slug):
     # 模拟数据：新闻类别详情
     categories_details = {
-        'international': {'name': '国际新闻', 'description': '全球范围内的新闻热点，聚焦国际局势。'},
-        'domestic': {'name': '国内新闻', 'description': '关注本国的时事新闻，涵盖社会、政治、经济等各个方面。'},
-        'technology': {'name': '科技新闻', 'description': '报道最新的科技趋势、创新产品和技术突破。'},
-        'sports': {'name': '体育新闻', 'description': '关注体育赛事、运动员动态及全球体育新闻。'},
-        'entertainment': {'name': '娱乐新闻', 'description': '报道娱乐圈的最新动态、明星资讯、影视作品等。'},
+        "international": {
+            "name": "国际新闻",
+            "description": "全球范围内的新闻热点，聚焦国际局势。",
+        },
+        "domestic": {
+            "name": "国内新闻",
+            "description": "关注本国的时事新闻，涵盖社会、政治、经济等各个方面。",
+        },
+        "technology": {
+            "name": "科技新闻",
+            "description": "报道最新的科技趋势、创新产品和技术突破。",
+        },
+        "sports": {
+            "name": "体育新闻",
+            "description": "关注体育赛事、运动员动态及全球体育新闻。",
+        },
+        "entertainment": {
+            "name": "娱乐新闻",
+            "description": "报道娱乐圈的最新动态、明星资讯、影视作品等。",
+        },
     }
 
     category = categories_details.get(slug, {})
-    return render(request, 'topics/sandbox/news/detail_category.html', {'category': category})
+    return render(
+        request, "topics/sandbox/news/detail_category.html", {"category": category}
+    )
 
 
 def sandbox_news_source_detail(request, slug):
     # 模拟数据：来源平台详情
     sources_details = {
-        'douyin': {'name': '抖音', 'description': '抖音是一款短视频分享社交平台，用户可以发布和观看短视频。'},
-        'bilibili': {'name': 'B站', 'description': 'B站是一家以二次元文化为主的在线视频平台，提供丰富的视频内容。'},
-        'zhihu': {'name': '知乎', 'description': '知乎是一个知识分享和问答社区，汇集了大量专业内容和用户互动。'},
+        "douyin": {
+            "name": "抖音",
+            "description": "抖音是一款短视频分享社交平台，用户可以发布和观看短视频。",
+        },
+        "bilibili": {
+            "name": "B站",
+            "description": "B站是一家以二次元文化为主的在线视频平台，提供丰富的视频内容。",
+        },
+        "zhihu": {
+            "name": "知乎",
+            "description": "知乎是一个知识分享和问答社区，汇集了大量专业内容和用户互动。",
+        },
     }
 
     source = sources_details.get(slug, {})
     print(source)
-    return render(request, 'topics/sandbox/news/detail_source.html', {'source': source})
+    return render(request, "topics/sandbox/news/detail_source.html", {"source": source})
+
+
+def sandbox_news_hot(request):
+    platforms = NewsPlatform.objects.all()
+    # 第一次查询，获取所有数据行的 id 和 platform_id
+    res = {}
+    first_query_results = NewsRequestHistory.objects.order_by("-id").values(
+        "id", "platform_id"
+    )[: 2 * len(platforms)]
+    for _ in first_query_results[::-1]:
+        res[_["platform_id"]] = _["id"]
+    # 使用 ids 查询真实数据
+    latest_records = NewsRequestHistory.objects.filter(id__in=res.values())
+    id_news_mapping = {}
+    # 将日志对象映射到新闻数据
+    for log_obj in latest_records:
+        id_news_mapping[log_obj.platform_id] = log_obj.response_data[:10]
+    # 为每个平台添加新闻数据
+    platform_news_mapping = {}
+    for platform in platforms:
+        platform_news_mapping[platform] = id_news_mapping.get(platform.id, [])
+    # 将平台及其对应的新闻传递给模板
+    return render(
+        request,
+        "topics/sandbox/news/news_hot.html",
+        {
+            "platform_news_mapping": platform_news_mapping,
+        },
+    )
+
+
+def sandbox_news_hot_detail(request, slug):
+    platforms = NewsPlatform.objects.all()
+    news = None
+    if slug:
+        selected_platform = NewsPlatform.objects.get(slug=slug)
+        log_obj = (
+            NewsRequestHistory.objects.filter(platform_id=selected_platform.id)
+            .order_by("-id")
+            .first()
+        )
+        news = log_obj.response_data
+    else:
+        selected_platform = None
+
+    return render(
+        request,
+        "topics/sandbox/news/news_hot_detail.html",
+        {
+            "platforms": platforms,
+            "selected_platform": selected_platform,
+            "news_lst": news,
+        },
+    )
+
+
+def hot_news_detail_view(request, id):
+    ...
+    # news = get_object_or_404(HotNews, id=id)
+    # return render(request, 'hot_news_detail.html', {'news': news})
 
 
 def sandbox_news_detail(request, id):
     # 假设根据id获取新闻，实际上只是返回假数据
     news_item = {
-        'id': id,
-        'title': f'新闻 {id} 详情',
-        'content': '这是新闻的详细内容，更多的细节信息可以在这里展示。',
+        "id": id,
+        "title": f"新闻 {id} 详情",
+        "content": "这是新闻的详细内容，更多的细节信息可以在这里展示。",
     }
-    return render(request, 'topics/sandbox/news/detail_news.html',
-                  {'news_item': news_item})
+    return render(
+        request, "topics/sandbox/news/detail_news.html", {"news_item": news_item}
+    )
 
 
 def sandbox_news_about_us(request):
-    return render(request, 'topics/sandbox/news/about_us.html')
+    return render(request, "topics/sandbox/news/about_us.html")
 
 
 def sandbox_news_notice(request):
-    return render(request, 'topics/sandbox/news/notice.html')
+    return render(request, "topics/sandbox/news/notice.html")
 
 
 def shorthand(request):
-    return render(request, 'topics/index/shorthand.html')
+    return render(request, "topics/index/shorthand.html")
 
 
 def solutions(request):
-    return render(request, 'topics/solutions.html')
+    return render(request, "topics/solutions.html")
 
 
 def topic_view(request, response_path):
     # 根据 path 获取对应的题目
     topic = get_object_or_404(Topics, response_path=response_path)
     # 返回对应的 HTML 视图
-    return render(request, 'topics/pages/' + response_path + '.html', {'topic': topic})
+    return render(request, "topics/pages/" + response_path + ".html", {"topic": topic})
 
 
 def error404(request, exception):
-    return render(request, 'topics/404.html', status=404)
+    return render(request, "topics/404.html", status=404)

@@ -23,8 +23,10 @@ class OrderMixin(models.Model):
 
 class Category(BaseModel):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(blank=True, null=True, max_length=200, help_text='类别名')
-    detail = models.CharField(blank=True, null=True, default=None, max_length=200, help_text='类别的描述')
+    name = models.CharField(blank=True, null=True, max_length=200, help_text="类别名")
+    detail = models.CharField(
+        blank=True, null=True, default=None, max_length=200, help_text="类别的描述"
+    )
 
     class Meta:
         db_table = "sd_ls_category"  # 自定义表名
@@ -32,39 +34,97 @@ class Category(BaseModel):
 
 class Topics(BaseModel):
     DIFFICULTY_CHOICES = [
-        ('beginner', '初级'),
-        ('intermediate', '中级'),
-        ('advanced', '高级'),
-        ('ultimate', '终极'),
+        ("beginner", "初级"),
+        ("intermediate", "中级"),
+        ("advanced", "高级"),
+        ("ultimate", "终极"),
     ]
 
     id = models.AutoField(primary_key=True)
-    order_id = models.PositiveIntegerField(blank=True, null=True, default=3, help_text='题目排序，根据难度分排序，会变')
-    title = models.CharField(blank=True, default=None, max_length=200, help_text='题目的标题，最好有趣个性化一点')
-    detail = models.TextField(blank=True, null=True, default='暂无表述', help_text='题目的描述：简单创造一个背景故事')
-    goal = models.TextField(blank=True, null=True, default='暂无描述', help_text='题目的目标：掌握xxx')
-    question = models.TextField(blank=True, null=True, default='暂无题目要求', help_text='题目要求')
-    answer = models.CharField(blank=True, null=True, max_length=255, help_text='题目的答案')
-    category = models.CharField(blank=True, null=True, default='成神之路', max_length=100,
-                                help_text='题目类别：成神之路，xpath特训')
-    difficulty = models.CharField(blank=True, null=True, default='简单', max_length=12, choices=DIFFICULTY_CHOICES,
-                                  help_text='难度')
-    difficulty_score = models.BigIntegerField(blank=True, null=True, default=200,
-                                              help_text='难度分数，后续根据此字段排序order_id')
-    points = models.TextField(blank=True, null=True, default='暂未更新考点', help_text='本题的考点', )
-    published = models.BooleanField(blank=True, null=True, default=False, help_text='是否发布')
-    pass_status = models.BooleanField(blank=True, null=True, default=False, help_text='是否通过')
-    solution_txt = models.URLField(blank=True, null=True, default='暂无表述', help_text='题解，图文讲解')
-    solution_video = models.URLField(blank=True, null=True, default='暂无表述', help_text='视频讲解')
-    api_type = models.CharField(blank=True, null=True, max_length=255, default='直接对应视图',
-                                help_text='此题目的接口类型：直接对应视图，访问一个接口判断后决定是否返回视图，返回一个视图+【多个】api')
-    api_prefix = models.CharField(blank=True, null=True, max_length=255, default='topic/',
-                                  help_text='topic/,view/,api/')
-    response_path = models.TextField(blank=True, null=True, help_text='题目路径【文件名】')
+    order_id = models.PositiveIntegerField(
+        blank=True, null=True, default=3, help_text="题目排序，根据难度分排序，会变"
+    )
+    title = models.CharField(
+        blank=True,
+        default=None,
+        max_length=200,
+        help_text="题目的标题，最好有趣个性化一点",
+    )
+    detail = models.TextField(
+        blank=True,
+        null=True,
+        default="暂无表述",
+        help_text="题目的描述：简单创造一个背景故事",
+    )
+    goal = models.TextField(
+        blank=True, null=True, default="暂无描述", help_text="题目的目标：掌握xxx"
+    )
+    question = models.TextField(
+        blank=True, null=True, default="暂无题目要求", help_text="题目要求"
+    )
+    answer = models.CharField(
+        blank=True, null=True, max_length=255, help_text="题目的答案"
+    )
+    category = models.CharField(
+        blank=True,
+        null=True,
+        default="成神之路",
+        max_length=100,
+        help_text="题目类别：成神之路，xpath特训",
+    )
+    difficulty = models.CharField(
+        blank=True,
+        null=True,
+        default="简单",
+        max_length=12,
+        choices=DIFFICULTY_CHOICES,
+        help_text="难度",
+    )
+    difficulty_score = models.BigIntegerField(
+        blank=True,
+        null=True,
+        default=200,
+        help_text="难度分数，后续根据此字段排序order_id",
+    )
+    points = models.TextField(
+        blank=True,
+        null=True,
+        default="暂未更新考点",
+        help_text="本题的考点",
+    )
+    published = models.BooleanField(
+        blank=True, null=True, default=False, help_text="是否发布"
+    )
+    pass_status = models.BooleanField(
+        blank=True, null=True, default=False, help_text="是否通过"
+    )
+    solution_txt = models.URLField(
+        blank=True, null=True, default="暂无表述", help_text="题解，图文讲解"
+    )
+    solution_video = models.URLField(
+        blank=True, null=True, default="暂无表述", help_text="视频讲解"
+    )
+    api_type = models.CharField(
+        blank=True,
+        null=True,
+        max_length=255,
+        default="直接对应视图",
+        help_text="此题目的接口类型：直接对应视图，访问一个接口判断后决定是否返回视图，返回一个视图+【多个】api",
+    )
+    api_prefix = models.CharField(
+        blank=True,
+        null=True,
+        max_length=255,
+        default="topic/",
+        help_text="topic/,view/,api/",
+    )
+    response_path = models.TextField(
+        blank=True, null=True, help_text="题目路径【文件名】"
+    )
 
     class Meta:
         db_table = "sd_ls_topic"  # 自定义表名
-        ordering = ['order_id']  # 默认按 order_id 排序
+        ordering = ["order_id"]  # 默认按 order_id 排序
 
     def __str__(self):
         return self.title
@@ -79,7 +139,7 @@ class TopicCategoryRelation(BaseModel, OrderMixin):
 
     class Meta:
         db_table = "sd_ls_topic_category_relation"  # 自定义表名
-        unique_together = ('topic', 'category')  # 确保唯一关系
+        unique_together = ("topic", "category")  # 确保唯一关系
 
     def __str__(self):
         return f"Topic {self.topic_id} - Category {self.category_id}"
@@ -115,7 +175,9 @@ class NewsRequestHistory(BaseModel):
     request_time = models.DateTimeField(auto_now_add=True)
     response_data = models.JSONField()  # 处理后的结果数据
     status = models.CharField(blank=True, null=True, max_length=255)
-    platform = models.ForeignKey(NewsPlatform, related_name='history', on_delete=models.CASCADE)  # 所属平台
+    platform = models.ForeignKey(
+        NewsPlatform, related_name="history", on_delete=models.CASCADE
+    )  # 所属平台
 
     class Meta:
         db_table = "sd_ls_news_request_history"
@@ -127,15 +189,29 @@ class NewsRequestHistory(BaseModel):
 # 新闻表
 class News(BaseModel):
     title = models.CharField(max_length=200)  # 新闻标题
-    url = models.URLField()  # 新闻链接
+    url = models.CharField(
+        blank=True, null=True, unique=True, max_length=255
+    )  # 新闻链接
     desc = models.CharField(max_length=500, blank=True, null=True)
     publish_time = models.DateTimeField(blank=True, null=True)
-    timestamp = models.IntegerField(default=0, blank=True, null=True)
+    timestamp = models.BigIntegerField(default=0, blank=True, null=True)
     author = models.CharField(max_length=255, blank=True, null=True)
     content = models.TextField()  # 新闻内容
     hot = models.IntegerField(default=0)  # 新闻内容
-    platform = models.ForeignKey(NewsPlatform, related_name='news', on_delete=models.CASCADE)  # 所属平台
-    category = models.ForeignKey(NewsCategory, related_name='news', on_delete=models.CASCADE)  # 新闻类别
+    platform = models.ForeignKey(
+        NewsPlatform,
+        related_name="news",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )  # 所属平台
+    category = models.ForeignKey(
+        NewsCategory,
+        related_name="news",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )  # 新闻类别
 
     class Meta:
         db_table = "sd_ls_news"

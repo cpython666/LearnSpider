@@ -1,0 +1,79 @@
+{% extends "topics/sandbox/news/news_base.html" %}
+
+{% block title %}热榜{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">平台热榜</h1>
+
+        <!-- 平台选择框 -->
+        <div class="row mb-4 justify-content-center">
+            <div class="col-12 text-center">
+                <div class="d-flex flex-wrap justify-content-center">
+                    {% for platform in platforms %}
+                        <div class="me-2 mb-2">
+                            <a href="{% url 'sandbox_news_hot_detail' platform.slug %}"
+                               class="btn btn-outline-primary btn-sm
+                               {% if platform.slug == selected_platform.slug %}active{% endif %}">
+                                {{ platform.name }}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% if selected_platform %}
+            <div class="row">
+                <!-- 显示选中的平台热榜 -->
+                <div class="col-md-12">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h4>{{ selected_platform.name }} 热榜</h4>
+                        </div>
+                        <div class="card-body">
+                            <!-- 使用栅格布局来展示新闻 -->
+                            <div class="row">
+                                {% for news in news_lst %}
+                                    <div class="col-md-4 col-lg-3 mb-3">
+                                        <div class="card shadow-sm d-flex flex-column" style="height: 200px;">
+                                            <!-- 排名 -->
+                                            <div class="card-header text-center">
+                                                <span class="badge rounded-pill
+
+                                                        {#                                                    {% if forloop.counter == 1 %}bg-warning text-white{% elif forloop.counter == 2 %}bg-secondary text-white{% elif forloop.counter == 3 %}bg-success text-white{% else %}bg-secondary text-white{% endif %}">#}
+                                                                                                            {% if forloop.counter == 1 %}bg-warning text-white{% elif forloop.counter == 2 %}bg-secondary text-white{% elif forloop.counter == 3 %}bg-success text-white{% else %}bg-light text-dark{% endif %}">
+
+                                                    {{ forloop.counter }}
+                                                </span>
+                                            </div>
+                                            <div class="card-body d-flex flex-column justify-content-between">
+                                                <a href="{{ news.url }}" class="text-decoration-none text-dark">
+                                                    <div class="card-title">{{ news.title }}</div>
+                                                    <p class="card-text text-muted">{{ news.published_at|date:"Y-m-d H:i" }}</p>
+                                                </a>
+                                                <!-- 阅读更多按钮居中 -->
+                                                <div class="mt-auto text-center">
+                                                    <a href="{{ news.url }}"
+                                                       class="btn btn-outline-info btn-sm">阅读更多</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% empty %}
+                                    <div class="col-12">
+                                        <p class="text-center">该平台暂无热榜新闻。</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <p class="text-center">请选择一个平台来查看热榜。</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
