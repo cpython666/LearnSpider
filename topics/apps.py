@@ -7,5 +7,7 @@ class TopicsConfig(AppConfig):
 
     def ready(self):
         from topics.scheduler import start_scheduler
+        from LearnSpider.settings import DJANGO_ENV
 
-        start_scheduler()
+        if DJANGO_ENV != "local":
+            start_scheduler()

@@ -9,7 +9,9 @@ def start_scheduler():
     scheduler = BackgroundScheduler()
     scheduler.add_job(
         fetch_and_save_news,
-        trigger=CronTrigger(minute="0,10,20,30,40,50"),  # 每个整十分（00, 10, 20, 30, 40, 50）执行一次
+        trigger=CronTrigger(
+            minute="0,10,20,30,40,50"
+        ),  # 每个整十分（00, 10, 20, 30, 40, 50）执行一次
         # trigger=IntervalTrigger(minutes=10),  # 每 10 分钟执行一次
         id="fetch_and_save_news",
         name="定时任务:十分钟一次，获取新闻",
