@@ -140,4 +140,44 @@ except ImportError as e:
     print(e)
     pass
 
+from dotenv import load_dotenv
+
+load_dotenv()
+DJANGO_ENV=os.getenv("DJANGO_ENV")
+if DJANGO_ENV == "local":
+    DEBUG = True
+else:
+    DEBUG = False
+
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "verbose": {
+                "format": "[%(asctime)s] %(message)s",
+                "datefmt": "%d/%b/%Y %H:%M:%S",
+            },
+        },
+        "handlers": {
+            "debug_file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": os.path.join("logs", "django_debug.log"),
+                "formatter": "verbose",
+            },
+            "error_file": {
+                "level": "ERROR",
+                "class": "logging.FileHandler",
+                "filename": os.path.join("logs", "django_error.log"),
+                "formatter": "verbose",
+            },
+        },
+        "loggers": {
+            "django": {
+                "handlers": ["debug_file", "error_file"],
+                "level": "DEBUG",
+                "propagate": True,
+            },
+        },
+    }
 print(DEBUG)

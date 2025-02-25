@@ -3,7 +3,7 @@ import base64
 import json
 import random
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.utils import timezone
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
@@ -692,6 +692,88 @@ def pagination_table(request, page):
 
     # 返回JSON响应
     return JsonResponse({"data": data})
+
+
+@csrf_exempt
+def post_intro_json(request):
+    if request.method == "POST":
+        data = json.loads(request.body)  # 解析请求体中的 JSON 数据
+        password = data.get('password', None)
+
+        if password != 'post':
+            return JsonResponse({'error': '密码不正确'}, status=403)
+
+        intro_content = {
+            "title": "POST 请求介绍",
+            "content": """
+                POST 请求是 HTTP 协议中常用的一种请求方法，通常用于向服务器提交数据。
+                与 GET 请求不同，POST 请求的参数不会附加在 URL 中，而是放在请求体（Body）中。
+                POST 请求用于表单提交、用户登录、注册、文件上传等场景。它的特点包括：
+                <ul>
+                    <li>请求参数通过请求体（Body）传递，而不是附加在 URL 后。</li>
+                    <li>没有长度限制，可以传输大量数据。</li>
+                    <li>会修改服务器的数据或创建新的资源。</li>
+                    <li>通常不是幂等的，每次请求可能会产生不同的结果。</li>
+                </ul>
+            """
+        }
+        return JsonResponse(intro_content)
+    else:
+        return JsonResponse({'error': '只支持 POST 请求'}, status=400)
+
+
+@csrf_exempt
+def post_intro_form(request):
+    if request.method == "POST":
+        password = request.POST.get('password', None)
+        if password != 'post':
+            return JsonResponse({'error': '密码不正确'}, status=403)
+        intro_content = {
+            "title": "POST 请求类型：JSON 与表单的区别",
+            "content": """
+                <h3>1. 表单格式 (application/x-www-form-urlencoded)</h3>
+                <p>
+                    表单格式是最常见的 POST 请求格式。在这种格式下，数据通过键值对传递，数据被编码为 `key=value` 的形式，
+                    适合简单的数据提交，如用户名、密码等。表单数据会经过 URL 编码，格式类似 `key1=value1&key2=value2`，通常用于传统表单。
+                </p>
+                <h3>示例：</h3>
+                <pre>
+                POST /submit_form HTTP/1.1
+                Host: example.com
+                Content-Type: application/x-www-form-urlencoded
+                Content-Length: 43
+
+                username=alice&password=12345&email=alice%40mail.com
+                </pre>
+
+                <h3>2. JSON 格式 (application/json)</h3>
+                <p>
+                    JSON 格式适合提交结构化的数据，尤其是在 API 交互中。JSON 格式可以支持更复杂的嵌套数据，
+                    比如对象和数组，通常用于与 RESTful API 进行交互。JSON 格式的数据通常通过 `application/json` 类型提交。
+                </p>
+                <h3>示例：</h3>
+                <pre>
+                POST /submit_data HTTP/1.1
+                Host: example.com
+                Content-Type: application/json
+                Content-Length: 55
+
+                {
+                    "username": "alice",
+                    "password": "12345",
+                    "email": "alice@mail.com"
+                }
+                </pre>
+                <h3>总结：</h3>
+                <ul>
+                    <li><b>表单格式：</b>适用于简单的数据提交，通常用于传统的表单提交。</li>
+                    <li><b>JSON 格式：</b>适用于复杂的、结构化的数据提交，常用于与 API 的交互。</li>
+                </ul>
+            """
+        }
+        return JsonResponse(intro_content)
+    else:
+        return JsonResponse({'error': '只支持 POST的表单 请求'}, status=400)
 
 
 @require_GET

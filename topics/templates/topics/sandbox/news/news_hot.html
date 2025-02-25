@@ -26,7 +26,7 @@
 {#{% if forloop.counter == 1 %}bg-warning text-white{% elif forloop.counter == 2 %}bg-secondary text-white{% elif forloop.counter == 3 %}bg-success text-white{% else %}bg-secondary text-white{% endif %}">#}
                                                     {{ forloop.counter }}
                                                 </span>
-                                                <a href="{{ news.get_absolute_url }}" data-bs-toggle="tooltip"
+                                                <a href="{{ news.url }}" data-bs-toggle="tooltip"
                                                    data-bs-placement="top" title="{{ news.title }}" class="ms-2">
                                                     <span class="text-truncate"
                                                           style="max-width: 200px; display: inline-block;">{{ news.title }}</span>

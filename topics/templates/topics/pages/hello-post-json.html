@@ -1,0 +1,44 @@
+{% extends "topics/base.html" %}
+
+{% block title %}
+    POST请求-JSON请求体
+{% endblock %}
+
+{% block question %}
+    <h1>POST 请求介绍</h1>
+    <h3>
+        POST 请求用于向服务器提交数据，你知道怎么通过代码发送一个 POST 请求吗？<br>
+        请回答：【了解】或【不了解】
+    </h3>
+{% endblock %}
+
+{% block content %}
+
+    <div id="introContent"></div>
+
+    <script>
+        $(document).ready(function () {
+            // 发送 POST 请求获取关于 POST 请求的介绍内容
+            $.ajax({
+                url: '/api/post_intro_json/',  // 后端接口地址
+                type: 'POST',
+                contentType: 'application/json',  // 请求头指定发送 JSON 数据
+                data: JSON.stringify({  // 将 JavaScript 对象转换为 JSON 字符串
+                    password: 'post'
+                }),
+                success: function (response) {
+                    // 请求成功后，将返回的内容插入到页面中
+                    $("#introContent").html(`
+                        <h2>${response.title}</h2>
+                        <div>${response.content}</div>
+                    `);
+                },
+                error: function () {
+                    // 请求失败时的处理
+                    alert("请求失败，请重试！");
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

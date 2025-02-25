@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from topics.models import Topics
 
 
+# python manage.py update_difficulty_scores
 class Command(BaseCommand):
     help = "批量更新题目的 difficulty_score 字段，规则为目前的 difficulty_score 排序号乘以 10"
 

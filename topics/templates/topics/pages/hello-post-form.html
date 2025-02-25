@@ -1,0 +1,46 @@
+{% extends "topics/base.html" %}
+
+{% block title %}
+    POST请求-表单请求体
+{% endblock %}
+
+{% block question %}
+    <h1>POST 请求类型：JSON 与表单的区别</h1>
+    <h3>
+        你知道 POST 请求发送数据的不同格式吗？我们有 JSON 格式和表单格式的区别哦！<br>
+        请回答：【了解】或【不了解】
+    </h3>
+{% endblock %}
+
+{% block content %}
+    <p>
+        POST 请求是 HTTP 协议中常用的一种请求方法，主要用于向服务器提交数据。在提交数据时，POST 请求有不同的
+        **数据格式**，其中最常用的有：
+    </p>
+
+    <div id="responseContent"></div>
+
+    <script>
+        $(document).ready(function () {
+            // 发送 GET 请求，获取 POST 请求类型的介绍
+            $.ajax({
+                url: '/api/post_intro_form/',  // 后端接口地址
+                type: 'POST',
+                data: {
+                    'password': 'post'
+                },
+                success: function (response) {
+                    // 将返回的内容插入到页面中
+                    $("#responseContent").html(`
+                        <h2>${response.title}</h2>
+                        <div>${response.content}</div>
+                    `);
+                },
+                error: function () {
+                    alert("请求失败，请重试！");
+                }
+            });
+        });
+    </script>
+
+{% endblock %}
