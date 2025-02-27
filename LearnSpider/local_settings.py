@@ -1,13 +1,3 @@
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.mysql",
-#         "NAME": "dbname",
-#         "HOST": "127.0.0.1",
-#         "PORT": 3306,
-#         "USER": "root",
-#         "PASSWORD": "1234",
-#     }
-# }
 SECRET_KEY = "your-secret-key"
 # settings
 # 多语言配置更改语言为中文
@@ -37,3 +27,15 @@ ALLOWED_HOSTS = [
     "localhost",
     "110.42.101.196",
 ]
+
+# 本地mysql
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": "learn_spider",
+#         "HOST": "127.0.0.1",
+#         "PORT": 3306,
+#         "USER": "root",
+#         "PASSWORD": "1234",
+#     }
+# }

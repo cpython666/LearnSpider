@@ -2,13 +2,18 @@ version: '3.8'
 
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: django_app
+    image: python:3.11-slim
+    container_name: learn_spider_app
+    working_dir: /app
+    volumes:
+      - .:/app  # 映射当前目录
     ports:
       - "8001:8001"
-    volumes:
-      - .:/app
     environment:
       - PYTHONUNBUFFERED=1
+    command: >
+      bash -c "
+        pip install --no-cache-dir -r /app/requirements.txt -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple &&
+        python /app/manage.py collectstatic --noinput &&  # 收集静态文件
+        python /app/manage.py runserver 0.0.0.0:8001  # 使用 6666 端口
+      "

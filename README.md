@@ -22,7 +22,7 @@
 
 ### TODO
 
-- docker部署
+- docker部署（我的mac好像连接不上docker的网络，暂时搁置等后面再说）
 - 用户系统
 
 ### 项目目标
@@ -86,7 +86,7 @@ LearnSpider/
 1. 克隆项目代码：
 
    ```bash
-   git clone https://github.com/你的用户名/LearnSpider.git
+   git clone https://github.com/cpython666/LearnSpider.git
    cd LearnSpider
    ```
 
@@ -103,19 +103,21 @@ LearnSpider/
    pip install -r requirements.txt
    ```
 
-4. 运行数据库迁移：
+4. 导入数据到mysql，修改数据库连接配置！！！！！！！！！！
+
+5. 运行数据库迁移：
 
    ```bash
    python manage.py migrate
    ```
 
-5. 启动开发服务器：
+6. 启动开发服务器：
 
    ```bash
    python manage.py runserver
    ```
 
-6. 在浏览器中打开 `http://127.0.0.1:8000` 查看项目。
+7. 在浏览器中打开 `http://127.0.0.1:8000` 查看项目。
 
 ### docker部署
 

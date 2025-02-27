@@ -1,3 +1,8 @@
 .git
 .DS_Store
 .idea
+.env
+/static_root
+docs
+spider_demo
+__pycache__
