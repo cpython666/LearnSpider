@@ -111,13 +111,25 @@ LearnSpider/
    python manage.py migrate
    ```
 
-6. 启动开发服务器：
+6. 【可选】收集静态文件。
+
+   线上运行的时候用nginx代理静态文件；
+
+   本地运行的时候确保debug为true，否则访问不到静态资源
+
+```
+python manage.py collectstatic --noinput
+```
+
+
+
+1. 启动开发服务器：
 
    ```bash
    python manage.py runserver
    ```
 
-7. 在浏览器中打开 `http://127.0.0.1:8000` 查看项目。
+2. 在浏览器中打开 `http://127.0.0.1:8000` 查看项目。
 
 ### docker部署
 
