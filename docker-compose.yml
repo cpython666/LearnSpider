@@ -4,6 +4,7 @@ services:
   web:
     image: python:3.11-slim
     container_name: learn_spider_app
+    restart: unless-stopped
     working_dir: /app
     volumes:
       - .:/app  # 映射当前目录
