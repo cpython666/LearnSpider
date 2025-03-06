@@ -16,21 +16,22 @@ class ParseDemoSpider(scrapy.Spider):
     start_urls = ["http://localhost:8001/sandbox/news/hot/"]
 
     def parse(self, response):
-        card_lst = response.css('.card-body')
+        card_lst = response.css(".card-body")
         for card in card_lst:
             # item = NewsItem()
             # item['title'] = card.css('a span::text').get()
             # item['url'] = card.css('a::attr(href)').get()
             yield {
-                "title": card.css('a span::text').get(), "url": card.css('a::attr(href)').get()
+                "title": card.css("a span::text").get(),
+                "url": card.css("a::attr(href)").get(),
             }
             # print(card.css('a span::text').get(), card.css('a::attr(href)').get())
             # yield item
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from scrapy import Selector
 
-    text = '<a>111</a>'
+    text = "<a>111</a>"
     response = Selector(text=text)
-    print(response.xpath('//a/text()').get())
+    print(response.xpath("//a/text()").get())

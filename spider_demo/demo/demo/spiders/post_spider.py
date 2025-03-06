@@ -3,28 +3,28 @@ import json
 
 
 class JsonRequestSpider(scrapy.Spider):
-    name = 'json_spider'
+    name = "json_spider"
 
-    start_urls = ['http://localhost:8001/api/post_intro_json/']
+    start_urls = ["http://localhost:8001/api/post_intro_json/"]
 
     def start_requests(self):
         # JSON 数据
         data = {
-            'password': 'post',
+            "password": "post",
         }
 
         # 请求头，指定发送 JSON 数据
         headers = {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
         }
 
         # 发送 POST 请求
         yield scrapy.Request(
             url=self.start_urls[0],
-            method='POST',
+            method="POST",
             headers=headers,
             body=json.dumps(data),  # 将字典转换为 JSON 字符串
-            callback=self.parse
+            callback=self.parse,
         )
 
     def parse(self, response):
@@ -34,22 +34,22 @@ class JsonRequestSpider(scrapy.Spider):
 
 
 class FormRequestSpider(scrapy.Spider):
-    name = 'form_spider'
+    name = "form_spider"
 
-    start_urls = ['http://localhost:8001/api/post_intro_form/']
+    start_urls = ["http://localhost:8001/api/post_intro_form/"]
 
     def start_requests(self):
         # JSON 数据
         formdata = {
-            'password': 'post',
+            "password": "post",
         }
 
         # 发送 POST 请求
         yield scrapy.FormRequest(
             url=self.start_urls[0],
-            method='POST',
+            method="POST",
             formdata=formdata,  # 将字典转换为 JSON 字符串
-            callback=self.parse
+            callback=self.parse,
         )
 
     def parse(self, response):

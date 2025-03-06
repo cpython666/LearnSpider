@@ -11,6 +11,6 @@ from itemadapter import ItemAdapter
 class NewsPipeline:
     def process_item(self, item, spider):
         # 数据清洗或验证的逻辑
-        item['title'] = item['title'].strip()  # 去除标题前后的空格
-        print(f'pipeline item: {item}')
+        item["title"] = item["title"].strip()  # 去除标题前后的空格
+        print(f"pipeline item: {item}")
         return item

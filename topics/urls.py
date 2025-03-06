@@ -50,9 +50,7 @@ urlpatterns = [
     # ------------------------------------------
     # topic开头 重定向到视图返回 /html pages静态页面类型
     path("page/<str:response_path>/", topic_view, name="topic_view"),
-
     # ------------------------------------------
-
     # 请求视图类型
     path("view/hello-spider/", views.hello_spider, name="request_twice"),
     path("view/request-twice/", views.request_twice, name="request-twice"),

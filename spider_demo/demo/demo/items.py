@@ -5,6 +5,7 @@
 
 import scrapy
 
+
 class NewsItem(scrapy.Item):
     title = scrapy.Field()  # 新闻标题
-    url = scrapy.Field()    # 新闻链接
+    url = scrapy.Field()  # 新闻链接

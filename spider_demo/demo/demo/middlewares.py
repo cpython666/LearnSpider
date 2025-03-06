@@ -78,7 +78,7 @@ class DemoDownloaderMiddleware:
         # - or return a Request object
         # - or raise IgnoreRequest: process_exception() methods of
         #   installed downloader middleware will be called
-        print('请求之前')
+        print("请求之前")
         return None
 
     def process_response(self, request, response, spider):
@@ -88,7 +88,7 @@ class DemoDownloaderMiddleware:
         # - return a Response object
         # - return a Request object
         # - or raise IgnoreRequest
-        print('响应之后')
+        print("响应之后")
         return response
 
     def process_exception(self, request, exception, spider):

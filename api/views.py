@@ -698,10 +698,10 @@ def pagination_table(request, page):
 def post_intro_json(request):
     if request.method == "POST":
         data = json.loads(request.body)  # 解析请求体中的 JSON 数据
-        password = data.get('password', None)
+        password = data.get("password", None)
 
-        if password != 'post':
-            return JsonResponse({'error': '密码不正确'}, status=403)
+        if password != "post":
+            return JsonResponse({"error": "密码不正确"}, status=403)
 
         intro_content = {
             "title": "POST 请求介绍",
@@ -715,19 +715,19 @@ def post_intro_json(request):
                     <li>会修改服务器的数据或创建新的资源。</li>
                     <li>通常不是幂等的，每次请求可能会产生不同的结果。</li>
                 </ul>
-            """
+            """,
         }
         return JsonResponse(intro_content)
     else:
-        return JsonResponse({'error': '只支持 POST 请求'}, status=400)
+        return JsonResponse({"error": "只支持 POST 请求"}, status=400)
 
 
 @csrf_exempt
 def post_intro_form(request):
     if request.method == "POST":
-        password = request.POST.get('password', None)
-        if password != 'post':
-            return JsonResponse({'error': '密码不正确'}, status=403)
+        password = request.POST.get("password", None)
+        if password != "post":
+            return JsonResponse({"error": "密码不正确"}, status=403)
         intro_content = {
             "title": "POST 请求类型：JSON 与表单的区别",
             "content": """
@@ -769,11 +769,11 @@ def post_intro_form(request):
                     <li><b>表单格式：</b>适用于简单的数据提交，通常用于传统的表单提交。</li>
                     <li><b>JSON 格式：</b>适用于复杂的、结构化的数据提交，常用于与 API 的交互。</li>
                 </ul>
-            """
+            """,
         }
         return JsonResponse(intro_content)
     else:
-        return JsonResponse({'error': '只支持 POST的表单 请求'}, status=400)
+        return JsonResponse({"error": "只支持 POST的表单 请求"}, status=400)
 
 
 @require_GET

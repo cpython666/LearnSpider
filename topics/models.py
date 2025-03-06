@@ -32,7 +32,6 @@ class Category(BaseModel):
         db_table = "sd_ls_category"  # 自定义表名
 
 
-
 class Topics(BaseModel):
     DIFFICULTY_CHOICES = [
         ("beginner", "初级"),
@@ -223,13 +222,11 @@ class News(BaseModel):
 
 # 新闻表
 class Web3NewsTag(BaseModel):
-    tag_id = models.IntegerField( blank=True, null=True)
+    tag_id = models.IntegerField(blank=True, null=True)
     name = models.CharField(max_length=200, blank=True, null=True)
     tag = models.CharField(max_length=200, blank=True, null=True)
     name_en = models.CharField(max_length=200, blank=True, null=True)
-    url = models.CharField(
-        blank=True, null=True, max_length=255
-    )
+    url = models.CharField(blank=True, null=True, max_length=255)
     desc = models.CharField(max_length=500, blank=True, null=True)
     desc_en = models.CharField(max_length=500, blank=True, null=True)
 
@@ -239,14 +236,13 @@ class Web3NewsTag(BaseModel):
     def __str__(self):
         return self.name
 
+
 class Web3News(BaseModel):
     title = models.CharField(max_length=200, blank=True, null=True)
     sub_title = models.CharField(max_length=500, blank=True, null=True)
-    web_link = models.CharField(unique=True,max_length=255, blank=True, null=True)
+    web_link = models.CharField(unique=True, max_length=255, blank=True, null=True)
     author_name = models.CharField(max_length=50, blank=True, null=True)
-    published_time = models.DateTimeField(
-        blank=True, null=True
-    )
+    published_time = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         db_table = "sd_ls_news_web3"
