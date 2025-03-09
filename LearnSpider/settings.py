@@ -141,7 +141,13 @@ except ImportError as e:
     pass
 
 from dotenv import load_dotenv
+# 定义日志目录
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LOG_DIR = os.path.join(BASE_DIR, "logs")
 
+# 如果日志目录不存在，则创建
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
 load_dotenv()
 DJANGO_ENV = os.getenv("DJANGO_ENV")
 if DJANGO_ENV == "local":
@@ -162,13 +168,13 @@ else:
             "debug_file": {
                 "level": "DEBUG",
                 "class": "logging.FileHandler",
-                "filename": os.path.join("logs", "django_debug.log"),
+                "filename": os.path.join(LOG_DIR, "django_debug.log"),
                 "formatter": "verbose",
             },
             "error_file": {
                 "level": "ERROR",
                 "class": "logging.FileHandler",
-                "filename": os.path.join("logs", "django_error.log"),
+                "filename": os.path.join(LOG_DIR, "django_error.log"),
                 "formatter": "verbose",
             },
         },
@@ -180,4 +186,4 @@ else:
             },
         },
     }
-print(DEBUG)
+print("DEBUG",DEBUG)
