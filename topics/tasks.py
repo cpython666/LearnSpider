@@ -19,10 +19,12 @@ def fetch_and_save_news():
             NewsRequestHistory.objects.create(response_data=data, platform=platform)
             # 检查记录数量，如果超过100，则删除前50条
             total=NewsRequestHistory.objects.count()
+            print(f'记录数量:{total}')
             if total > 100:
-                # 这里按照创建时间或者 id 排序并删除前50条数据
-                NewsRequestHistory.objects.all().order_by("id")[:total - 50].delete()
-
+                # 获取最新的 50 条记录的 ID
+                preserve_ids = list(NewsRequestHistory.objects.all().order_by("-id")[:50].values_list("id", flat=True))
+                # 删除不在这些 ID 中的记录
+                NewsRequestHistory.objects.exclude(id__in=preserve_ids).delete()
             print(f"{platform.name} {platform.slug} 保存完成")
         else:
             print(f"请求出错了！")
