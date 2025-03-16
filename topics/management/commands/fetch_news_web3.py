@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from collect_data.collect_web3_news import BianNewsSpider
+from collect_data.collect_news_binance import BianNewsSpider
 
 
 # python manage.py fetch_news_web3
