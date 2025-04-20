@@ -4,116 +4,211 @@
 
 {% endblock %}
 {% block content %}
-<style>
-  /* 左侧广告固定定位 */
-  .left-ad {
-    position: fixed;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 220px;
-    z-index: 1000;
-  }
+    <style>
+        /* 左侧广告固定定位 */
+        .left-ad {
+            position: fixed;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 220px;
+            z-index: 1000;
+        }
 
-  /* 右侧广告固定定位 */
-  .right-ad {
-    position: fixed;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 220px;
-    z-index: 1000;
-  }
+        /* 右侧广告固定定位 */
+        .right-ad {
+            position: fixed;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 220px;
+            z-index: 1000;
+        }
 
-  /* 小屏幕隐藏广告 */
-  @media (max-width: 991px) {
-    .left-ad, .right-ad {
-      display: none;
-    }
-  }
+        /* 小屏幕隐藏广告 */
+        @media (max-width: 991px) {
+            .left-ad, .right-ad {
+                display: none;
+            }
+        }
 
-  /* 主要内容容器，增加左右间距 */
-  .content-container {
-    margin-left: 250px;  /* 留出左侧广告空间 */
-    margin-right: 250px; /* 留出右侧广告空间 */
-  }
+        /* 主要内容容器，增加左右间距 */
+        .content-container {
+            margin-left: 250px; /* 留出左侧广告空间 */
+            margin-right: 250px; /* 留出右侧广告空间 */
+        }
 
-  @media (max-width: 1199px) {
-    .content-container {
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
-</style>
+        @media (max-width: 1199px) {
+            .content-container {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
 
-<div class="container mt-3">
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s ease;
+        }
+    </style>
 
-  <!-- 左侧广告 -->
-  <div class="left-ad d-none d-lg-block">
-    <div class="card shadow-sm border-0">
-      <img src="{% static 'imgs/support/lky.png' %}" class="card-img-top rounded-top" alt="莱卡云">
-      <div class="card-body text-center">
-        <h5 class="card-title">莱卡云</h5>
-        <p class="card-text text-muted"><strong>低价格高性能服务器</strong>，速速上车，开启学习之旅～<br><br>莱卡云拥有精选华中/香港/美国/欧洲多种（境内境外）云服务器产品（境外服务器可以免备案），低至25元每月。</p>
-        <a href="https://www.lcayun.com/aff/DECEDOZS" class="btn btn-primary btn-sm" target="_blank">立即购买</a>
-      </div>
+    <div class="container mt-3">
+
+        <!-- 左侧广告 -->
+        <div class="left-ad d-none d-lg-block">
+            <div class="card shadow-sm border-0">
+                <img src="{% static 'imgs/support/lky.png' %}" class="card-img-top rounded-top" alt="莱卡云">
+                <div class="card-body text-center">
+                    <h5 class="card-title">莱卡云</h5>
+                    <p class="card-text text-muted"><strong>低价格高性能服务器</strong>，速速上车，开启学习之旅～<br><br>莱卡云拥有精选华中/香港/美国/欧洲多种（境内境外）云服务器产品（境外服务器可以免备案），低至25元每月。
+                    </p>
+                    <a href="https://www.lcayun.com/aff/DECEDOZS" class="btn btn-primary btn-sm"
+                       target="_blank">立即购买</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主要内容 -->
+        <div class="content-container">
+            <div class="text-center p-3">
+                <img src="{% static 'imgs/logo.jpeg' %}" class="img-thumbnail rounded-circle shadow-sm"
+                     style="width: 180px;" alt="...">
+                <h1 class="mt-3">爬虫百战成神 - LearnSpider</h1>
+                <div class="mt-2">
+                    <span class="badge rounded-pill bg-primary">靶场</span>
+                    <span class="badge rounded-pill bg-secondary">爬虫</span>
+                    <span class="badge rounded-pill bg-success">教程</span>
+                    <span class="badge rounded-pill bg-danger">自动化</span>
+                    <span class="badge rounded-pill bg-warning text-dark">一站式</span>
+                    <span class="badge rounded-pill bg-info text-dark">DrissionPage</span>
+                    <span class="badge rounded-pill bg-dark">Python</span>
+                </div>
+            </div>
+
+            <div class="p-3 bg-light rounded shadow-sm">
+                <div class="text-start" style="text-indent: 2em;">
+                    不仅是一个练习场，也配套有每道题目的多种技术示例代码，文档讲解，视频演示。
+                </div>
+                <div class="text-start" style="text-indent: 2em;">
+                    题目由易到难，由浅入深，想让大家在刷题与实践的过程中甚至是从零学会爬虫（因为思想学会后，剩下的代码其实就是工具的使用），在这个过程中增加自己对于代码和场景的理解。
+                </div>
+                <div class="text-start" style="text-indent: 2em;">
+                    本项目目标覆盖爬虫初级，进阶和高级。涉及到requests，scrapy这些请求工具，还有selenium，drissionpage这些自动化工具框架。
+                </div>
+                <div class="text-start" style="text-indent: 2em;">
+                    涉及到接口请求，静态页面解析，也涉及到代码混淆，接口加密，也包含各种抓包工具的使用，chrome开发者工具的使用等。
+                </div>
+                <div class="text-start" style="text-indent: 2em;">
+                    包括一些新颖的反爬技术，比如前端层面的反爬，svg反爬，css反爬，雪碧图等，也比如新兴的反爬技术比如wasm。
+                </div>
+                <div class="text-start" style="text-indent: 2em;">
+                    总之就是我会什么，就像教大家什么。所以此仓库的内容也会无限拓展。也欢迎大家的贡献。
+                </div>
+
+                <div class="text-start mt-3" style="text-indent: 2em;">
+                    此仓库旨在让大家在刷题的过程中以结果和成就感驱动学习，学习到某个知识点后可以快速应用，从而感受到学到了东西，感受到爬虫是如此的简单有趣。而不是学完之后因为网站内容变动而没有刷题的地方，久而久之像没学一样。
+                </div>
+                <div class="text-start" style="text-indent: 2em;">
+                    并且本项目最想让大家养成举一反三，逻辑推理的思考思维习惯。
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <h3>cpython666 出品</h3>
+                <a class="btn btn-lg btn-primary mt-2" href="list" role="button">开启爬虫成神之旅</a>
+            </div>
+        </div>
+
+        <!-- 右侧广告 -->
+        <div class="right-ad d-none d-lg-block">
+            <div class="card shadow-sm border-0">
+                <img src="{% static 'imgs/support/yrx.png' %}" class="card-img-top rounded-top" alt="猿人学">
+                <div class="card-body text-center">
+                    <h5 class="card-title">猿人学</h5>
+                    <p class="card-text text-muted">爬虫逆向反爬虫课程，3000爬虫er圈子，不定期聚会，行业顶级资源。<br><br>爬虫行业每10人中有一人就是猿人学的学员。<br><br><strong>报课提站长名字可享内部优惠价格。</strong>
+                    </p>
+                    <a href="https://match.yuanrenxue.cn/" class="btn btn-danger btn-sm" target="_blank">了解更多</a>
+                </div>
+            </div>
+        </div>
+
     </div>
-  </div>
 
-  <!-- 主要内容 -->
-  <div class="content-container">
-    <div class="text-center p-3">
-      <img src="{% static 'imgs/logo.jpeg' %}" class="img-thumbnail rounded-circle shadow-sm" style="width: 180px;" alt="...">
-      <h1 class="mt-3">爬虫百战成神 - LearnSpider</h1>
-      <div class="mt-2">
-        <span class="badge rounded-pill bg-primary">靶场</span>
-        <span class="badge rounded-pill bg-secondary">爬虫</span>
-        <span class="badge rounded-pill bg-success">教程</span>
-        <span class="badge rounded-pill bg-danger">自动化</span>
-        <span class="badge rounded-pill bg-warning text-dark">一站式</span>
-        <span class="badge rounded-pill bg-info text-dark">DrissionPage</span>
-        <span class="badge rounded-pill bg-dark">Python</span>
-      </div>
+    <!-- 底部版权 -->
+    <footer class="bg-light text-center py-3 mt-3 shadow-sm">
+        <p class="mb-0">
+            © 2024 星梦起航. | <a href="https://beian.miit.gov.cn/#/Integrated/index"
+                                  target="_blank">豫ICP备2025114038号-2</a>
+        </p>
+    </footer>
+    <!-- Sponsors Section -->
+    <div class="container py-5" style="background: linear-gradient(to right, #f9fafb, #e6f0ff);">
+        <h2 class="text-center fw-semibold mb-4 text-dark">赞助商</h2>
+        <div class="row g-4 justify-content-center">
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <a href="https://www.lcayun.com/aff/DECEDOZS" target="_blank"
+                   class="card h-100 text-decoration-none border-0 shadow-sm">
+                    <div class="d-flex align-items-center justify-content-center p-2 bg-white"
+                         style="aspect-ratio: 12/5;">
+                        <img src="{% static '/imgs/sponsors/lky_logo.png' %}" alt="莱卡云" class="img-fluid">
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <a href="https://match.yuanrenxue.cn/" target="_blank"
+                   class="card h-100 text-decoration-none border-0 shadow-sm">
+                    <div class="d-flex align-items-center justify-content-center p-2 bg-white"
+                         style="aspect-ratio: 12/5;">
+                        <img src="{% static '/imgs/sponsors/yrx_logo.png' %}" alt="猿人学" class="img-fluid">
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <a href="https://www.qg.net/product/proxyip.html?source=star" target="_blank"
+                   class="card h-100 text-decoration-none border-0 shadow-sm">
+                    <div class="d-flex align-items-center justify-content-center p-2 bg-white"
+                         style="aspect-ratio: 12/5;">
+                        <img src="{% static '/imgs/sponsors/qgwl_logo.png' %}" alt="青果网络" class="img-fluid">
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <a href="https://evolution-host.com/" target="_blank"
+                   class="card h-100 text-decoration-none border-0 shadow-sm">
+                    <div class="d-flex align-items-center justify-content-center p-2 bg-white"
+                         style="aspect-ratio: 12/5;">
+                        <img src="{% static '/imgs/sponsors/evolution_host.png' %}" alt="Evolution Host"
+                             class="img-fluid">
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 
-    <div class="p-3 bg-light rounded shadow-sm">
-         <div class="text-start" style="text-indent: 2em;">不仅是一个练习场，也配套有每道题目的多种技术示例代码，文档讲解，视频演示。</div>
-    <div class="text-start" style="text-indent: 2em;"> 题目由易到难，由浅入深，想让大家在刷题与实践的过程中甚至是从零学会爬虫（因为思想学会后，剩下的代码其实就是工具的使用），在这个过程中增加自己对于代码和场景的理解。</div>
-    <div class="text-start" style="text-indent: 2em;"> 本项目目标覆盖爬虫初级，进阶和高级。涉及到requests，scrapy这些请求工具，还有selenium，drissionpage这些自动化工具框架。</div>
-    <div class="text-start" style="text-indent: 2em;"> 涉及到接口请求，静态页面解析，也涉及到代码混淆，接口加密，也包含各种抓包工具的使用，chrome开发者工具的使用等。</div>
-    <div class="text-start" style="text-indent: 2em;"> 包括一些新颖的反爬技术，比如前端层面的反爬，svg反爬，css反爬，雪碧图等，也比如新兴的反爬技术比如wasm。</div>
-    <div class="text-start" style="text-indent: 2em;"> 总之就是我会什么，就像教大家什么。所以此仓库的内容也会无限拓展。也欢迎大家的贡献。</div>
-
-    <div class="text-start mt-3" style="text-indent: 2em;">
-      此仓库旨在让大家在刷题的过程中以结果和成就感驱动学习，学习到某个知识点后可以快速应用，从而感受到学到了东西，感受到爬虫是如此的简单有趣。而不是学完之后因为网站内容变动而没有刷题的地方，久而久之像没学一样。 </div>
-    <div class="text-start" style="text-indent: 2em;"> 并且本项目最想让大家养成举一反三，逻辑推理的思考思维习惯。</div>
+    <!-- Friends Links Section -->
+    <div class="container py-5" style="background: linear-gradient(to right, #fff8f0, #fcebd5);">
+        <h2 class="text-center fw-semibold mb-4 text-dark">友情链接</h2>
+        <div class="row g-4 justify-content-center">
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <a href="http://www.stardream.vip/" target="_blank"
+                   class="card h-100 text-decoration-none border-0 shadow-sm">
+                    <div class="d-flex align-items-center justify-content-center p-2 bg-white"
+                         style="aspect-ratio: 12/5;">
+                        <img src="{% static '/imgs/friends/stardream_logo.png' %}" alt="星梦起航" class="img-fluid">
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                <a href="http://www.learnspider.vip/" target="_blank"
+                   class="card h-100 text-decoration-none border-0 shadow-sm">
+                    <div class="d-flex align-items-center justify-content-center p-2 bg-white"
+                         style="aspect-ratio: 12/5;">
+                        <img src="{% static '/imgs/friends/learnspider_logo.png' %}" alt="爬虫百战成神"
+                             class="img-fluid">
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
-
-    <div class="text-center mt-3">
-      <h3>cpython666 出品</h3>
-      <a class="btn btn-lg btn-primary mt-2" href="list" role="button">开启爬虫成神之旅</a>
-    </div>
-  </div>
-
-  <!-- 右侧广告 -->
-  <div class="right-ad d-none d-lg-block">
-    <div class="card shadow-sm border-0">
-      <img src="{% static 'imgs/support/yrx.png' %}" class="card-img-top rounded-top" alt="猿人学">
-      <div class="card-body text-center">
-        <h5 class="card-title">猿人学</h5>
-          <p class="card-text text-muted">爬虫逆向反爬虫课程，3000爬虫er圈子，不定期聚会，行业顶级资源。<br><br>爬虫行业每10人中有一人就是猿人学的学员。<br><br><strong>报课提站长名字可享内部优惠价格。</strong></p>
-        <a href="https://match.yuanrenxue.cn/" class="btn btn-danger btn-sm" target="_blank">了解更多</a>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- 底部版权 -->
-<footer class="bg-light text-center py-3 mt-3 shadow-sm">
-  <p class="mb-0">
-    © 2024 星梦起航. | <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">豫ICP备2025114038号-2</a>
-  </p>
-</footer>
 
 {% endblock %}

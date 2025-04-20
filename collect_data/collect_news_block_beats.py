@@ -19,7 +19,7 @@ if res["status"] == 0:
         url = data_item["h5"]
         title = data_item["title"]
         content = data_item["content"]
-        time = data_item["time"]
+        time_str = data_item["time"]
         add_time = data_item["add_time"]
         rich_text = data_item["rich_text"]
 
