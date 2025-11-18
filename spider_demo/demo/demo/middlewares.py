@@ -1,105 +1,98 @@
-# Define here the models for your spider middleware
-#
-# See documentation in:
-# https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-
 from scrapy import signals
-
-# useful for handling different item types with a single interface
-from itemadapter import is_item, ItemAdapter
+import random
 
 
-class DemoSpiderMiddleware:
-    # Not all methods need to be defined. If a method is not defined,
-    # scrapy acts as if the spider middleware does not modify the
-    # passed objects.
-
-    @classmethod
-    def from_crawler(cls, crawler):
-        # This method is used by Scrapy to create your spiders.
-        s = cls()
-        crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
-        return s
-
-    def process_spider_input(self, response, spider):
-        # Called for each response that goes through the spider
-        # middleware and into the spider.
-
-        # Should return None or raise an exception.
-        return None
-
-    def process_spider_output(self, response, result, spider):
-        # Called with the results returned from the Spider, after
-        # it has processed the response.
-
-        # Must return an iterable of Request, or item objects.
-        for i in result:
-            yield i
-
-    def process_spider_exception(self, response, exception, spider):
-        # Called when a spider or process_spider_input() method
-        # (from other spider middleware) raises an exception.
-
-        # Should return either None or an iterable of Request or item objects.
-        pass
-
-    def process_start_requests(self, start_requests, spider):
-        # Called with the start requests of the spider, and works
-        # similarly to the process_spider_output() method, except
-        # that it doesn’t have a response associated.
-
-        # Must return only requests (not items).
-        for r in start_requests:
-            yield r
-
-    def spider_opened(self, spider):
-        spider.logger.info("Spider opened: %s" % spider.name)
-
-
-class DemoDownloaderMiddleware:
-    # Not all methods need to be defined. If a method is not defined,
-    # scrapy acts as if the downloader middleware does not modify the
-    # passed objects.
+class ProxyDownloaderMiddleware:
+    """
+    使用代理的下载器中间件（仅使用统一 PROXY_URL）：
+    - 从 settings 读取 PROXY_URL
+    - 为请求设置 request.meta['proxy']
+    - 可通过 request.meta['no_proxy']=True 跳过某些请求
+    """
 
     @classmethod
     def from_crawler(cls, crawler):
-        # This method is used by Scrapy to create your spiders.
         s = cls()
+        settings = crawler.settings
+        s.proxy_url = settings.get("PROXY_URL")
         crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
         return s
 
     def process_request(self, request, spider):
-        # Called for each request that goes through the downloader
-        # middleware.
+        # 若设置了 no_proxy 或未配置 PROXY_URL，跳过
 
-        # Must either:
-        # - return None: continue processing this request
-        # - or return a Response object
-        # - or return a Request object
-        # - or raise IgnoreRequest: process_exception() methods of
-        #   installed downloader middleware will be called
-        print("请求之前")
+        if request.meta.get("no_proxy") or not self.proxy_url:
+            return None
+
+        # 如果请求已经携带了代理，沿用它
+        current = request.meta.get("proxy")
+        if current:
+            spider.logger.info(f"沿用请求自带代理: {current} -> {request.url}")
+            return None
+
+        # 仅使用统一的 PROXY_URL
+        proxy = self.proxy_url
+
+        if proxy:
+            request.meta["proxy"] = proxy
+            spider.logger.info(f"使用代理 {proxy} 请求 {request.url}")
+        else:
+            spider.logger.debug(f"未配置代理，直连: {request.url}")
         return None
 
-    def process_response(self, request, response, spider):
-        # Called with the response returned from the downloader.
-
-        # Must either;
-        # - return a Response object
-        # - return a Request object
-        # - or raise IgnoreRequest
-        print("响应之后")
-        return response
-
     def process_exception(self, request, exception, spider):
-        # Called when a download handler or a process_request()
-        # (from other downloader middleware) raises an exception.
-
-        # Must either:
-        # - return None: continue processing this exception
-        # - return a Response object: stops process_exception() chain
-        # - return a Request object: stops process_exception() chain
-        pass
+        # 记录代理阶段的异常，交由后续中间件/默认处理
+        spider.logger.warning(f"下载异常，url={request.url}, error={exception}")
+        return None
 
     def spider_opened(self, spider):
-        spider.logger.info("Spider opened: %s" % spider.name)
+        spider.logger.info(
+            f"ProxyDownloaderMiddleware 已加载, PROXY_URL={getattr(self,'proxy_url',None)}"
+        )
+
+
+class RequestHeadersMiddleware:
+    """
+    请求头中间件：
+    - 从 settings 读取 REQUEST_HEADERS（dict）、REQUEST_HEADERS_OVERWRITE（bool）、
+      REQUEST_USER_AGENT（str）或 REQUEST_USER_AGENT_LIST（list）
+    - 可通过 request.meta['no_headers_mw']=True 跳过
+    """
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        s = cls()
+        settings = crawler.settings
+        s.headers = settings.get("REQUEST_HEADERS") or {}
+        s.overwrite = settings.getbool("REQUEST_HEADERS_OVERWRITE", True)
+        s.user_agent = settings.get("REQUEST_USER_AGENT")
+        s.user_agent_list = settings.get("REQUEST_USER_AGENT_LIST") or []
+        crawler.signals.connect(s.spider_opened, signal=signals.spider_opened)
+        return s
+
+    def process_request(self, request, spider):
+        # 跳过条件
+        if request.meta.get("no_headers_mw"):
+            return None
+
+        # 设置 User-Agent
+        ua = self.user_agent
+        if not ua and self.user_agent_list:
+            ua = random.choice(self.user_agent_list)
+        if ua:
+            if self.overwrite or b"User-Agent" not in request.headers:
+                request.headers["User-Agent"] = ua
+
+        # 合并设置的 headers
+        for k, v in self.headers.items():
+            key_bytes = k.encode() if isinstance(k, str) else k
+            if self.overwrite or key_bytes not in request.headers:
+                request.headers[k] = v
+
+        return None
+
+    def spider_opened(self, spider):
+        spider.logger.info(
+            f"RequestHeadersMiddleware 已加载, overwrite={getattr(self,'overwrite',None)}, "
+            f"UA={'list' if getattr(self,'user_agent_list',[]) else getattr(self,'user_agent',None)}"
+        )
