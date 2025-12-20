@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login Demo</title>
+<meta name="login-secret" content="WmSecretKey-2025">
+<meta name="login-pepper" content="Glass-Edge">
+<meta name="login-salt" content="WmSalt123">
+<meta name="login-expected" content="JKPb5sxlg3sWO6RPLwtwzupvQo2M2PC2LG8CVrYjI2I=">
+<style>
+html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+.wrap{display:flex;align-items:center;justify-content:center;height:100%;background:#f5f7fa}
+.card{width:360px;background:#fff;border:1px solid #e6e8eb;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.08);padding:24px}
+.title{font-size:20px;margin:0 0 16px 0}
+.group{display:flex;flex-direction:column;gap:8px;margin:12px 0}
+.input{padding:10px 12px;border:1px solid #cfd6dd;border-radius:8px;font-size:14px;outline:none}
+.btn{width:100%;margin-top:10px;padding:10px 12px;border:0;border-radius:8px;background:#2563eb;color:#fff;font-size:15px;cursor:pointer}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.msg{margin-top:12px;font-size:14px;color:#111}
+.ok{color:#15803d}
+.err{color:#b91c1c}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1 class="title">Login</h1>
+    <div class="group">
+      <input id="pwd" class="input" type="password" placeholder="Enter password">
+      <button id="go" class="btn">Sign In</button>
+      <div id="msg" class="msg"></div>
+    </div>
+  </div>
+</div>
+<script src="./app.js"></script>
+</body>
+</html>
